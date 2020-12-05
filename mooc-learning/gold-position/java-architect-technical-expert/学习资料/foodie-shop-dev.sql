@@ -1853,7 +1853,7 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1908017YR51G1XWH', 'imooc', 'Qpf0SxOVUjUkWySXOZ16kw==', 'imooc', NULL, 'http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png', NULL, NULL, 2, '1900-01-01', '2019-08-14 23:44:30', '2019-08-14 23:44:30');
+INSERT INTO `users` VALUES ('1908017YR51G1XWH', 'ccarlosf', 'Qpf0SxOVUjUkWySXOZ16kw==', 'ccarlosf', NULL, 'http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png', NULL, NULL, 2, '1900-01-01', '2019-08-14 23:44:30', '2019-08-14 23:44:30');
 INSERT INTO `users` VALUES ('190815GTKCBSS7MW', 'test', 'Qpf0SxOVUjUkWySXOZ16kw==', 'test', NULL, 'http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png', NULL, NULL, 2, '1900-01-01', '2019-08-15 22:11:58', '2019-08-15 22:11:58');
 INSERT INTO `users` VALUES ('190816HH9RDPD6Y8', 'abc', 'Qpf0SxOVUjUkWySXOZ16kw==', 'abc', NULL, 'http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png', NULL, NULL, 2, '1900-01-01', '2019-08-16 23:14:12', '2019-08-16 23:14:12');
 INSERT INTO `users` VALUES ('1908189H7TNWDTXP', 'imooc123', 'Qpf0SxOVUjUkWySXOZ16kw==', 'imooc123', NULL, 'http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png', NULL, NULL, 2, '1900-01-01', '2019-08-18 13:25:30', '2019-08-18 13:25:30');
