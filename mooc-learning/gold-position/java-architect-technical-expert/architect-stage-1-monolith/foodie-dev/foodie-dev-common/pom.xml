@@ -3,17 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>java-architect-technical-expert</artifactId>
+        <artifactId>foodie-dev</artifactId>
         <groupId>com.ccarlosf</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>architect-stage-1-monolith</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>foodie-dev</module>
-    </modules>
+    <!-- 默认打包方式为 jar -->
+    <!--<packaging>jar</packaging>-->
+
+    <artifactId>foodie-dev-common</artifactId>
 
 
 </project>
