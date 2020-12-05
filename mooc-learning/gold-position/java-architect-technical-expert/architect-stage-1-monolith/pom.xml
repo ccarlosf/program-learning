@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>foodie-dev</module>
+        <module>mybatis-generator</module>
     </modules>
 
 
