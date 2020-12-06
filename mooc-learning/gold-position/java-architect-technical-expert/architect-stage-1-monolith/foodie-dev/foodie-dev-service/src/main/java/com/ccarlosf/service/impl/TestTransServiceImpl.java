@@ -23,13 +23,17 @@ public class TestTransServiceImpl implements TestTransService {
      *           举例：领导没饭吃，我也没饭吃；领导有饭吃，我也有饭吃。
      * MANDATORY: 该传播属性强制必须存在一个事务，如果不存在，则抛出异常
      *            举例：领导必须管饭，不管饭没饭吃，我就不乐意了，就不干了（抛出异常）
-     * REQUIRES_NEW:
-     * NOT_SUPPORTED:
-     * NEVER:
+     * REQUIRES_NEW: 如果当前有事务，则挂起该事务，并且自己创建一个新的事务给自己使用；
+     *               如果当前没有事务，则同 REQUIRED
+     *               举例：领导有饭吃，我偏不要，我自己买了自己吃
+     * NOT_SUPPORTED: 如果当前有事务，则把事务挂起，自己不适用事务去运行数据库操作
+     *                举例：领导有饭吃，分一点给你，我太忙了，放一边，我不吃
+     * NEVER: 如果当前有事务存在，则抛出异常
+     *        举例：领导有饭给你吃，我不想吃，我热爱工作，我抛出异常
      * NESTED:
      */
 
-    @Transactional(propagation = Propagation.REQUIRED)
+//    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void testPropagationTrans() {
         stuService.saveParent();
