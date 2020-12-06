@@ -30,15 +30,24 @@ public class TestTransServiceImpl implements TestTransService {
      *                举例：领导有饭吃，分一点给你，我太忙了，放一边，我不吃
      * NEVER: 如果当前有事务存在，则抛出异常
      *        举例：领导有饭给你吃，我不想吃，我热爱工作，我抛出异常
-     * NESTED:
+     * NESTED: 如果当前有事务，则开启子事务（嵌套事务），嵌套事务是独立提交或者回滚；
+     *         如果当前没有事务，则同 REQUIRED。
+     *         但是如果主事务提交，则会携带子事务一起提交。
+     *         如果主事务回滚，则子事务会一起回滚。相反，子事务异常，则父事务可以回滚或不回滚。
+     *         举例：领导决策不对，老板怪罪，领导带着小弟一同受罪。小弟出了差错，领导可以推卸责任。
      */
 
-//    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void testPropagationTrans() {
         stuService.saveParent();
 
-        stuService.saveChildren();
+        try {
+            // save point
+            stuService.saveChildren();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 //        int a = 1 / 0;
     }
