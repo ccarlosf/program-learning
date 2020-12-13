@@ -3,7 +3,9 @@ package com.ccarlosf.controller;
 import com.ccarlosf.pojo.Users;
 import com.ccarlosf.pojo.bo.UserBO;
 import com.ccarlosf.service.UserService;
+import com.ccarlosf.utils.CookieUtils;
 import com.ccarlosf.utils.JSONResult;
+import com.ccarlosf.utils.JsonUtils;
 import com.ccarlosf.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -77,6 +79,11 @@ public class PassportController {
         // 4. 实现注册
         Users userResult = userService.createUser(userBO);
 
+        userResult = setNullProperty(userResult);
+
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(userResult), true);
+
         return JSONResult.ok();
     }
 
@@ -103,6 +110,25 @@ public class PassportController {
             return JSONResult.errorMsg("用户名或密码不正确");
         }
 
+        userResult = setNullProperty(userResult);
+
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(userResult), true);
+
+
+        // TODO 生成用户token，存入redis会话
+        // TODO 同步购物车数据
+
         return JSONResult.ok(userResult);
+    }
+
+    private Users setNullProperty(Users userResult) {
+        userResult.setPassword(null);
+        userResult.setMobile(null);
+        userResult.setEmail(null);
+        userResult.setCreatedTime(null);
+        userResult.setUpdatedTime(null);
+        userResult.setBirthday(null);
+        return userResult;
     }
 }
