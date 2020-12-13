@@ -5,12 +5,13 @@
 	<meta charset="UTF-8">
 	<title>天天吃货 - 登录</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 
-	<link rel="shortcut icon" href="img/foodie.ico"/>
+	<link rel="shortcut icon" href="img/foodie.ico" />
 
 	<link rel="stylesheet" href="AmazeUI-2.4.2/assets/css/amazeui.css" />
 	<link href="css/dlstyle.css" rel="stylesheet" type="text/css">
@@ -87,7 +88,7 @@
 				returnUrl: ""
 			},
 			created() {
-				
+
 				// 登录成功后会跳原来页面
 				var returnUrl = app.getUrlParam("returnUrl");
 				if (returnUrl != null && returnUrl != undefined && returnUrl != '') {
@@ -95,10 +96,8 @@
 				}
 			},
 			methods: {
-				getRequest() {
-				},
-				postRequest() {							
-				},
+				getRequest() {},
+				postRequest() {},
 				doLogin() {
 
 					if (this.username == null || this.username == undefined || this.username == '') {
@@ -126,6 +125,7 @@
 					// console.log(axios.defaults);
 					axios.post(serverUrl + '/passport/login', userBO)
 						.then(res => {
+							debugger;
 							if (res.data.status == 200) {
 								var user = res.data;
 								// console.log(user);
