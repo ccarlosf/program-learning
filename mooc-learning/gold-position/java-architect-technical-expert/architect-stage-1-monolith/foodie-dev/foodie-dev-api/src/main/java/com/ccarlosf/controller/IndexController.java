@@ -3,6 +3,7 @@ package com.ccarlosf.controller;
 import com.ccarlosf.enums.YesOrNo;
 import com.ccarlosf.pojo.Carousel;
 import com.ccarlosf.pojo.Category;
+import com.ccarlosf.pojo.vo.CategoryVO;
 import com.ccarlosf.service.CarouselService;
 import com.ccarlosf.service.CategoryService;
 import com.ccarlosf.utils.JSONResult;
@@ -46,5 +47,20 @@ public class IndexController {
         List<Category> list = categoryService.queryAllRootLevelCat();
         return JSONResult.ok(list);
     }
+
+    @ApiOperation(value = "获取商品子分类", notes = "获取商品子分类", httpMethod = "GET")
+    @GetMapping("/subCat/{rootCatId}")
+    public JSONResult subCat(
+            @ApiParam(name = "rootCatId", value = "一级分类id", required = true)
+            @PathVariable Integer rootCatId) {
+
+        if (rootCatId == null) {
+            return JSONResult.errorMsg("分类不存在");
+        }
+
+        List<CategoryVO> list = categoryService.getSubCatList(rootCatId);
+        return JSONResult.ok(list);
+    }
+
 
 }
