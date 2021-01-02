@@ -4,6 +4,7 @@ import com.ccarlosf.enums.CommentLevel;
 import com.ccarlosf.mapper.*;
 import com.ccarlosf.pojo.*;
 import com.ccarlosf.pojo.vo.CommentLevelCountsVO;
+import com.ccarlosf.pojo.vo.ItemCommentVO;
 import com.ccarlosf.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class ItemServiceImpl implements ItemService {
     private ItemsParamMapper itemsParamMapper;
     @Autowired
     private ItemsCommentsMapper itemsCommentsMapper;
+    @Autowired
+    private ItemsMapperCustom itemsMapperCustom;
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
@@ -88,6 +91,24 @@ public class ItemServiceImpl implements ItemService {
             condition.setCommentLevel(level);
         }
         return itemsCommentsMapper.selectCount(condition);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ItemCommentVO> queryPagedComments(String itemId,
+                                              Integer level,
+                                              Integer page,
+                                              Integer pageSize) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("itemId", itemId);
+        map.put("level", level);
+
+        // mybatis-pagehelper
+
+        List<ItemCommentVO> list = itemsMapperCustom.queryItemComments(map);
+
+        return list;
     }
 
 }
