@@ -4,6 +4,7 @@ import com.ccarlosf.mapper.CategoryMapper;
 import com.ccarlosf.mapper.CategoryMapperCustom;
 import com.ccarlosf.pojo.Category;
 import com.ccarlosf.pojo.vo.CategoryVO;
+import com.ccarlosf.pojo.vo.NewItemsVO;
 import com.ccarlosf.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,4 +45,13 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapperCustom.getSubCatList(rootCatId);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("rootCatId", rootCatId);
+
+        return categoryMapperCustom.getSixNewItemsLazy(map);
+    }
 }
