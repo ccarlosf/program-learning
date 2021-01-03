@@ -6,6 +6,7 @@ import com.ccarlosf.pojo.*;
 import com.ccarlosf.pojo.vo.CommentLevelCountsVO;
 import com.ccarlosf.pojo.vo.ItemCommentVO;
 import com.ccarlosf.pojo.vo.SearchItemsVO;
+import com.ccarlosf.pojo.vo.ShopcartVO;
 import com.ccarlosf.service.ItemService;
 import com.ccarlosf.utils.DesensitizationUtil;
 import com.ccarlosf.utils.PagedGridResult;
@@ -162,4 +163,15 @@ public class ItemServiceImpl implements ItemService {
         return setterPagedGrid(list, page);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ShopcartVO> queryItemsBySpecIds(String specIds) {
+
+        String ids[] = specIds.split(",");
+        //TODO 使用google工具类
+        List<String> specIdsList = new ArrayList<>();
+        Collections.addAll(specIdsList, ids);
+
+        return itemsMapperCustom.queryItemsBySpecIds(specIdsList);
+    }
 }
