@@ -92,4 +92,22 @@ public class AddressController {
         return JSONResult.ok();
     }
 
+    @ApiOperation(value = "用户修改地址", notes = "用户修改地址", httpMethod = "POST")
+    @PostMapping("/update")
+    public JSONResult update(@RequestBody AddressBO addressBO) {
+
+        if (StringUtils.isBlank(addressBO.getAddressId())) {
+            return JSONResult.errorMsg("修改地址错误：addressId不能为空");
+        }
+
+        JSONResult checkRes = checkAddress(addressBO);
+        if (checkRes.getStatus() != 200) {
+            return checkRes;
+        }
+
+        addressService.updateUserAddress(addressBO);
+
+        return JSONResult.ok();
+    }
+
 }
