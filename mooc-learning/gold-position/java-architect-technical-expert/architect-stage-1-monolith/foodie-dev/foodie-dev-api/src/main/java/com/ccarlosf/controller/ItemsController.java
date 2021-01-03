@@ -92,4 +92,37 @@ public class ItemsController extends BaseController {
 
         return JSONResult.ok(grid);
     }
+
+    @ApiOperation(value = "搜索商品列表", notes = "搜索商品列表", httpMethod = "GET")
+    @GetMapping("/search")
+    public JSONResult search(
+            @ApiParam(name = "keywords", value = "关键字", required = true)
+            @RequestParam String keywords,
+            @ApiParam(name = "sort", value = "排序", required = false)
+            @RequestParam String sort,
+            @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
+            @RequestParam Integer page,
+            @ApiParam(name = "pageSize", value = "分页的每一页显示的条数", required = false)
+            @RequestParam Integer pageSize) {
+
+        // TODO 可修改为当搜搜关键词为空时，默认搜索所有的商品列表
+        if (StringUtils.isBlank(keywords)) {
+            return JSONResult.errorMsg(null);
+        }
+
+        if (page == null) {
+            page = 1;
+        }
+
+        if (pageSize == null) {
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult grid = itemService.searhItems(keywords,
+                sort,
+                page,
+                pageSize);
+
+        return JSONResult.ok(grid);
+    }
 }

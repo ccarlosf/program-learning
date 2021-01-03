@@ -5,6 +5,7 @@ import com.ccarlosf.mapper.*;
 import com.ccarlosf.pojo.*;
 import com.ccarlosf.pojo.vo.CommentLevelCountsVO;
 import com.ccarlosf.pojo.vo.ItemCommentVO;
+import com.ccarlosf.pojo.vo.SearchItemsVO;
 import com.ccarlosf.service.ItemService;
 import com.ccarlosf.utils.DesensitizationUtil;
 import com.ccarlosf.utils.PagedGridResult;
@@ -133,4 +134,20 @@ public class ItemServiceImpl implements ItemService {
         grid.setRecords(pageList.getTotal());
         return grid;
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searhItems(String keywords, String sort, Integer page, Integer pageSize) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("keywords", keywords);
+        map.put("sort", sort);
+
+        PageHelper.startPage(page, pageSize);
+        List<SearchItemsVO> list = itemsMapperCustom.searchItems(map);
+
+        return setterPagedGrid(list, page);
+    }
+
+
 }
