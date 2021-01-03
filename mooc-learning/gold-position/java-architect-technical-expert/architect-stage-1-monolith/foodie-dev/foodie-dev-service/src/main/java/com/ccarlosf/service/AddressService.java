@@ -1,6 +1,7 @@
 package com.ccarlosf.service;
 
 import com.ccarlosf.pojo.UserAddress;
+import com.ccarlosf.pojo.bo.AddressBO;
 
 import java.util.List;
 
@@ -14,4 +15,10 @@ public interface AddressService {
      */
     public List<UserAddress> queryAll(String userId);
 
+    /**
+     * 用户新增地址
+     *
+     * @param addressBO
+     */
+    public void addNewUserAddress(AddressBO addressBO);
 }
