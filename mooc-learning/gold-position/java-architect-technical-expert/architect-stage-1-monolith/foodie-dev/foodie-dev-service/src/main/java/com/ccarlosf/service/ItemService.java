@@ -6,7 +6,7 @@ import com.ccarlosf.pojo.ItemsImg;
 import com.ccarlosf.pojo.ItemsParam;
 import com.ccarlosf.pojo.ItemsSpec;
 import com.ccarlosf.pojo.vo.CommentLevelCountsVO;
-import com.ccarlosf.pojo.vo.ItemCommentVO;
+import com.ccarlosf.utils.PagedGridResult;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public interface ItemService {
      * @param level
      * @return
      */
-    public List<ItemCommentVO> queryPagedComments(String itemId, Integer level,
-                                                  Integer page, Integer pageSize);
+    public PagedGridResult queryPagedComments(String itemId, Integer level,
+                                              Integer page, Integer pageSize);
 
 }
