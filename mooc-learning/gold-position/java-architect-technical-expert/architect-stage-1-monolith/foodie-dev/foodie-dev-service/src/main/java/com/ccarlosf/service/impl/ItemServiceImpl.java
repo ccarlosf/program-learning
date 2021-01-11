@@ -1,6 +1,7 @@
 package com.ccarlosf.service.impl;
 
 import com.ccarlosf.enums.CommentLevel;
+import com.ccarlosf.enums.YesOrNo;
 import com.ccarlosf.mapper.*;
 import com.ccarlosf.pojo.*;
 import com.ccarlosf.pojo.vo.CommentLevelCountsVO;
@@ -174,4 +175,21 @@ public class ItemServiceImpl implements ItemService {
 
         return itemsMapperCustom.queryItemsBySpecIds(specIdsList);
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public ItemsSpec queryItemSpecById(String specId) {
+        return itemsSpecMapper.selectByPrimaryKey(specId);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public String queryItemMainImgById(String itemId) {
+        ItemsImg itemsImg = new ItemsImg();
+        itemsImg.setItemId(itemId);
+        itemsImg.setIsMain(YesOrNo.YES.type);
+        ItemsImg result = itemsImgMapper.selectOne(itemsImg);
+        return result != null ? result.getUrl() : "";
+    }
+
 }
