@@ -18,4 +18,7 @@ public interface ItemsMapperCustom {
 
     // TODO  指定类型
     public List<ShopcartVO> queryItemsBySpecIds(@Param("paramsList") List specIdsList);
+
+    public int decreaseItemSpecStock(@Param("specId") String specId,
+                                     @Param("pendingCounts") int pendingCounts);
 }

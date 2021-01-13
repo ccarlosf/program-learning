@@ -1,5 +1,6 @@
 package com.ccarlosf.service.impl;
 
+import com.ccarlosf.enums.OrderStatusEnum;
 import com.ccarlosf.enums.YesOrNo;
 import com.ccarlosf.mapper.OrderItemsMapper;
 import com.ccarlosf.mapper.OrderStatusMapper;
@@ -111,13 +112,20 @@ public class OrderServiceImpl implements OrderService {
             subOrderItem.setItemSpecName(itemSpec.getName());
             subOrderItem.setPrice(itemSpec.getPriceDiscount());
             orderItemsMapper.insert(subOrderItem);
-            
+
+            // 2.4 在用户提交订单以后，规格表中需要扣除库存
+            itemService.decreaseItemSpecStock(itemSpecId, buyCounts);
         }
 
         newOrder.setTotalAmount(totalAmount);
         newOrder.setRealPayAmount(realPayAmount);
         ordersMapper.insert(newOrder);
         // 3. 保存订单状态表
+        OrderStatus waitPayOrderStatus = new OrderStatus();
+        waitPayOrderStatus.setOrderId(orderId);
+        waitPayOrderStatus.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
+        waitPayOrderStatus.setCreatedTime(new Date());
+        orderStatusMapper.insert(waitPayOrderStatus);
 
     }
 
