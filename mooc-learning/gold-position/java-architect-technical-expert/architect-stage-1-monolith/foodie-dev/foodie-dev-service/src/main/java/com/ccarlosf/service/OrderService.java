@@ -9,6 +9,6 @@ public interface OrderService {
      *
      * @param submitOrderBO
      */
-    public void createOrder(SubmitOrderBO submitOrderBO);
+    public String createOrder(SubmitOrderBO submitOrderBO);
 
 }
