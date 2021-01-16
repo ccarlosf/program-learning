@@ -11,10 +11,10 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan(basePackages = "com.ccarlosf.mapper")
 // 扫描所有包以及相关组件包
 @ComponentScan(basePackages = {"com.ccarlosf","org.n3r.idworker"})
-public class Application {
+public class FoodieApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(FoodieApplication.class, args);
     }
 
 }

@@ -7,6 +7,8 @@ import com.ccarlosf.mapper.OrderStatusMapper;
 import com.ccarlosf.mapper.OrdersMapper;
 import com.ccarlosf.pojo.*;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
+import com.ccarlosf.pojo.vo.MerchantOrdersVO;
+import com.ccarlosf.pojo.vo.OrderVO;
 import com.ccarlosf.service.AddressService;
 import com.ccarlosf.service.ItemService;
 import com.ccarlosf.service.OrderService;
@@ -41,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public String createOrder(SubmitOrderBO submitOrderBO) {
+    public OrderVO createOrder(SubmitOrderBO submitOrderBO) {
 
         String userId = submitOrderBO.getUserId();
         String addressId = submitOrderBO.getAddressId();
@@ -127,7 +129,19 @@ public class OrderServiceImpl implements OrderService {
         waitPayOrderStatus.setCreatedTime(new Date());
         orderStatusMapper.insert(waitPayOrderStatus);
 
-        return orderId;
+        // 4. 构建商户订单，用于传给支付中心
+        MerchantOrdersVO merchantOrdersVO = new MerchantOrdersVO();
+        merchantOrdersVO.setMerchantOrderId(orderId);
+        merchantOrdersVO.setMerchantUserId(userId);
+        merchantOrdersVO.setAmount(realPayAmount + postAmount);
+        merchantOrdersVO.setPayMethod(payMethod);
+
+        // 5. 构建自定义订单vo
+        OrderVO orderVO = new OrderVO();
+        orderVO.setOrderId(orderId);
+        orderVO.setMerchantOrdersVO(merchantOrdersVO);
+
+        return orderVO;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

@@ -3,6 +3,8 @@ package com.ccarlosf.controller;
 import com.ccarlosf.enums.OrderStatusEnum;
 import com.ccarlosf.enums.PayMethod;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
+import com.ccarlosf.pojo.vo.MerchantOrdersVO;
+import com.ccarlosf.pojo.vo.OrderVO;
 import com.ccarlosf.service.OrderService;
 import com.ccarlosf.utils.JSONResult;
 import io.swagger.annotations.Api;
@@ -46,7 +48,10 @@ public class OrdersController extends BaseController {
         System.out.println(submitOrderBO.toString());
 
         // 1. 创建订单
-        String orderId = orderService.createOrder(submitOrderBO);
+        OrderVO orderVO = orderService.createOrder(submitOrderBO);
+        String orderId = orderVO.getOrderId();
+        MerchantOrdersVO merchantOrdersVO = orderVO.getMerchantOrdersVO();
+        merchantOrdersVO.setReturnUrl(payReturnUrl);
 
         // 2. 创建订单以后，移除购物车中已结算（已提交）的商品
         /**
