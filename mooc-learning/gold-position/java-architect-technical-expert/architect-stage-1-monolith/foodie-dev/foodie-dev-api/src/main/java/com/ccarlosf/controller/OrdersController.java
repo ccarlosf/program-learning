@@ -1,5 +1,6 @@
 package com.ccarlosf.controller;
 
+import com.ccarlosf.enums.OrderStatusEnum;
 import com.ccarlosf.enums.PayMethod;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
 import com.ccarlosf.service.OrderService;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,5 +61,11 @@ public class OrdersController extends BaseController {
         // 3. 向支付中心发送当前订单，用于保存支付中心的订单数据
 
         return JSONResult.ok(orderId);
+    }
+
+    @PostMapping("notifyMerchantOrderPaid")
+    public Integer notifyMerchantOrderPaid(String merchantOrderId) {
+        orderService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
+        return HttpStatus.OK.value();
     }
 }
