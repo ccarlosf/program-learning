@@ -2,6 +2,7 @@ package com.ccarlosf.controller;
 
 import com.ccarlosf.enums.OrderStatusEnum;
 import com.ccarlosf.enums.PayMethod;
+import com.ccarlosf.pojo.OrderStatus;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
 import com.ccarlosf.pojo.vo.MerchantOrdersVO;
 import com.ccarlosf.pojo.vo.OrderVO;
@@ -97,5 +98,11 @@ public class OrdersController extends BaseController {
     public Integer notifyMerchantOrderPaid(String merchantOrderId) {
         orderService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
         return HttpStatus.OK.value();
+    }
+
+    @PostMapping("getPaidOrderInfo")
+    public JSONResult getPaidOrderInfo(String orderId) {
+        OrderStatus orderStatus = orderService.queryOrderStatusInfo(orderId);
+        return JSONResult.ok(orderStatus);
     }
 }

@@ -1,5 +1,6 @@
 package com.ccarlosf.service;
 
+import com.ccarlosf.pojo.OrderStatus;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
 import com.ccarlosf.pojo.vo.OrderVO;
 
@@ -19,5 +20,13 @@ public interface OrderService {
      * @param orderStatus
      */
     public void updateOrderStatus(String orderId, Integer orderStatus);
+
+    /**
+     * 查询订单状态
+     *
+     * @param orderId
+     * @return
+     */
+    public OrderStatus queryOrderStatusInfo(String orderId);
 
 }
