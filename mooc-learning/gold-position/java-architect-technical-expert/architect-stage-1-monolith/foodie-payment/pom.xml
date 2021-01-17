@@ -41,6 +41,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <!-- mysql驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.41</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
         <dependency>
             <groupId>com.alipay.sdk</groupId>
