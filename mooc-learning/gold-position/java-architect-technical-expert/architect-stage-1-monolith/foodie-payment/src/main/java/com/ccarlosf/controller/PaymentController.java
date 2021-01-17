@@ -222,8 +222,10 @@ public class PaymentController {
 		//请求
 		String alipayForm = "";
 		try {
-			alipayForm = alipayClient.pageExecute(alipayRequest).getBody();
-		} catch (AlipayApiException e) {
+			// TODO 真实支付
+//			alipayForm = alipayClient.pageExecute(alipayRequest).getBody();
+			alipayForm = "";
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
