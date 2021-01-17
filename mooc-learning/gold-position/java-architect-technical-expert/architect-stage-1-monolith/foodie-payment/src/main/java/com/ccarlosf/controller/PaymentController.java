@@ -148,6 +148,10 @@ public class PaymentController {
 			paymentInfoVO.setAmount(waitPayOrder.getAmount());
 			paymentInfoVO.setMerchantOrderId(merchantOrderId);
 			paymentInfoVO.setMerchantUserId(merchantUserId);
+
+			// TODO 测试使用
+			qrCodeUrl = "https://www.baidu.com";
+
 			paymentInfoVO.setQrCodeUrl(qrCodeUrl);
 
 			redis.set(wxPayResource.getQrcodeKey() + ":" + merchantOrderId, qrCodeUrl, wxPayResource.getQrcodeExpire());
