@@ -12,10 +12,10 @@ public class OrderJob {
     @Autowired
     private OrderService orderService;
 
-    @Scheduled(cron = "0/3 * * * * ?")
-//    @Scheduled(cron = "0 0 0/1 * * ?")
+//    @Scheduled(cron = "0/3 * * * * ?")
+    @Scheduled(cron = "0 0 0/1 * * ?")
     public void autoCloseOrder() {
-//        orderService.closeOrder();
+        orderService.closeOrder();
         System.out.println("执行定时任务，当前时间为："
                 + DateUtil.getCurrentDateString(DateUtil.DATETIME_PATTERN));
     }
