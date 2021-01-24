@@ -74,7 +74,6 @@ public class CenterUserController extends BaseController {
 
                     // 获取文件的后缀名
                     String suffix = fileNameArr[fileNameArr.length - 1];
-
                     if (!suffix.equalsIgnoreCase("png") &&
                             !suffix.equalsIgnoreCase("jpg") &&
                             !suffix.equalsIgnoreCase("jpeg")) {
