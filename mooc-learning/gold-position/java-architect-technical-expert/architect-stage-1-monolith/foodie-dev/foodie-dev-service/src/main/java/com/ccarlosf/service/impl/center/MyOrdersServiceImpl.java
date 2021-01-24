@@ -93,5 +93,41 @@ public class MyOrdersServiceImpl implements MyOrdersService {
         return ordersMapper.selectOne(orders);
     }
 
+    @Transactional(propagation=Propagation.REQUIRED)
+    @Override
+    public boolean updateReceiveOrderStatus(String orderId) {
+
+        OrderStatus updateOrder = new OrderStatus();
+        updateOrder.setOrderStatus(OrderStatusEnum.SUCCESS.type);
+        updateOrder.setSuccessTime(new Date());
+
+        Example example = new Example(OrderStatus.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("orderId", orderId);
+        criteria.andEqualTo("orderStatus", OrderStatusEnum.WAIT_RECEIVE.type);
+
+        int result = orderStatusMapper.updateByExampleSelective(updateOrder, example);
+
+        return result == 1 ? true : false;
+    }
+
+    @Transactional(propagation=Propagation.REQUIRED)
+    @Override
+    public boolean deleteOrder(String userId, String orderId) {
+
+        Orders updateOrder = new Orders();
+        updateOrder.setIsDelete(YesOrNo.YES.type);
+        updateOrder.setUpdatedTime(new Date());
+
+        Example example = new Example(Orders.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("id", orderId);
+        criteria.andEqualTo("userId", userId);
+
+        int result = ordersMapper.updateByExampleSelective(updateOrder, example);
+
+        return result == 1 ? true : false;
+    }
+
 
 }
