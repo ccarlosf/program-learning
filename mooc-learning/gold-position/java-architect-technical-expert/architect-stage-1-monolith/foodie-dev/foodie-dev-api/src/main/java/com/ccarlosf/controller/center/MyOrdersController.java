@@ -1,6 +1,7 @@
 package com.ccarlosf.controller.center;
 
 import com.ccarlosf.controller.BaseController;
+import com.ccarlosf.pojo.Orders;
 import com.ccarlosf.service.center.MyOrdersService;
 import com.ccarlosf.utils.JSONResult;
 import com.ccarlosf.utils.PagedGridResult;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @Api(value = "用户中心我的订单", tags = {"用户中心我的订单相关接口"})
@@ -51,7 +53,7 @@ public class MyOrdersController extends BaseController {
     }
 
     // 商家发货没有后端，所以这个接口仅仅只是用于模拟
-    @ApiOperation(value="商家发货", notes="商家发货", httpMethod = "GET")
+    @ApiOperation(value = "商家发货", notes = "商家发货", httpMethod = "GET")
     @GetMapping("/deliver")
     public JSONResult deliver(
             @ApiParam(name = "orderId", value = "订单id", required = true)
@@ -64,5 +66,48 @@ public class MyOrdersController extends BaseController {
         return JSONResult.ok();
     }
 
+    @ApiOperation(value = "用户确认收货", notes = "用户确认收货", httpMethod = "POST")
+    @PostMapping("/confirmReceive")
+    public JSONResult confirmReceive(
+            @ApiParam(name = "orderId", value = "订单id", required = true)
+            @RequestParam String orderId,
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId) throws Exception {
 
+        JSONResult checkResult = checkUserOrder(userId, orderId);
+        if (checkResult.getStatus() != HttpStatus.OK.value()) {
+            return checkResult;
+        }
+
+        return JSONResult.ok();
+    }
+
+    @ApiOperation(value = "用户删除订单", notes = "用户删除订单", httpMethod = "POST")
+    @PostMapping("/delete")
+    public JSONResult delete(
+            @ApiParam(name = "orderId", value = "订单id", required = true)
+            @RequestParam String orderId,
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId) throws Exception {
+
+        JSONResult checkResult = checkUserOrder(userId, orderId);
+        if (checkResult.getStatus() != HttpStatus.OK.value()) {
+            return checkResult;
+        }
+
+        return JSONResult.ok();
+    }
+
+    /**
+     * 用于验证用户和订单是否有关联关系，避免非法用户调用
+     *
+     * @return
+     */
+    private JSONResult checkUserOrder(String userId, String orderId) {
+        Orders order = myOrdersService.queryMyOrder(userId, orderId);
+        if (order == null) {
+            return JSONResult.errorMsg("订单不存在！");
+        }
+        return JSONResult.ok(order);
+    }
 }

@@ -1,9 +1,12 @@
 package com.ccarlosf.service.impl.center;
 
 import com.ccarlosf.enums.OrderStatusEnum;
+import com.ccarlosf.enums.YesOrNo;
 import com.ccarlosf.mapper.OrderStatusMapper;
+import com.ccarlosf.mapper.OrdersMapper;
 import com.ccarlosf.mapper.OrdersMapperCustom;
 import com.ccarlosf.pojo.OrderStatus;
+import com.ccarlosf.pojo.Orders;
 import com.ccarlosf.pojo.vo.MyOrdersVO;
 import com.ccarlosf.service.center.MyOrdersService;
 import com.ccarlosf.utils.PagedGridResult;
@@ -28,6 +31,9 @@ public class MyOrdersServiceImpl implements MyOrdersService {
 
     @Autowired
     private OrderStatusMapper orderStatusMapper;
+
+    @Autowired
+    private OrdersMapper ordersMapper;
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
@@ -73,6 +79,18 @@ public class MyOrdersServiceImpl implements MyOrdersService {
         criteria.andEqualTo("orderStatus", OrderStatusEnum.WAIT_DELIVER.type);
 
         orderStatusMapper.updateByExampleSelective(updateOrder, example);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public Orders queryMyOrder(String userId, String orderId) {
+
+        Orders orders = new Orders();
+        orders.setUserId(userId);
+        orders.setId(orderId);
+        orders.setIsDelete(YesOrNo.NO.type);
+
+        return ordersMapper.selectOne(orders);
     }
 
 
