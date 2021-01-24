@@ -4,6 +4,7 @@ package com.ccarlosf.controller.center;
 import com.ccarlosf.controller.BaseController;
 import com.ccarlosf.pojo.Users;
 import com.ccarlosf.pojo.bo.center.CenterUserBO;
+import com.ccarlosf.resource.FileUpload;
 import com.ccarlosf.service.center.CenterUserService;
 import com.ccarlosf.utils.CookieUtils;
 import com.ccarlosf.utils.JSONResult;
@@ -38,6 +39,9 @@ public class CenterUserController extends BaseController {
     @Autowired
     private CenterUserService centerUserService;
 
+    @Autowired
+    private FileUpload fileUpload;
+
     @ApiOperation(value = "用户头像修改", notes = "用户头像修改", httpMethod = "POST")
     @PostMapping("uploadFace")
     public JSONResult uploadFace(
@@ -50,7 +54,8 @@ public class CenterUserController extends BaseController {
         // .sh .php
 
         // 定义头像保存的地址
-        String fileSpace = IMAGE_USER_FACE_LOCATION;
+//        String fileSpace = IMAGE_USER_FACE_LOCATION;
+        String fileSpace = fileUpload.getImageUserFaceLocation();
         // 在路径上为每一个用户增加一个userid，用于区分不同用户上传
         String uploadPathPrefix = File.separator + userId;
 
