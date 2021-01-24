@@ -1,5 +1,9 @@
 package com.ccarlosf.controller;
 
+import com.ccarlosf.pojo.Orders;
+import com.ccarlosf.service.center.MyOrdersService;
+import com.ccarlosf.utils.JSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -34,6 +38,14 @@ public class BaseController {
             File.separator + "faces";
 //    public static final String IMAGE_USER_FACE_LOCATION = "/workspaces/images/foodie/faces";
 
+    @Autowired
+    private MyOrdersService myOrdersService;
 
-
+    public JSONResult checkUserOrder(String userId, String orderId) {
+        Orders order = myOrdersService.queryMyOrder(userId, orderId);
+        if (order == null) {
+            return JSONResult.errorMsg("订单不存在！");
+        }
+        return JSONResult.ok(order);
+    }
 }
