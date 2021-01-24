@@ -11,6 +11,8 @@ import com.ccarlosf.utils.JsonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +56,61 @@ public class CenterUserController extends BaseController {
 
         // 开始文件上传
         if (file != null) {
+            FileOutputStream fileOutputStream = null;
+            try {
+                // 获得文件上传的文件名称
+                String fileName = file.getOriginalFilename();
 
+                if (StringUtils.isNotBlank(fileName)) {
+
+                    // 文件重命名  imooc-face.png -> ["imooc-face", "png"]
+                    String fileNameArr[] = fileName.split("\\.");
+
+                    // 获取文件的后缀名
+                    String suffix = fileNameArr[fileNameArr.length - 1];
+
+                    if (!suffix.equalsIgnoreCase("png") &&
+                            !suffix.equalsIgnoreCase("jpg") &&
+                            !suffix.equalsIgnoreCase("jpeg")) {
+                        return JSONResult.errorMsg("图片格式不正确！");
+                    }
+
+                    // face-{userid}.png
+                    // 文件名称重组 覆盖式上传，增量式：额外拼接当前时间
+                    String newFileName = "face-" + userId + "." + suffix;
+
+                    // 上传的头像最终保存的位置
+                    String finalFacePath = fileSpace + uploadPathPrefix + File.separator + newFileName;
+                    // 用于提供给web服务访问的地址
+                    uploadPathPrefix += ("/" + newFileName);
+
+                    File outFile = new File(finalFacePath);
+                    if (outFile.getParentFile() != null) {
+                        // 创建文件夹
+                        outFile.getParentFile().mkdirs();
+                    }
+
+                    // 文件输出保存到目录
+                    fileOutputStream = new FileOutputStream(outFile);
+                    InputStream inputStream = file.getInputStream();
+                    IOUtils.copy(inputStream, fileOutputStream);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fileOutputStream != null) {
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
             return JSONResult.errorMsg("文件不能为空！");
         }
+
 
         return JSONResult.ok();
     }
