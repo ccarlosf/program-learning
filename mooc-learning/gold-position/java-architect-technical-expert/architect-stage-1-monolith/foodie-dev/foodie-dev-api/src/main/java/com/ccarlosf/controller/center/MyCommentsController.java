@@ -69,7 +69,7 @@ public class MyCommentsController extends BaseController {
             return JSONResult.errorMsg("评论内容不能为空！");
         }
 
-//        myCommentsService.saveComments(orderId, userId, commentList);
+        myCommentsService.saveComments(orderId, userId, commentList);
         return JSONResult.ok();
     }
 
