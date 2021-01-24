@@ -5,7 +5,6 @@ package com.ccarlosf.pojo.vo;
  */
 public class MySubOrderItemVO {
 
-    private String itemSpecId;
     private String itemId;
     private String itemImg;
     private String itemName;
