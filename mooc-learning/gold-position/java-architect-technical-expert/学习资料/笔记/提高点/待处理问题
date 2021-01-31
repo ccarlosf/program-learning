@@ -5,3 +5,4 @@
 5.扣减库存使用分布式锁
 6.使用构造器注入方式
 7.VO拆分出门户端和个人中心端
+8.使用BaseService中的setterPagedGrid简化代码

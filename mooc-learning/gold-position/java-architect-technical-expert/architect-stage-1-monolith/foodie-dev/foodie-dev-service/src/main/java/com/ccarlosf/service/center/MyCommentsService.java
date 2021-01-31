@@ -3,6 +3,7 @@ package com.ccarlosf.service.center;
 
 import com.ccarlosf.pojo.OrderItems;
 import com.ccarlosf.pojo.bo.center.OrderItemsCommentBO;
+import com.ccarlosf.utils.PagedGridResult;
 
 import java.util.List;
 
@@ -24,5 +25,15 @@ public interface MyCommentsService {
      * @param commentList
      */
     public void saveComments(String orderId, String userId, List<OrderItemsCommentBO> commentList);
+
+    /**
+     * 我的评价查询 分页
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PagedGridResult queryMyComments(String userId, Integer page, Integer pageSize);
 
 }

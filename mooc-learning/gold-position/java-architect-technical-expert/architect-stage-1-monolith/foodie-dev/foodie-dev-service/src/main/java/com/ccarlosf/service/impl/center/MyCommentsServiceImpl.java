@@ -9,7 +9,11 @@ import com.ccarlosf.pojo.OrderItems;
 import com.ccarlosf.pojo.OrderStatus;
 import com.ccarlosf.pojo.Orders;
 import com.ccarlosf.pojo.bo.center.OrderItemsCommentBO;
+import com.ccarlosf.pojo.vo.MyCommentVO;
+import com.ccarlosf.service.center.BaseService;
 import com.ccarlosf.service.center.MyCommentsService;
+import com.ccarlosf.utils.PagedGridResult;
+import com.github.pagehelper.PageHelper;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MyCommentsServiceImpl implements MyCommentsService {
+public class MyCommentsServiceImpl extends BaseService implements MyCommentsService {
 
     @Autowired
     public OrderItemsMapper orderItemsMapper;
@@ -72,6 +76,21 @@ public class MyCommentsServiceImpl implements MyCommentsService {
         orderStatus.setOrderId(orderId);
         orderStatus.setCommentTime(new Date());
         orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult queryMyComments(String userId,
+                                           Integer page,
+                                           Integer pageSize) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+
+        PageHelper.startPage(page, pageSize);
+        List<MyCommentVO> list = itemsCommentsMapperCustom.queryMyComments(map);
+
+        return setterPagedGrid(list, page);
     }
 
 }
