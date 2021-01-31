@@ -1,0 +1,8 @@
+1.检查有没有安装JDK
+java -version
+
+2.检查系统安装的OpenJDK
+rpm -qa|grep openjdk -i
+
+3.删除以上的安装包并检查后显示删除完毕
+rpm -e --nodeps 需要删除的软件
