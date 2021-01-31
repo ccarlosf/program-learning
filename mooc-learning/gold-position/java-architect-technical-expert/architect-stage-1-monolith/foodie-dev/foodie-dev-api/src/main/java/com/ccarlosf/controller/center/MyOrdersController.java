@@ -2,6 +2,7 @@ package com.ccarlosf.controller.center;
 
 import com.ccarlosf.controller.BaseController;
 import com.ccarlosf.pojo.Orders;
+import com.ccarlosf.pojo.vo.OrderStatusCountsVO;
 import com.ccarlosf.service.center.MyOrdersService;
 import com.ccarlosf.utils.JSONResult;
 import com.ccarlosf.utils.PagedGridResult;
@@ -20,6 +21,21 @@ public class MyOrdersController extends BaseController {
 
     @Autowired
     private MyOrdersService myOrdersService;
+
+    @ApiOperation(value = "获得订单状态数概况", notes = "获得订单状态数概况", httpMethod = "POST")
+    @PostMapping("/statusCounts")
+    public JSONResult statusCounts(
+            @ApiParam(name = "userId", value = "用户id", required = true)
+            @RequestParam String userId) {
+
+        if (StringUtils.isBlank(userId)) {
+            return JSONResult.errorMsg(null);
+        }
+
+        OrderStatusCountsVO result = myOrdersService.getOrderStatusCounts(userId);
+
+        return JSONResult.ok(result);
+    }
 
 
     @ApiOperation(value = "查询订单列表", notes = "查询订单列表", httpMethod = "POST")

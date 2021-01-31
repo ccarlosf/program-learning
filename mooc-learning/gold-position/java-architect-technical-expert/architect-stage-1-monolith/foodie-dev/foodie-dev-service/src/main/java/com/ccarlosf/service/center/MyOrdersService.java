@@ -2,6 +2,7 @@ package com.ccarlosf.service.center;
 
 
 import com.ccarlosf.pojo.Orders;
+import com.ccarlosf.pojo.vo.OrderStatusCountsVO;
 import com.ccarlosf.utils.PagedGridResult;
 
 public interface MyOrdersService {
@@ -51,6 +52,13 @@ public interface MyOrdersService {
      * @return
      */
     public boolean deleteOrder(String userId, String orderId);
+
+    /**
+     * 查询用户订单数
+     *
+     * @param userId
+     */
+    public OrderStatusCountsVO getOrderStatusCounts(String userId);
 
 
 }
