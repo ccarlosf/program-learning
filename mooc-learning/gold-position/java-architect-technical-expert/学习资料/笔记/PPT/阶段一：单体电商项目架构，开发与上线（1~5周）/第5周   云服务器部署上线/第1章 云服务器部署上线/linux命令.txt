@@ -32,3 +32,19 @@ export PATH=$PATH:$JAVA_HOME/bin
 source /etc/profile
 
 1-6 安装Tomcat - 部署第一台Tomcat（05:30）
+1.上传tomcat9.0.24
+cd /home/software
+
+2.解压tomcat
+tar -zxvf apache-tomcat-9.0.24.tar.gz
+
+3.重命名tomcat
+mv apache-tomcat-9.0.24 tomcat-frontend
+
+4.移动tomcat到/usr/local目录
+mv tomcat-frontend/ /usr/local/
+
+5.进入到tomcat的bin目录，启动tomcat
+./startup.sh
+
+1-7 安装Tomcat - 部署第二台Tomcat与域名配置方案（06:31）

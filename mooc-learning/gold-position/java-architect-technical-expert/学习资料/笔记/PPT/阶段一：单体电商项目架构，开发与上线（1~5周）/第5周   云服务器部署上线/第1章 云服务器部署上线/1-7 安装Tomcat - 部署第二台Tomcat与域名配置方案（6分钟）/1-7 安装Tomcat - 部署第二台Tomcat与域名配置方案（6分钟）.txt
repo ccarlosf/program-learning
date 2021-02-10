@@ -1,0 +1,27 @@
+1.进度tomcat安装包目录
+cd /home/software/
+
+2.解压tomcat
+tar -zxvf apache-tomcat-9.0.24.tar.gz
+
+3.重命名tomcat
+mv apache-tomcat-9.0.24 tomcat-api
+
+4.移动tomcat
+mv tomcat-api/ /usr/local
+
+5.修改tomcat配置文件
+cd tomcat-api/conf/
+vim server.xml
+（1）启动端口号
+<Connector port="8088" protocol="HTTP/1.1"
+           connectionTimeout="20000"
+           redirectPort="8443" />
+（2）关闭端口号
+<Server port="8008" shutdown="SHUTDOWN">
+（3）重定向端口号
+<Connector port="8049" protocol="AJP/1.3" redirectPort="8443" />
+
+6.启动tomcat
+cd ../bin/
+./startup.sh
