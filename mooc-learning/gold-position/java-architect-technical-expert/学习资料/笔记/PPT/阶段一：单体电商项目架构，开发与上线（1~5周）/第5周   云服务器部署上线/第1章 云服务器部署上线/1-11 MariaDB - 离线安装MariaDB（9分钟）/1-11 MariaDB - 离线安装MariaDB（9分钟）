@@ -1,0 +1,27 @@
+https://mariadb.com/kb/en/mariadb-installation-version-10121-via-rpms-on-centos-7/
+
+1.上传MariaDB安装包
+
+2.离线安装MariaDB
+yum install rsync nmap lsof perl-DBI nc
+rpm -ivh jemalloc-3.6.0-1.el7.x86_64.rpm
+rpm -ivh jemalloc-devel-3.6.0-1.el7.x86_64.rpm
+
+3.检测MariaDB冲突包
+rpm -qa | grep mariadb-libs
+
+4.移除冲突包
+rpm -ev --nodeps mariadb-libs-5.5.64-1.el7.x86_64
+
+4.安装依赖环境
+yum install boost-devel.x86_64
+
+5.导入安装MariaDB安装的key
+rpm --import http://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+
+6.下载缺失的依赖包
+wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libaio-0.3.107-10.el6.x86_64.rpm
+
+7.安装
+rpm -ivh MariaDB-common-10.4.8-1.el7.centos.x86_64.rpm MariaDB-compat-10.4.8-1.el7.centos.x86_64.rpm MariaDB-client-10.4.8-1.el7.centos.x86_64.rpm galera-4-26.4.2-1.rhel7.el7.centos.x86_64.rpm MariaDB-server-10.4.8-1.el7.centos.x86_64.rpm
+
