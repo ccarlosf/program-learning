@@ -1,0 +1,10 @@
+1.启动MariaDB
+service mysql start
+
+2.数据库安全配置
+mysql_secure_installation
+
+3.赋予root用户远程连接权限
+mysql -u root -p
+grant all privileges on *.* to 'root'@'%' identified by '123456';
+flush privileges;

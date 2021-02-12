@@ -105,3 +105,6 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libaio-0.3.107-10.el6.
 7.安装
 rpm -ivh MariaDB-common-10.4.8-1.el7.centos.x86_64.rpm MariaDB-compat-10.4.8-1.el7.centos.x86_64.rpm MariaDB-client-10.4.8-1.el7.centos.x86_64.rpm galera-4-26.4.2-1.rhel7.el7.centos.x86_64.rpm MariaDB-server-10.4.8-1.el7.centos.x86_64.rpm
 
+1-12 MariaDB - 配置MariaDB（13:47）
+1.启动MariaDB
+service mysql start
