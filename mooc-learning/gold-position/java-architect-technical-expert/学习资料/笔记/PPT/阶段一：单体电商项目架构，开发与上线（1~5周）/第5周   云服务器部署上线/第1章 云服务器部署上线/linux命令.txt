@@ -108,3 +108,14 @@ rpm -ivh MariaDB-common-10.4.8-1.el7.centos.x86_64.rpm MariaDB-compat-10.4.8-1.e
 1-12 MariaDB - 配置MariaDB（13:47）
 1.启动MariaDB
 service mysql start
+
+1.启动MariaDB
+service mysql start
+
+2.数据库安全配置
+mysql_secure_installation
+
+3.赋予root用户远程连接权限
+mysql -u root -p
+grant all privileges on *.* to 'root'@'%' identified by '123456';
+flush privileges;
