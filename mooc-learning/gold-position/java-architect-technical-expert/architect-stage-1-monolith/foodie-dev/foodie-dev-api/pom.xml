@@ -11,6 +11,10 @@
 
     <artifactId>foodie-dev-api</artifactId>
 
+    <!--<packaging>jar</packaging>-->
+    <!-- 打包war [1] -->
+    <packaging>war</packaging>
+
     <dependencies>
 
         <!--
@@ -30,6 +34,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- 打包war [3] 添加依赖 -->
+       <!-- <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
 
     </dependencies>
 
