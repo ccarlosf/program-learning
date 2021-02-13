@@ -119,3 +119,8 @@ mysql_secure_installation
 mysql -u root -p
 grant all privileges on *.* to 'root'@'%' identified by '123456';
 flush privileges;
+
+1-18 解决Cookie异常，测试订单支付流程（10分钟）.txt
+1.添加新版的cookie处理器
+vim context.xml
+<CookieProcessor className="org.apache.tomcat.util.http.LegacyCookieProcessor" />

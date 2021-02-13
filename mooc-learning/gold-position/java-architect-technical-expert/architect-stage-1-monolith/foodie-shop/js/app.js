@@ -7,7 +7,7 @@ window.app = {
     // cookieDomain: "", // cookie 域
 
     /* 生产环境 */
-     serverUrl: "http://api.z.mukewang.com:8088/foodie-dev-api",                      // 接口服务接口地址
+    serverUrl: "http://api.z.mukewang.com:8088/foodie-dev-api",                      // 接口服务接口地址
     paymentServerUrl: "http://payment.t.mukewang.com/foodie-payment", // 支付中心服务地址
     shopServerUrl: "http://shop.z.mukewang.com:8080/foodie-shop/",                            // 门户网站地址
     centerServerUrl: "http://center.z.mukewang.com:8080/foodie-center/",                        // 用户中心地址
