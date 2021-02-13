@@ -45,3 +45,8 @@ cd /usr/local/nginx/
 cd sbin/
 ./nginx
 
+
+
+1-8 Nginx进程模型解析（7分钟）
+worker_processes  2;
+
