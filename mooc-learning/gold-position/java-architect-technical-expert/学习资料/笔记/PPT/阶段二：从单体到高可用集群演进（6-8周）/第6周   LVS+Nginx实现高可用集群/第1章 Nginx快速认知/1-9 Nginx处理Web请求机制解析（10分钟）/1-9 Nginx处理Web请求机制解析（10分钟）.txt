@@ -1,0 +1,6 @@
+events {
+    # 默认使用epoll
+    use epoll;
+    # 每个worker允许连接的客户端最大连接数
+    worker_connections  10240;
+}

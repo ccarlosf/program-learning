@@ -50,3 +50,13 @@ cd sbin/
 1-8 Nginx进程模型解析（7分钟）
 worker_processes  2;
 
+
+
+1-9 Nginx处理Web请求机制解析（10分钟）
+events {
+    # 默认使用epoll
+    use epoll;
+    # 每个worker允许连接的客户端最大连接数
+    worker_connections  10240;
+}
+
