@@ -1,0 +1,15 @@
+   server {
+        listen       89;
+        server_name  localhost;
+
+        location / {
+            root   html;
+            index  imooc.html index.htm;
+        }
+    }
+
+cp index.html imooc.html
+
+导入文件模式
+include imooc.conf;
+
