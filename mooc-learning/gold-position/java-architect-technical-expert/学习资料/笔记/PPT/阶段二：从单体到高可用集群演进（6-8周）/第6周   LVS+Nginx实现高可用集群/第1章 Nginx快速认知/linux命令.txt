@@ -60,3 +60,7 @@ events {
     worker_connections  10240;
 }
 
+
+
+1-13 nginx.conf 核心配置文件详解 - 1（6分钟）
+user  root;
