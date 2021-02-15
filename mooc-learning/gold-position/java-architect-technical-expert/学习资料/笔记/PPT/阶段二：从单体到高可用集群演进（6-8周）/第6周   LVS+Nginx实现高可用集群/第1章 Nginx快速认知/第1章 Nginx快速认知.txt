@@ -192,3 +192,68 @@ Cron表达式是，分为5或6个域，每个域代表一个含义，如下所�
 
 
 
+1-21 附：Nginx 日志切割-定时
+
+
+
+1-22 虚拟主机 - 使用Nginx为静态资源提供服务（13分钟）
+1.上传静态资源到服务器
+
+2.vim imooc.conf
+server {
+        listen       90;
+        server_name  localhost;
+
+        location / {
+            root   /home/foodie-shop;
+            index  index.html;
+        }
+
+
+        location /imooc {
+            root   /home;
+        }
+
+    }
+或者
+server {
+        listen       90;
+        server_name  localhost;
+
+        location / {
+            root   /home/foodie-shop;
+            index  index.html;
+        }
+
+
+        location /static {
+            #root   /home;
+            alias  /home/imooc;
+        }
+
+    }
+
+总
+server {
+        listen       90;
+        server_name  localhost;
+
+        location / {
+            root   /home/foodie-shop;
+            index  index.html;
+        }
+
+        location /imooc {
+            root   /home;
+        }
+
+
+        location /static {
+            alias  /home/imooc;
+        }
+
+    }
+
+
+
+

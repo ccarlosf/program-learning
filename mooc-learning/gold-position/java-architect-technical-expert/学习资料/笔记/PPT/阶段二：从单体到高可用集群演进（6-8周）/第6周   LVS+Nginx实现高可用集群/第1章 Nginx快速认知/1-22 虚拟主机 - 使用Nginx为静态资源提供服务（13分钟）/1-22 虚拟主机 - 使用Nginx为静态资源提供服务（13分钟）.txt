@@ -1,0 +1,63 @@
+1.上传静态资源到服务器
+
+2.vim imooc.conf
+server {
+        listen       90;
+        server_name  localhost;
+
+        location / {
+            root   /home/foodie-shop;
+            index  index.html;
+        }
+
+
+        location /imooc {
+            root   /home;
+        }
+
+    }
+或者
+server {
+        listen       90;
+        server_name  localhost;
+
+        location / {
+            root   /home/foodie-shop;
+            index  index.html;
+        }
+
+
+        location /static {
+            #root   /home;
+            alias  /home/imooc;
+        }
+
+    }
+
+总
+server {
+        listen       90;
+        server_name  localhost;
+
+        location / {
+            root   /home/foodie-shop;
+            index  index.html;
+        }
+
+        location /imooc {
+            root   /home;
+        }
+
+
+        location /static {
+            alias  /home/imooc;
+        }
+
+    }
+
+
+
+
+
+
+
