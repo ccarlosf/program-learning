@@ -1,0 +1,8 @@
+1.重新加载nginx，找不到pid
+/nginx -s reload
+
+2.查看nginx帮助命令
+/nginx -h
+
+3.指定nginx配置加载文件
+./nginx -c /usr/local/nginx/conf/nginx.conf
