@@ -1,0 +1,51 @@
+1.精准匹配
+vim imooc.conf
+server {
+        listen       91;
+        server_name  localhost;
+
+        #精确匹配
+        location = / {
+            root   html;
+            index  imooc.html index.htm;
+        }
+
+        location = /imooc/暴风截图2021131-2056005421.jpg {
+            root   /home;
+        }
+
+    }
+
+2.正则表达式匹配
+vim imooc.conf
+server {
+        listen       92;
+        server_name  localhost;
+
+        #正则表达式 *代表不区分大小写
+        location ~* \.(GIF|png|bmp|jpg|jpeg) {
+            root   /home;
+        }
+    }
+
+
+server {
+        listen       92;
+        server_name  localhost;
+
+        #正则表达式 *代表不区分大小写
+        location ~ \.(GIF|png|bmp|jpg|jpeg) {
+            root   /home;
+        }
+    }
+
+3.~ 以某个字符路径开头请求，只能匹配/imooc/img的资源
+server {
+        listen       93;
+        server_name  localhost;
+
+        #^~ 以某个字符路径开头请求
+         location ^~ /imooc/img {
+            root   /home;
+        }
+    }
