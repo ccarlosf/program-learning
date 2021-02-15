@@ -121,4 +121,25 @@ include imooc.conf;
 
 
 
+1-18 Nginx日志切割 - 手动（7分钟）
+1.进入nginx可执行sbin目录
+cd /usr/local/nginx/sbin/
 
+2.创建可执行脚本文件
+vim cut_my_log.sh
+
+#!/bin/bash
+LOG_PATH="/var/log/nginx/"
+RECORD_TIME=$(date -d "yesterday" +%Y-%m-%d+%H:%M)
+PID=/var/run/nginx/nginx.pid
+mv ${LOG_PATH}/access.log ${LOG_PATH}/access.${RECORD_TIME}.log
+mv ${LOG_PATH}/error.log ${LOG_PATH}/error.${RECORD_TIME}.log
+
+#向Nginx主进程发送信号，用于重新打开日志文件
+kill -USR1 `cat $PID`
+
+3.为 cut_my_log.sh 添加可执行的权限：
+chmod +x cut_my_log.sh
+
+4. 测试日志切割后的结果:
+./cut_my_log.sh
