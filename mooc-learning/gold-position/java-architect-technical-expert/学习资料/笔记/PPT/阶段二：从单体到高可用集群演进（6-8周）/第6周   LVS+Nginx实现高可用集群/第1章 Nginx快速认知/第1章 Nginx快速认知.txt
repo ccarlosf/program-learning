@@ -64,3 +64,61 @@ events {
 
 1-13 nginx.conf 核心配置文件详解 - 1（6分钟）
 user  root;
+
+
+
+1-15 nginx.conf 核心配置文件详解 - 3（12分钟）
+   server {
+        listen       89;
+        server_name  localhost;
+
+        location / {
+            root   html;
+            index  imooc.html index.htm;
+        }
+    }
+
+cp index.html imooc.html
+
+导入文件模式
+include imooc.conf;
+
+
+
+
+1-16 nginx.pid打开失败以及失效的解决方案（4分钟）
+1.重新加载nginx，找不到pid
+/nginx -s reload
+
+2.查看nginx帮助命令
+/nginx -h
+
+3.指定nginx配置加载文件
+./nginx -c /usr/local/nginx/conf/nginx.conf
+
+
+
+1-17 Nginx常用命令解析（4分钟）
+1.暴力关闭nginx
+./nginx -s stop
+
+2.友好关闭nginx
+./nginx -s quit
+
+3.测试nginx
+./nginx -t
+
+4.查看nginx版本号
+./nginx -v
+./nginx -V
+
+5.查看nginx帮助
+./nginx -h
+./nginx -?
+
+6.手动指定切换核心配置文件
+./nginx -c /usr/local/nginx/conf/nginx.conf
+
+
+
+

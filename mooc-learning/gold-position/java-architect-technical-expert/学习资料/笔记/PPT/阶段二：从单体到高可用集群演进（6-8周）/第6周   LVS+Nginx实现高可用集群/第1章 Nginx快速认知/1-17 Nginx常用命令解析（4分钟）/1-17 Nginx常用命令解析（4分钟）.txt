@@ -1,0 +1,19 @@
+1.暴力关闭nginx
+./nginx -s stop
+
+2.友好关闭nginx
+./nginx -s quit
+
+3.测试nginx
+./nginx -t
+
+4.查看nginx版本号
+./nginx -v
+./nginx -V
+
+5.查看nginx帮助
+./nginx -h
+./nginx -?
+
+6.手动指定切换核心配置文件
+./nginx -c /usr/local/nginx/conf/nginx.conf
