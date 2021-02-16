@@ -1,0 +1,14 @@
+1.默认值
+max_fails为1
+fail_timeout为10s
+
+2.修改imooc.conf
+upstream tomcats {
+        server 192.168.253.146:8080 max_fails=2 fail_timeout=1s;
+        server 192.168.253.147:8080 weight=1;
+        server 192.168.253.145:8080 weight=1;
+#        server 120.78.168.208:8080;
+}
+
+3.停止tomcat-1
+./shutdown.sh
