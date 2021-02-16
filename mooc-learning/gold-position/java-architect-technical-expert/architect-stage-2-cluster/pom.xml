@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>architect-stage-2-cluster</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>nginx-url-hash</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

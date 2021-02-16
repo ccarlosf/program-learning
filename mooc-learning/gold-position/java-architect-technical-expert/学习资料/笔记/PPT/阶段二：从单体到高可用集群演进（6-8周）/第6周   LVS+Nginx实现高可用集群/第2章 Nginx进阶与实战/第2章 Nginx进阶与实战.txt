@@ -288,3 +288,54 @@ http://nginx.org/en/docs/http/ngx_http_upstream_module.html#ip_hash
 
 
 2-24 一致性hash算法（11分钟）
+
+
+
+2-25 负载均衡原理 - url hash 与 least_conn（8分钟）
+1.上传项目包到服务器
+
+2.远程复制项目
+scp -r nginx-url-hash.war root@192.168.253.147:/usr/local/tomcat-2/webapps
+
+3.修改nginx的imooc.conf
+
+# url hash
+upstream tomcats {
+        hash $request_uri;
+
+        server 192.168.253.146:8080;
+        server 192.168.253.147:8080;
+        server 192.168.253.145:8080;
+#        server 120.78.168.208:8080;
+
+}
+
+server {
+        listen       80;
+        server_name  www.tomcats.com;
+
+
+         location / {
+            proxy_pass http://tomcats;
+        }
+    }
+
+
+4.浏览器进行访问
+http://www.tomcats.com/nginx-url-hash/hello
+
+5. least_conn
+# least_conn
+upstream tomcats {
+        #hash $request_uri;
+        least_conn;
+
+        server 192.168.253.146:8080;
+        server 192.168.253.147:8080;
+        server 192.168.253.145:8080;
+#        server 120.78.168.208:8080;
+
+}
+
+
+
