@@ -1,0 +1,11 @@
+1.修改imooc.conf
+#配置上游服务器
+upstream tomcats {
+        server 192.168.253.146:8080 max_conns=2;
+        server 192.168.253.147:8080 max_conns=2;
+        server 192.168.253.145:8080 max_conns=2;
+#        server 120.78.168.208:8080;
+}
+
+2.修改nginx.conf
+worker_processes  1;
