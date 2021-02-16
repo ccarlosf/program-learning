@@ -284,3 +284,7 @@ vim ngx_http_upstream_ip_hash_module.c
 2-23 附：负载均衡 ip_hash
 参考：
 http://nginx.org/en/docs/http/ngx_http_upstream_module.html#ip_hash
+
+
+
+2-24 一致性hash算法（11分钟）
