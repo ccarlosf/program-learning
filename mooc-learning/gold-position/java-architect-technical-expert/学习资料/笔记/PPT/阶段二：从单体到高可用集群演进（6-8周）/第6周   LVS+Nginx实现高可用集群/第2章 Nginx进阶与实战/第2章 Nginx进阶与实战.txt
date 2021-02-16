@@ -84,3 +84,7 @@ if ($invalid_referer) {
 
 
 2-5 附：Nginx 防盗链配置支持
+
+
+
+2-6 四层、七层与DNS负载均衡（10分钟）
