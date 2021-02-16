@@ -339,3 +339,4 @@ upstream tomcats {
 
 
 
+2-26 附：负载均衡 url_hash 与 least_conn
