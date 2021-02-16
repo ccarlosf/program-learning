@@ -92,3 +92,25 @@ if ($invalid_referer) {
 
 
 2-7 附：OSI 网络模型
+
+
+
+2-8 使用Nginx搭建3台Tomcat集群（7分钟）
+2.配置nginx文件
+vim imooc.conf
+#配置上游服务器
+upstream tomcats {
+        server 192.168.253.146:8080;
+        server 192.168.253.147:8080;
+        server 192.168.253.145:8080;
+}
+
+server {
+        listen       80;
+        server_name  www.tomcats.com;
+
+
+         location / {
+            proxy_pass http://tomcats;
+        }
+    }
