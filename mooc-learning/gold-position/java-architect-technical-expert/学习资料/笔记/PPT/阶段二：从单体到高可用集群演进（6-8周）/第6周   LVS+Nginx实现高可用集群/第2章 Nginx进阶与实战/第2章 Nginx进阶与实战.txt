@@ -72,3 +72,7 @@ if ($invalid_referer) {
 
 
 2-2 Nginx的模块化设计解析（9分钟）
+
+
+
+2-3 Nginx的集群负载均衡解析（7分钟）
