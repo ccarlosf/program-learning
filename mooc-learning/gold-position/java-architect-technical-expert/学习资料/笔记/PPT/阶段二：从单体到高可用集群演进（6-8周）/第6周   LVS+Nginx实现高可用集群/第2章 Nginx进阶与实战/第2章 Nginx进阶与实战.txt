@@ -162,3 +162,16 @@ upstream tomcats {
 
 2.修改nginx.conf
 worker_processes  1;
+
+
+
+
+2-14 upstream的指令参数之slow_start（4分钟）
+1.修改imooc.conf
+#配置上游服务器
+upstream tomcats {
+        server 192.168.253.146:8080 weight=6 slow_start=60s;
+        server 192.168.253.147:8080 weight=2;
+        server 192.168.253.145:8080 weight=2;
+#        server 120.78.168.208:8080;
+}
