@@ -96,6 +96,10 @@ if ($invalid_referer) {
 
 
 2-8 使用Nginx搭建3台Tomcat集群（7分钟）
+1.远程拷贝tomcat安装包和jdk到其它服务器
+scp -r apache-tomcat-9.0.24.tar.gz root@192.168.253.147:/home/software/
+scp /home/software/jdk-8u191-linux-x64.tar.gz root@192.168.253.145:/home/software/
+
 2.配置nginx文件
 vim imooc.conf
 #配置上游服务器
