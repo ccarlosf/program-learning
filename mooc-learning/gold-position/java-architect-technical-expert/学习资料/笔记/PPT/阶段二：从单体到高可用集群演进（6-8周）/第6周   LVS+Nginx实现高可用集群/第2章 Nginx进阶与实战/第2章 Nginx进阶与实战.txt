@@ -76,3 +76,11 @@ if ($invalid_referer) {
 
 
 2-3 Nginx的集群负载均衡解析（7分钟）
+
+
+
+2-4 附：Nginx 跨域配置支持
+
+
+
+2-5 附：Nginx 防盗链配置支持
