@@ -214,3 +214,7 @@ upstream tomcats {
 
 
 
+2-19 附：upstream 指令参数 max_fails、fail_timeout
+
+
+
