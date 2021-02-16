@@ -219,7 +219,65 @@ upstream tomcats {
 
 
 2-20 使用Keepalived提高吞吐量（6分钟）
+1.修改imooc.conf
+upstream tomcats {
+#        server 192.168.253.146:8080 max_fails=2 fail_timeout=1s;
+#        server 192.168.253.147:8080 weight=1;
+#        server 192.168.253.145:8080 weight=1;
+        server 120.78.168.208:8080;
+
+        keepalive 32;
+}
+
+server {
+        listen       80;
+        server_name  www.tomcats.com;
+
+
+         location / {
+            proxy_pass http://tomcats;
+
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+        }
+    }
 
 
 
 2-21 附：Keepalived 提高吞吐量
+
+
+
+2-22 负载均衡原理 - ip_hash（13分钟）
+1.修改imooc.conf
+upstream tomcats {
+         ip_hash;
+
+        server 192.168.253.146:8080;
+        server 192.168.253.147:8080 down;
+        server 192.168.253.145:8080;
+#        server 120.78.168.208:8080;
+
+}
+
+server {
+        listen       80;
+        server_name  192.168.253.129;
+
+
+         location / {
+            proxy_pass http://tomcats;
+        }
+    }
+
+
+2.源码分析
+cd /home/software/nginx-1.16.1/src/http/modules
+vim ngx_http_upstream_ip_hash_module.c
+/addr
+/addrlen
+
+3.down标记，不能移除服务器节点
+
+
+
