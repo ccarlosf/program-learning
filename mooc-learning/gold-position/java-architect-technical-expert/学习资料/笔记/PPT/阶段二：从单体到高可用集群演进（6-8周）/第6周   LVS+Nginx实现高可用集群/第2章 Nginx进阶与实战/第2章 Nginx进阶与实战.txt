@@ -385,3 +385,49 @@ http://192.168.253.129:90/static/cache.html
             #expires off;
             expires max;
         }
+
+
+
+2-29 附：Nginx的缓存
+
+
+
+2-30 Nginx的反向代理缓存（11分钟）
+远程复制静态资源到3台tomcat
+scp -r imooc root@192.168.253.146:/usr/local/tomcat-1/webapps
+scp -r imooc root@192.168.253.147:/usr/local/tomcat-2/webapps
+scp -r imooc root@192.168.253.145:/usr/local/tomcat-3/webapps
+
+#配置上游服务器
+upstream tomcats {
+        #hash $request_uri;
+        #least_conn;
+
+        server 192.168.253.146:8080;
+        server 192.168.253.147:8080;
+        server 192.168.253.145:8080;
+#        server 120.78.168.208:8080;
+
+}
+
+# proxy_cache_path 设置缓存保存的目录
+# keys_zone 设置共享内存以及占用的空间大小
+# max_size 设置缓存大小
+# inactive 超过此时间，则缓存自动清理
+# use_temp_path 关闭临时目录
+proxy_cache_path /usr/local/nginx/upstream_cache keys_zone=mycache:5m max_size=1g inactive=30s use_temp_path=off;
+
+server {
+        listen       81;
+        server_name  www.tomcats.com;
+
+        # 开启并且使用缓存
+         proxy_cache mycache;
+        # 针对200和304状态码的缓存设置过期时间
+         proxy_cache_valid      200  304 8h;
+
+         location / {
+            proxy_pass http://tomcats;
+        }
+    }
+
