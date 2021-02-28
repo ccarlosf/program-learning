@@ -340,3 +340,7 @@ upstream tomcats {
 
 
 2-26 附：负载均衡 url_hash 与 least_conn
+
+
+
+2-27 Nginx控制浏览器缓存 - 1（8分钟）
