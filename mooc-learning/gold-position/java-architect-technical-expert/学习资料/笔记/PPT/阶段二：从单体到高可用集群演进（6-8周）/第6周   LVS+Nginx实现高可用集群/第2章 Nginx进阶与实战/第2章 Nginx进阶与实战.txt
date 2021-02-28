@@ -375,3 +375,13 @@ http://192.168.253.129:90/static/cache.html
 
 
 2-28 Nginx控制浏览器缓存 - 2（7分钟）
+1.vim imooc.html
+  location /static {
+            alias  /home/imooc;
+            #expires 10s;
+            #expires @22h30m;
+            #expires -1h;
+            #expires epoch;
+            #expires off;
+            expires max;
+        }
