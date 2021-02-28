@@ -1,0 +1,27 @@
+1.进入imooc目录
+cd /home/imooc
+
+2.创建imooc.html
+vim cache.html
+<html>
+   <body>
+       <h1>
+            Helo, Nginx~
+       </h1>
+   </body>
+</html>
+
+3.进入nginx配置文件目录
+/usr/local/nginx/conf
+
+4.访问地址
+http://192.168.253.129:90/static/cache.html
+
+5.vim imooc.html
+<html>
+   <body>
+       <h1>
+            Helo, Nginx~!~
+       </h1>
+   </body>
+</html>
