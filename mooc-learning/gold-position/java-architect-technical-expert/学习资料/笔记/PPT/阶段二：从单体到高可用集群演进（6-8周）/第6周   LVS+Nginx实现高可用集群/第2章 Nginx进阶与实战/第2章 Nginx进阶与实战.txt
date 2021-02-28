@@ -371,3 +371,7 @@ http://192.168.253.129:90/static/cache.html
        </h1>
    </body>
 </html>
+
+
+
+2-28 Nginx控制浏览器缓存 - 2（7分钟）

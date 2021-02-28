@@ -1,0 +1,11 @@
+1.vim imooc.html
+  location /static {
+            alias  /home/imooc;
+            #expires 10s;
+            #expires @22h30m;
+            #expires -1h;
+            #expires epoch;
+            #expires off;
+            expires max;
+        }
+
