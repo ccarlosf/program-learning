@@ -676,3 +676,127 @@ http://api.z.mukewang.com/foodie-dev-api/doc.html
 
 
 2-36 附：使用Nginx配置HTTPS域名证书
+
+
+
+2-37 部署Nginx到云端 - 实现动静分离与虚拟主机（9分钟）
+1.创建静态资源站点目录
+mkdir /home/website
+
+2.停止tomcat-frontend
+cd /usr/local/tomcat-frontend/bin/
+./shutdown.sh
+
+3.把tomcat中的静态资源项目拷贝到nginx
+cd ../webapps/
+cp foodie-* /home/website/ -rf
+
+4.修改静态资源的app.js
+(1) cd foodie-shop/js/
+vim app.js
+/* 生产环境 */
+serverUrl: "http://api.z.mukewang.com:8088/foodie-dev-api",      // 接口服务接口地址
+paymentServerUrl: "http://payment.t.mukewang.com/foodie-payment", // 支付中心服务地址
+shopServerUrl: "http://shop.z.mukewang.com:8080/foodie-shop/",    // 门户网站地址
+centerServerUrl: "http://center.z.mukewang.com:8080/foodie-center/",    // 用户中心地址
+cookieDomain: ".z.mukewang.com;",     // cookie 域
+
+ctx: "/foodie-shop",
+
+改为
+/* 生产环境 */
+serverUrl: "http://api.z.mukewang.com/foodie-dev-api",      // 接口服务接口地址
+paymentServerUrl: "http://payment.t.mukewang.com/foodie-payment", // 支付中心服务地址
+shopServerUrl: "http://shop.z.mukewang.com",    // 门户网站地址
+centerServerUrl: "http://center.z.mukewang.com",    // 用户中心地址
+cookieDomain: ".z.mukewang.com;",     // cookie 域
+
+ctx: "/foodie-shop",
+
+(2) cd foodie-center/js/
+vim app.js
+/* 生产环境 */
+serverUrl: "http://api.z.mukewang.com:8088/foodie-dev-api",      // 接口服务接>口地址
+paymentServerUrl: "http://payment.t.mukewang.com/foodie-payment", // 支付中心服务地址
+shopServerUrl: "http://shop.z.mukewang.com:8080/foodie-shop/",    // 门户网站地址
+centerServerUrl: "http://center.z.mukewang.com:8080/foodie-center/",    // 用户中心地址
+cookieDomain: ".z.mukewang.com;",
+
+ctx: "/foodie-shop",
+
+改为
+/* 生产环境 */
+serverUrl: "http://api.z.mukewang.com/foodie-dev-api",      // 接口服务接>口地址
+paymentServerUrl: "http://payment.t.mukewang.com/foodie-payment", // 支付中心服务地址
+shopServerUrl: "http://shop.z.mukewang.com",    // 门户网站地址
+centerServerUrl: "http://center.z.mukewang.com",    // 用户中心地址
+cookieDomain: ".z.mukewang.com;",
+
+ctx: "/foodie-shop",
+
+5.配置nginx
+cd /usr/local/nginx/conf/
+vim frontend.conf
+server {
+        listen 80;
+        server_name shop.z.mukewang.com;
+
+        location / {
+              root  /home/website/foodie-shop;
+              index    index.html;
+        }
+}
+
+server {
+        listen 80;
+        server_name center.z.mukewang.com;
+
+        location / {
+              root  /home/website/foodie-center;
+              index    index.html;
+        }
+}
+
+6.修改nginx.conf文件，把frontend.conf包含进来
+include frontend.cong;
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+
+    include tomcats.conf;
+    include frontend.conf;
+
+}
+
+7.访问测试网站
+http://shop.z.mukewang.com/
