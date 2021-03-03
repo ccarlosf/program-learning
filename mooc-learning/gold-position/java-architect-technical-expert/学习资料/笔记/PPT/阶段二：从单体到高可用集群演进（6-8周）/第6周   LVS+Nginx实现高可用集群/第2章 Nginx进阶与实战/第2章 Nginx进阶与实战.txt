@@ -672,3 +672,7 @@ http {
 
 3.访问测试
 http://api.z.mukewang.com/foodie-dev-api/doc.html
+
+
+
+2-36 附：使用Nginx配置HTTPS域名证书
