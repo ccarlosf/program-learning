@@ -1,0 +1,67 @@
+1.nginx新增tomcats.conf
+vim tomcats.conf
+upstream api.z.mukewang.com {
+        server 172.18.60.202:8088;
+}
+
+server {
+        listen 80;
+        server_name api.z.mukewang.com;
+
+        location ~ {
+                proxy_pass http://api.z.mukewang.com;
+        }
+}
+
+2.修改nginx conf文件
+vim nginx.conf
+
+user  root;
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+    worker_connections  1024;
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+
+    include tomcats.conf;
+
+}
+
+3.访问测试
+http://api.z.mukewang.com/foodie-dev-api/doc.html
