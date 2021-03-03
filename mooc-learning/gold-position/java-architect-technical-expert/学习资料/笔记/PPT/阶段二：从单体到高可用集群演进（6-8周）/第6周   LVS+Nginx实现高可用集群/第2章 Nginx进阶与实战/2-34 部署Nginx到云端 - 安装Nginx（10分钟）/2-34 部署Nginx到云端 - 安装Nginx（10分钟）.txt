@@ -1,0 +1,101 @@
+0.上传nginx安装包到云服务器
+
+1.安装gcc环境
+yum install gcc-c++
+
+2.安装PCRE库，用于解析正则表达式
+yum install -y pcre pcre-devel
+
+3.安装zlib压缩和解压缩依赖
+yum install -y zlib zlib-devel
+
+4.安装openssl
+yum install -y openssl openssl-devel
+
+5.解压nginx安装包
+tar -zxvf nginx-1.16.1.tar.gz
+
+6.编译之前，先创建nginx临时目录，如果不创建，在启动nginx的过程中会报错
+mkdir /var/temp/nginx -p
+
+7.在nginx目录，输入如下命令进行配置，目的是为了创建makefile文件
+./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi
+
+8.make编译
+make
+
+9.安装
+make install
+
+10.搜索安装好的nginx
+whereis nginx
+
+11.修改nginx.conf
+user  root;
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+
+}
+
+12.启动nginx
+cd /usr/local/nginx/
+cd sbin/
+./nginx
+
+13.修改本地hosts文件
+192.168.253.129  www.tomcats.com
+120.78.168.208 shop.z.mukewang.com
+120.78.168.208 api.z.mukewang.com
+120.78.168.208 center.z.mukewang.com
+
+14.访问nginx
+http://shop.z.mukewang.com/
