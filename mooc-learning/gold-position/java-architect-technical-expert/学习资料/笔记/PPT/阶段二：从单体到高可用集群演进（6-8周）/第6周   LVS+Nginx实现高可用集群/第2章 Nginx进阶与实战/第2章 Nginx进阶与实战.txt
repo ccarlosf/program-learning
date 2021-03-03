@@ -800,3 +800,7 @@ http {
 
 7.访问测试网站
 http://shop.z.mukewang.com/
+
+
+
+2-38 部署Nginx到云端 - 测试与日志调试（8分钟）.txt
