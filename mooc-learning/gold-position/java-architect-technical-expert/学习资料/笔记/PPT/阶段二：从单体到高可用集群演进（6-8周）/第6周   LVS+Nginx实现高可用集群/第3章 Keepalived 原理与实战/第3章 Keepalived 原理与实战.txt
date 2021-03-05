@@ -21,3 +21,7 @@ make && make install
 
 7.查找keepalived安装在哪
 whereis keepalived
+
+
+
+3-3 附：Keepalived安装部署
