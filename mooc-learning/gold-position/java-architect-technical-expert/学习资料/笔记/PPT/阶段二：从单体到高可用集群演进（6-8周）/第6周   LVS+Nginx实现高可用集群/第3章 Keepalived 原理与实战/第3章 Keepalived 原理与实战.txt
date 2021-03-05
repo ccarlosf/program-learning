@@ -87,3 +87,7 @@ ip addr
 
 5.查看keepalived相关进程
 ps -ef|grep keepalive
+
+
+
+3-5 附：配置 Keepalived - 主
