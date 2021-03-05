@@ -1,34 +1,3 @@
-3-1 高可用集群架构 Keepalived 双机主备原理
-
-
-
-3-2 Keepalived安装（7分钟）
-1.安装nginx备用节点
-
-2.上传keepalived至/home/software
-
-3.解压keepalived安装包
-tar -zxvf keepalived-2.0.18.tar.gz
-
-4.进入keepalived目录
-cd keepalived-2.0.18
-
-5.配置keepalived
-./configure --prefix=/usr/local/keepalived --sysconf=/etc
-
-6.编译和安装
-make && make install
-
-7.查找keepalived安装在哪
-whereis keepalived
-
-
-
-3-3 附：Keepalived安装部署
-
-
-
-3-4 Keepalived核心配置文件（10分钟）
 1.查看网卡信息
 ip addr
 ens33
