@@ -1,0 +1,86 @@
+1.如果192.168.253.129（171）主节点的nginx
+./nginx -s stop
+浏览器无法访问http://www.173.com/
+
+2.编写脚本让keepalived检测重启nginx，如果还是无法启动，则切换访问到192.168.253.148（172）备用节点
+主节点中
+cd /etc/keepalived/
+vim check_nginx_alive_or_not.sh
+
+#!/bin/bash
+
+A=`ps -C nginx --no-header |wc -l`
+# 判断nginx是否宕机，如果宕机了，尝试重启
+if [ $A -eq 0 ];then
+    /usr/local/nginx/sbin/nginx
+    # 等待一小会再次检查nginx，如果没有启动成功，则停止keepalived，使其启动备用机
+    sleep 3
+    if [ `ps -C nginx --no-header |wc -l` -eq 0 ];then
+        killall keepalived
+    fi
+fi
+
+3.给check_nginx_alive_or_not.sh授予权限
+chmod +x check_nginx_alive_or_not.sh
+
+4.手动运行脚本，让nginx启动
+./check_nginx_alive_or_not.sh
+
+5.修改keepalived核心配置文件，让keepalived定时监听运行脚本check_nginx_alive_or_not.sh
+vrrp_script check_nginx_alive {
+    script "/etc/keepalived/check_nginx_alive_or_not.sh"
+    interval 2 # 每隔两秒运行上一行脚本
+    weight 10 # 如果脚本运行成功，则升级权重+10
+    # weight -10 #如果脚本运行失败，则降低权重-10
+}
+
+6.在 vrrp_instance 中新增监控的脚本
+track_script {
+ check_nginx_alive # 追踪 nginx 脚本
+}
+
+7.keepalived.conf配置内容
+! Configuration File for keepalived
+
+global_defs {
+   # 路由id: 当前安装keepalived节点主机的标识符，全局唯一
+   router_id keep_171
+}
+
+vrrp_script check_nginx_alive {
+    script "/etc/keepalived/check_nginx_alive_or_not.sh"
+    interval 2 # 每隔两秒运行上一行脚本
+    weight 10 # 如果脚本运行成功，则升级权重+10
+    # weight -10 #如果脚本运行失败，则降低权重-10
+}
+
+# 计算机节点
+vrrp_instance VI_1 {
+    # 表示的状态，当前的171位nginx的主节点，MASTER/BACKUP
+    state MASTER
+    # 当前实例绑定的网卡
+    interface ens33
+    # 保证主备节点一致
+    virtual_router_id 51
+    # 优先级/权重，谁的优先级高，在MASTER挂掉以后，就能成为MASTER
+    priority 100
+    # 主备之间同步检查的时间间隔，默认1s
+    advert_int 1
+    # 认证授权的密码，防止非法节点的进入
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    track_script {
+        check_nginx_alive # 追踪 nginx 脚本
+    }
+    virtual_ipaddress {
+        192.168.253.161
+    }
+}
+
+8.重启keepalived，使配置生效
+systemctl restart keepalived
+
+9.停止nginx ，测试keepalived能否让nginx重启
+./nginx -s stop
