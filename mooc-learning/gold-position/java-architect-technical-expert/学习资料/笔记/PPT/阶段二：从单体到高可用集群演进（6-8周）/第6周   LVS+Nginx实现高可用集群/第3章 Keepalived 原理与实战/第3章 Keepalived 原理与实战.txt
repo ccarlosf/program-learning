@@ -294,3 +294,6 @@ systemctl restart keepalived
 
 3-10 附：Keepalived配置Nginx自动重启
 
+
+
+3-11 高可用集群架构 Keepalived 双主热备原理（6分钟）
