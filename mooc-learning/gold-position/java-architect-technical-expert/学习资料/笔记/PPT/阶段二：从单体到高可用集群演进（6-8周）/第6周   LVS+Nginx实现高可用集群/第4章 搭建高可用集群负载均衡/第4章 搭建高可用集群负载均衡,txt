@@ -193,3 +193,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 命令添加网关，服务器重启后会失效，更改配置文件，使其永久生效
 echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local
+
+
+
+4-9 附：搭建LVS-DR模式- 为两台RS配置arp
