@@ -301,3 +301,63 @@ systemctl restart keepalived
 
 
 3-12 云服务的DNS解析配置与负载均衡（5分钟）
+
+
+
+3-13 实现keepalived双主热备（9分钟）
+1.修改主节点192.168.253.129（171）的keepalived.conf
+cd /etc/keepalived
+vim keepalived.conf
+增加
+vrrp_instance VI_2 {
+    state BACKUP
+    interface ens33
+    virtual_router_id 52
+    priority 80
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        192.168.253.162
+    }
+}
+
+
+2.修改从节点192.168.253.148（172）的keepalived.conf
+cd /etc/keepalived
+vim keepalived.conf
+增加
+vrrp_instance VI_2 {
+    state MASTER
+    interface ens33
+    virtual_router_id 52
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+
+    virtual_ipaddress {
+        192.168.253.162
+    }
+}
+
+3.重启keepalived
+systemctl restart keepalived.service
+
+4.修改hosts文件
+192.168.253.161 www.keepalived.com
+192.168.253.162 www.keepalived1.com
+
+5.浏览器测试访问
+www.keepalived.com
+www.keepalived1.com
+
+6.关闭主节点192.168.253.129（171）的keepalived服务
+systemctl stop keepalived.service
+www.keepalived.com
+www.keepalived1.com
+都是访问到从节点
