@@ -19,7 +19,7 @@ systemctl stop NetworkManager
 systemctl disable NetworkManager
 在192.158.253.149 LVS-1 、192.158.253.129 Nginx-1 、192.158.253.128 Nginx-2运行
 
-3.构建虚拟IP
+3.LVS-1节点构建虚拟IP
 192.158.253.149 LVS-1
 cd /etc/sysconfig/network-scripts/
 ls
@@ -219,3 +219,7 @@ ipvsadm -a -t 192.168.253.150:80 -r 192.168.253.148:80 -g
 
 5.查看列表信息
 ipvsadm -Ln
+
+
+
+4-11 附：搭建LVS-DR模式- 使用ipvsadm配置集群规则
