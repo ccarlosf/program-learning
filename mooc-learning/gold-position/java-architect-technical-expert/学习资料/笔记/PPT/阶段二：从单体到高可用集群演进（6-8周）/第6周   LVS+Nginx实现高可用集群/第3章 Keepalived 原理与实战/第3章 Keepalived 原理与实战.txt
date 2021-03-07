@@ -348,18 +348,18 @@ vrrp_instance VI_2 {
 3.重启keepalived
 systemctl restart keepalived.service
 
-4.修改hosts文件
+4.修改hosts文件 VIP
 192.168.253.161 www.keepalived.com
 192.168.253.162 www.keepalived1.com
 
-5.浏览器测试访问
+5.浏览器测试访问 VIP
 www.keepalived.com
 www.keepalived1.com
 
 6.关闭主节点192.168.253.129（171）的keepalived服务
 systemctl stop keepalived.service
-www.keepalived.com
-www.keepalived1.com
+www.keepalived.com VIP
+www.keepalived1.com VIP
 都是访问到从节点
 
 7.主节点keepalived.conf

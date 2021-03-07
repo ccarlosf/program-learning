@@ -5,7 +5,7 @@ ls
 cp ifcfg-lo ifcfg-lo:1
 vim ifcfg-lo:1配置文件修改为
 DEVICE=lo:1
-IPADDR=192.168.1.150
+IPADDR=192.168.253.150
 NETMASK=255.255.255.255
 NETWORK=127.0.0.0
 # If you're having problems with gated making 127.0.0.0/8 a martian,
@@ -17,13 +17,13 @@ NAME=loopback
 刷新配置文件信息
 ifup lo
 
-查看网卡信息，多了192.168.1.150
+查看网卡信息，多了192.168.253.150
 ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet 192.168.1.150/32 brd 192.168.1.150 scope global lo:1
+    inet 192.168.253.150/32 brd 192.168.253.150 scope global lo:1
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host
        valid_lft forever preferred_lft forever
@@ -34,7 +34,7 @@ ls
 cp ifcfg-lo ifcfg-lo:1
 vim ifcfg-lo:1配置文件修改为
 DEVICE=lo:1
-IPADDR=192.168.1.150
+IPADDR=192.168.253.150
 NETMASK=255.255.255.255
 NETWORK=127.0.0.0
 # If you're having problems with gated making 127.0.0.0/8 a martian,
@@ -46,13 +46,13 @@ NAME=loopback
 重启网络服务
 service network restart
 
-查看网卡信息，多了192.168.1.150
+查看网卡信息，多了192.168.253.150
 ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet 192.168.1.150/32 brd 192.168.1.150 scope global lo:1
+    inet 192.168.253.150/32 brd 192.168.253.150 scope global lo:1
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host
        valid_lft forever preferred_lft forever

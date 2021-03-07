@@ -28,7 +28,7 @@ cp ifcfg-ens33 ifcfg-ens33:1
 BOOTPROTO="static"
 DEVICE="ens33:1"
 ONBOOT="yes"
-IPADDR=192.168.1.150
+IPADDR=192.168.253.150
 NETMASK=255.255.255.0
 
 4.重启网络服务
@@ -40,7 +40,7 @@ ip addr
     link/ether 00:0c:29:0c:15:c4 brd ff:ff:ff:ff:ff:ff
     inet 192.168.253.149/24 brd 192.168.253.255 scope global dynamic ens33
        valid_lft 1787sec preferred_lft 1787sec
-    inet 192.168.1.150/24 brd 192.168.1.255 scope global ens33:1
+    inet 192.168.253.150/24 brd 192.168.1.255 scope global ens33:1
        valid_lft forever preferred_lft forever
     inet6 fe80::20c:29ff:fe0c:15c4/64 scope link
        valid_lft forever preferred_lft forever
@@ -72,7 +72,7 @@ ls
 cp ifcfg-lo ifcfg-lo:1
 vim ifcfg-lo:1配置文件修改为
 DEVICE=lo:1
-IPADDR=192.168.1.150
+IPADDR=192.168.253.150
 NETMASK=255.255.255.255
 NETWORK=127.0.0.0
 # If you're having problems with gated making 127.0.0.0/8 a martian,
@@ -84,13 +84,13 @@ NAME=loopback
 刷新配置文件信息
 ifup lo
 
-查看网卡信息，多了192.168.1.150
+查看网卡信息，多了192.168.253.150
 ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet 192.168.1.150/32 brd 192.168.1.150 scope global lo:1
+    inet 192.168.253.150/32 brd 192.168.253.150 scope global lo:1
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host
        valid_lft forever preferred_lft forever
@@ -101,7 +101,7 @@ ls
 cp ifcfg-lo ifcfg-lo:1
 vim ifcfg-lo:1配置文件修改为
 DEVICE=lo:1
-IPADDR=192.168.1.150
+IPADDR=192.168.253.150
 NETMASK=255.255.255.255
 NETWORK=127.0.0.0
 # If you're having problems with gated making 127.0.0.0/8 a martian,
@@ -113,13 +113,13 @@ NAME=loopback
 重启网络服务
 service network restart
 
-查看网卡信息，多了192.168.1.150
+查看网卡信息，多了192.168.253.150
 ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet 192.168.1.150/32 brd 192.168.1.150 scope global lo:1
+    inet 192.168.253.150/32 brd 192.168.253.150 scope global lo:1
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host
        valid_lft forever preferred_lft forever
@@ -151,19 +151,19 @@ net.ipv4.conf.lo.arp_announce = 2
 sysctl -p
 
 增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
-route add -host 192.168.1.150 dev lo:1
+route add -host 192.168.253.150 dev lo:1
 
-查看验证，多了192.168.1.150指定给lo
+查看验证，多了192.168.253.150指定给lo
 route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.253.2   0.0.0.0         UG    0      0        0 ens33
 169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 ens33
-192.168.1.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
+192.168.253.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
 192.168.253.0   0.0.0.0         255.255.255.0   U     0      0        0 ens33
 
 命令添加网关，服务器重启后会失效，更改配置文件，使其永久生效
-echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local
+echo "route add -host 192.168.253.150 dev lo:1" >> /etc/rc.local
 
 
 2.配置192.168.253.148 Nginx-2节点
@@ -180,20 +180,42 @@ net.ipv4.conf.lo.arp_announce = 2
 sysctl -p
 
 增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
-route add -host 192.168.1.150 dev lo:1
+route add -host 192.168.253.150 dev lo:1
 
-查看验证，多了192.168.1.150指定给lo
+查看验证，多了192.168.253.150指定给lo
 route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.253.2   0.0.0.0         UG    0      0        0 ens33
 169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 ens33
-192.168.1.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
+192.168.253.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
 192.168.253.0   0.0.0.0         255.255.255.0   U     0      0        0 ens33
 
 命令添加网关，服务器重启后会失效，更改配置文件，使其永久生效
-echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local
+echo "route add -host 192.168.253.150 dev lo:1" >> /etc/rc.local
 
 
 
 4-9 附：搭建LVS-DR模式- 为两台RS配置arp
+
+
+
+4-10 搭建LVS-DR模式- 使用ipvsadm配置集群规则（6分钟）
+1.查看ipvsadm帮助文档
+ipvsadm -h
+
+2.添加集群 LVS1节点操作
+-s:指定算法
+rr:轮询算法
+ipvsadm -A -t 192.168.253.150:80 -s rr
+
+3.查看列表信息
+ipvsadm -Ln
+
+4.为2步骤添加的集群，添加服务器节点（nginx1和nginx2）
+g:直接路由模式
+ipvsadm -a -t 192.168.253.150:80 -r 192.168.253.129:80 -g
+ipvsadm -a -t 192.168.253.150:80 -r 192.168.253.148:80 -g
+
+5.查看列表信息
+ipvsadm -Ln

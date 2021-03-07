@@ -12,19 +12,19 @@ net.ipv4.conf.lo.arp_announce = 2
 sysctl -p
 
 增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
-route add -host 192.168.1.150 dev lo:1
+route add -host 192.168.253.150 dev lo:1
 
-查看验证，多了192.168.1.150指定给lo
+查看验证，多了192.168.253.150指定给lo
 route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.253.2   0.0.0.0         UG    0      0        0 ens33
 169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 ens33
-192.168.1.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
+192.168.253.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
 192.168.253.0   0.0.0.0         255.255.255.0   U     0      0        0 ens33
 
 命令添加网关，服务器重启后会失效，更改配置文件，使其永久生效
-echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local
+echo "route add -host 192.168.253.150 dev lo:1" >> /etc/rc.local
 
 
 2.配置192.168.253.148 Nginx-2节点
@@ -41,16 +41,16 @@ net.ipv4.conf.lo.arp_announce = 2
 sysctl -p
 
 增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
-route add -host 192.168.1.150 dev lo:1
+route add -host 192.168.253.150 dev lo:1
 
-查看验证，多了192.168.1.150指定给lo
+查看验证，多了192.168.253.150指定给lo
 route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.253.2   0.0.0.0         UG    0      0        0 ens33
 169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 ens33
-192.168.1.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
+192.168.253.150   0.0.0.0         255.255.255.255 UH    0      0        0 lo
 192.168.253.0   0.0.0.0         255.255.255.0   U     0      0        0 ens33
 
 命令添加网关，服务器重启后会失效，更改配置文件，使其永久生效
-echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local
+echo "route add -host 192.168.253.150 dev lo:1" >> /etc/rc.local

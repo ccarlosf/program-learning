@@ -14,7 +14,7 @@ cp ifcfg-ens33 ifcfg-ens33:1
 BOOTPROTO="static"
 DEVICE="ens33:1"
 ONBOOT="yes"
-IPADDR=192.168.1.150
+IPADDR=192.168.253.150
 NETMASK=255.255.255.0
 
 4.重启网络服务
@@ -26,7 +26,7 @@ ip addr
     link/ether 00:0c:29:0c:15:c4 brd ff:ff:ff:ff:ff:ff
     inet 192.168.253.149/24 brd 192.168.253.255 scope global dynamic ens33
        valid_lft 1787sec preferred_lft 1787sec
-    inet 192.168.1.150/24 brd 192.168.1.255 scope global ens33:1
+    inet 192.168.253.150/24 brd 192.168.1.255 scope global ens33:1
        valid_lft forever preferred_lft forever
     inet6 fe80::20c:29ff:fe0c:15c4/64 scope link
        valid_lft forever preferred_lft forever
