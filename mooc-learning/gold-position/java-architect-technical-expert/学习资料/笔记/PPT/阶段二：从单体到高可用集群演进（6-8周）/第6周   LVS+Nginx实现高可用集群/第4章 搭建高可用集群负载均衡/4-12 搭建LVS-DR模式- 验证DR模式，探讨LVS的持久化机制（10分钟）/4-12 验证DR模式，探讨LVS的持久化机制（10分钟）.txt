@@ -1,0 +1,26 @@
+1.查看LVS状态
+ipvsadm -Ln --stats
+
+IP Virtual Server version 1.2.1 (size=4096)
+Prot LocalAddress:Port               Conns   InPkts  OutPkts  InBytes OutBytes
+  -> RemoteAddress:Port
+TCP  192.168.253.150:80                 11      333        0    88323        0
+  -> 192.168.253.129:80                  5      236        0    65528        0
+  -> 192.168.253.148:80                  6       97        0    22795        0
+
+2.查看ipvsadm详细文档
+man ipvsadm
+
+3.设置5s的持久化连接
+ipvsadm -E -t 192.168.253.150:80 -s rr -p 5
+
+4.查看状态
+ipvsadm -Ln
+
+5.其他的超时时间也设置为1s（TCP UDP）
+ipvsadm --set 1 1 1
+
+6.查看其它状态信息（正在连接的列表）
+ipvsadm -Lnc
+
+7.设置轮询算法，没有发生轮询访问的原因，是链接的持久化机制
