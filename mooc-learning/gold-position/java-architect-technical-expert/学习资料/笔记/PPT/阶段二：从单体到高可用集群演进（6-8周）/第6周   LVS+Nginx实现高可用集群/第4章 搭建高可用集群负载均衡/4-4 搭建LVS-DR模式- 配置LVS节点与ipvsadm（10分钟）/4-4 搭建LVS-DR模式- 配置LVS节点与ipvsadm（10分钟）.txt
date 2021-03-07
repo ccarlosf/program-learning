@@ -6,7 +6,7 @@ systemctl disable NetworkManager
 在192.158.253.149 LVS-1 、192.158.253.129 Nginx-1 、192.158.253.128 Nginx-2运行
 
 3.构建虚拟IP
-192.158.253.149 LVS-1
+192.158.253.149 LVS-1节点操作
 cd /etc/sysconfig/network-scripts/
 ls
 cp ifcfg-ens33 ifcfg-ens33:1
