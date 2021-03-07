@@ -297,3 +297,7 @@ systemctl restart keepalived
 
 
 3-11 高可用集群架构 Keepalived 双主热备原理（6分钟）
+
+
+
+3-12 云服务的DNS解析配置与负载均衡（5分钟）
