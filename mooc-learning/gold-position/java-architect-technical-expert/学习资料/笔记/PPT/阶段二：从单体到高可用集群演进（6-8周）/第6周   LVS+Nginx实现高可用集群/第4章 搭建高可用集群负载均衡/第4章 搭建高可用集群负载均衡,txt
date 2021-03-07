@@ -57,3 +57,7 @@ Prot LocalAddress:Port Scheduler Flags
 8.阿里云服务器不支持虚拟ip，需要购买负载均衡服务，
 腾讯云服务器支持虚拟ip，但是也是需要进行购买ip服务，
 学习使用的是虚拟机
+
+
+
+4-5 附：搭建LVS-DR模式- 配置LVS节点与ipvsadm
