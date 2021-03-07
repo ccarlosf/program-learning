@@ -129,3 +129,7 @@ ip addr
        valid_lft 1769sec preferred_lft 1769sec
     inet6 fe80::20c:29ff:fe00:20de/64 scope link
        valid_lft forever preferred_lft forever
+
+
+
+4-7 附：搭建LVS-DR模式- 为两台RS配置虚拟IP
