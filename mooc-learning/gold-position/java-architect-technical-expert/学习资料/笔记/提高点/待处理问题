@@ -38,9 +38,10 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 5. 3-13 实现keepalived双主热备 主从节点加入脚本自动检查启动nginx
 
-6. keepalived主备模式和双主热备模式，部署项目
+6.keepalived主备模式和双主热备模式，部署项目
 主备模式：在一个时间点，只有一台nginx
 双主热备：在一个时间点，有两台nginx提供服务，经过DNS解析后，通过VIP访问
 
+7.搭建Keepalived+Lvs+Nginx高可用集群负载均衡，（单LVS和多LVS）部署项目
 
-7. 搭建Keepalived+Lvs+Nginx高可用集群负载均衡，（单LVS和多LVS）部署项目
+8.多LVS节点部署，不仅要实现LVS的健康检查，还要实现nginx集群里自动重启keepalived提供的健康检查
