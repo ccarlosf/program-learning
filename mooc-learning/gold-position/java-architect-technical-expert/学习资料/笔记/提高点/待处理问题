@@ -44,4 +44,9 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 7.搭建Keepalived+Lvs+Nginx高可用集群负载均衡，（单LVS和多LVS）部署项目
 
-8.多LVS节点部署，不仅要实现LVS的健康检查，还要实现nginx集群里自动重启keepalived提供的健康检查
+8.充电实现多LVS多节点部署，不仅要实现LVS的健康检查，还要实现nginx集群里自动重启keepalived提供的健康检查（nginx内不需vip，只需要健康检查即可）
+多LVS节点部署，不仅要实现LVS的健康检查，还要实现nginx集群里自动重启keepalived提供的健康检查（去除主备模式、和双主热备模式中的虚拟VIP，因为是直接通过LVS访问的，没必要加入）
+即实现LVS的健康检查和nginx的主备（健康检查）
+可以实现即实现LVS的健康检查和nginx的双主热备（健康检查），因为有两个人vip
+
+9.主备模式（双机主备）、双主热备，实现nginx集群里自动重启keepalived提供的健康检查（从节点加入keepalived自动重启nginx脚本）
