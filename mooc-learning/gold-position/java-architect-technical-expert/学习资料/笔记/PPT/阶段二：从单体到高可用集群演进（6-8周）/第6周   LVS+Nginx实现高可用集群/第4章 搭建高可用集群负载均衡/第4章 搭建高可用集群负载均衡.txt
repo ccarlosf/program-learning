@@ -522,3 +522,15 @@ Prot LocalAddress:Port Scheduler Flags
 TCP  192.168.253.150:80 rr persistent 10
   -> 192.168.253.129:80           Route   1      0          0
   -> 192.168.253.148:80           Route   1      0          0
+
+
+
+4-15 附：LVS的负载均衡算法
+
+
+
+4-16 阶段复习
+
+
+
+4-17 作业练习
