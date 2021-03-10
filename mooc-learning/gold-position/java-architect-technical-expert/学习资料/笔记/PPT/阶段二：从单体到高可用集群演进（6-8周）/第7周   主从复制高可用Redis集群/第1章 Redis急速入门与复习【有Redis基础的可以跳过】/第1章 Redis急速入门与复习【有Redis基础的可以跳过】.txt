@@ -11,3 +11,7 @@
 
 
 1-4 什么是分布式缓存，什么是Redis？（3分钟）
+
+
+
+1-5 分布式缓存方案与技术选型：Redis VS Memcache VS Ehcache（5分钟）
