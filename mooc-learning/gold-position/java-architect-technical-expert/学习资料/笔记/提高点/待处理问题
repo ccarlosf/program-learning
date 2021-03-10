@@ -52,3 +52,5 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 9.主备模式（双机主备）、双主热备，实现nginx集群里自动重启keepalived提供的健康检查（从节点加入keepalived自动重启nginx脚本）
 
 10.单LVS节点使用配置文件部署，而不是命令行（没完成是因为keepalived才支持配置文件形式）
+
+11.搭建双主热备LVS
