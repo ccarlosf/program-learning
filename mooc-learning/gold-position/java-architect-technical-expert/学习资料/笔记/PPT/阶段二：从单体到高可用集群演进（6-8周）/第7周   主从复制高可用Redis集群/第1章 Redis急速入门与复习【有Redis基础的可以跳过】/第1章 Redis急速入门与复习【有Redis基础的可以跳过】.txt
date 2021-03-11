@@ -334,3 +334,7 @@ OK
 flushall
 127.0.0.1:6379> flushall
 OK
+
+
+
+1-11 附：Redis的数据类型 - string
