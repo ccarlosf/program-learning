@@ -183,3 +183,154 @@ $CLIEXEC -a "imooc" -p $REDISPORT shutdown
 
 
 1-9 附：Redis的命令行客户端
+
+
+
+1-10 Redis的数据类型 - string（15分钟）
+基本命令
+1.设置
+set name imooc
+
+2.查看键，查看全部（不推荐使用，损耗性能）
+keys *
+
+127.0.0.1:6379> set name imooc
+OK
+127.0.0.1:6379> keys *
+1) "name"
+127.0.0.1:6379> set age 18
+OK
+127.0.0.1:6379> keys *
+1) "name"
+2) "age"
+127.0.0.1:6379>
+
+3.查看键，模糊匹配（推荐使用）
+keys x*
+127.0.0.1:6379> keys a*
+1) "age"
+127.0.0.1:6379> keys *e
+1) "name"
+2) "age"
+
+4.查看键类型
+type age
+127.0.0.1:6379> type age
+string
+
+5.键不存在时，进行设置
+因为age键存在，所以值不会从20变为18
+setnx age 18
+因为sex键不存在，所以值可以设置成功
+setnx sex man
+
+127.0.0.1:6379> setnx age 18
+(integer) 0
+127.0.0.1:6379> get age
+"20"
+127.0.0.1:6379> setnx sex man
+(integer) 1
+
+6.查看键过期时间
+ttl age
+127.0.0.1:6379> ttl age
+(integer) -1
+
+7.设置键过期时间
+127.0.0.1:6379> expire age 30
+(integer) 1
+
+8.已过期
+127.0.0.1:6379> ttl age
+(integer) -2
+
+9.设置值时，带过期时间
+set vip yes ex 20
+
+10.字符串拼接
+append name 123
+
+127.0.0.1:6379> get name
+"imooc"
+127.0.0.1:6379> append name 123
+(integer) 8
+127.0.0.1:6379> get name
+"imooc123"
+
+11.查看字符串长度
+127.0.0.1:6379>  STRLEN name
+(integer) 8
+
+12.累加
+incr age
+127.0.0.1:6379> set age 18
+OK
+127.0.0.1:6379> keys *
+1) "name"
+2) "age"
+3) "sex"
+127.0.0.1:6379> incr age
+(integer) 19
+
+13.累减
+decr age
+127.0.0.1:6379> decr age
+(integer) 22
+127.0.0.1:6379> decr age
+(integer) 21
+
+14.增加具体数值
+INCRBY age 10
+127.0.0.1:6379> decr age
+(integer) -5
+127.0.0.1:6379> INCRBY age 10
+(integer) 5
+
+
+15.减少具体数值
+DECRBY age 10
+127.0.0.1:6379> DECRBY age 10
+(integer) 25
+
+16.获取指定范围的字符串
+getrange name 0 -1
+127.0.0.1:6379> getrange name 0 -1
+"imooc123"
+127.0.0.1:6379> getrange name 2 4
+"ooc"
+
+17.指范围设置
+SETRANGE name 1 abc
+127.0.0.1:6379> SETRANGE name 1 abc
+(integer) 8
+127.0.0.1:6379> get name
+"iabcc123"
+
+18.批量设置和取值
+mset k1 aa k2 bb
+mget k1 k2
+127.0.0.1:6379> mset k1 aa k2 bb
+OK
+127.0.0.1:6379> mget k1 k2
+1) "aa"
+2) "bb"
+
+19.批量设置（键存在时，不能设置）
+msetnx k2 123 k3 cc
+127.0.0.1:6379> msetnx k2 123 k3 cc
+(integer) 0
+127.0.0.1:6379> msetnx k4 dd k3 cc
+(integer) 1
+
+20.切换数据库
+select 1
+
+21.清除当前数据库数据
+flushdb
+127.0.0.1:6379> flushdb
+OK
+
+22.清除所有库的数据
+flushall
+127.0.0.1:6379> flushall
+OK
