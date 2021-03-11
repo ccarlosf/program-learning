@@ -123,3 +123,59 @@ ps -ef | grep redis
 
 
 1-7 附：安装与配置 Redis
+
+
+
+1-8 Redis命令行客户端基本使用（4分钟）
+1.进入redis脚本目录
+cd /etc/init.d/
+vim redis_init_script
+
+2.客户端存放工具
+CLIEXEC=/usr/local/bin/redis-cli
+
+3.命令行执行redis-cli
+
+4.查看redis-cli 进程
+[root@pinyoyougou-docker ~]# ps -ef|grep redis
+root       638     1  0 3月11 ?       00:00:47 /usr/local/bin/redis-server 0.0.0.0:6379
+root      5488  2165  0 06:13 pts/0    00:00:00 redis-cli
+root      5507  5489  0 06:13 pts/1    00:00:00 grep --color=auto redis
+
+5.登录
+auth imooc
+
+6.设置
+set name imooc
+
+7.取值
+get name
+
+8.删除
+del name
+
+127.0.0.1:6379> auth imooc
+OK
+127.0.0.1:6379> set name imooc
+OK
+127.0.0.1:6379> get name
+"imooc"
+127.0.0.1:6379> del name
+(integer) 1
+127.0.0.1:6379> get name
+(nil)
+127.0.0.1:6379>
+
+9.检查redis存活
+[root@pinyoyougou-docker init.d]# redis-cli  ping
+(error) NOAUTH Authentication required.
+[root@pinyoyougou-docker init.d]# redis-cli -a imooc ping
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+PONG
+
+10.停止redis服务
+停止redis服务，停止不了，因为是需要密码
+./redis_init_script stop
+
+vim redis_init_script
+$CLIEXEC -a "imooc" -p $REDISPORT shutdown
