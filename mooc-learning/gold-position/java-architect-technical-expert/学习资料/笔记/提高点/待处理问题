@@ -23,7 +23,10 @@ String payReturnUrl = "http://api.z.mukewang.com:8088/foodie-dev-api/orders/noti
 
 11.1-21  【加餐】经历了拼多多5轮Java面试，都面了些啥？
 
+
+
 阶段二：从单体到高可用集群演进（6-8周）
+第6周   LVS+Nginx实现高可用集群
 1. 192.168.253.129服务器中nginx可以监听81端口，监听不了80和77端口
 访问 www.tomcats.com不可以，http://192.168.253.129/可以，为什么？
 
@@ -54,3 +57,10 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 10.单LVS节点使用配置文件部署，而不是命令行（没完成是因为keepalived才支持配置文件形式）
 
 11.搭建双主热备LVS
+
+12.关闭虚拟机后，重新运行LVS+keepalived+nginx主备模式，nginx+keepalived双机主备和双主热备模式
+
+
+
+第7周   主从复制高可用Redis集群
+1.不使用脚本的方式安装redis（单机版redis）
