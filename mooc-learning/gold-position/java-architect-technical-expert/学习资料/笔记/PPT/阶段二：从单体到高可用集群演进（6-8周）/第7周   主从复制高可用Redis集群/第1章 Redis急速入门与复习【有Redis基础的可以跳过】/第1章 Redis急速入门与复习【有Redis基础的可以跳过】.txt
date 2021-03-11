@@ -119,3 +119,7 @@ reboot
 
 检查redis进程
 ps -ef | grep redis
+
+
+
+1-7 附：安装与配置 Redis
