@@ -179,3 +179,7 @@ PONG
 
 vim redis_init_script
 $CLIEXEC -a "imooc" -p $REDISPORT shutdown
+
+
+
+1-9 附：Redis的命令行客户端
