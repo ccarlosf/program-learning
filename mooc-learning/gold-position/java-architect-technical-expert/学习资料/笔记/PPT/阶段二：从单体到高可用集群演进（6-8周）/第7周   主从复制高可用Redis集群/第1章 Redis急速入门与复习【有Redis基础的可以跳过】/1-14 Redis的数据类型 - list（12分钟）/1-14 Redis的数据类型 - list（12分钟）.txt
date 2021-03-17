@@ -1,0 +1,107 @@
+list操作
+1.创建list1
+127.0.0.1:6379> flushdb
+OK
+127.0.0.1:6379> lpush list1 pig cow sheep chicken duck
+(integer) 5
+127.0.0.1:6379> rpush list2 pig cow sheep chicken duck
+(integer) 5
+
+2.查看list1
+127.0.0.1:6379> lrange list1 0 -1
+1) "duck"
+2) "chicken"
+3) "sheep"
+4) "cow"
+5) "pig"
+
+127.0.0.1:6379> lrange list2 0 -1
+1) "pig"
+2) "cow"
+3) "sheep"
+4) "chicken"
+5) "duck"
+
+3.从list1左边取值
+127.0.0.1:6379> lpop list1
+"duck"
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "sheep"
+3) "cow"
+4) "pig"
+
+从list1右边取值
+127.0.0.1:6379> rpop list1
+"pig"
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "sheep"
+3) "cow"
+
+4.查看list长度
+127.0.0.1:6379> llen list1
+(integer) 3
+
+5.下表取值
+127.0.0.1:6379> lindex list1 2
+"cow"
+
+6.set设置
+127.0.0.1:6379> lset list1 1 1001
+OK
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "1001"
+3) "cow"
+
+7.insert插入值
+127.0.0.1:6379> linsert list1 BEFORE 1001 aaa
+(integer) 4
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "aaa"
+3) "1001"
+4) "cow"
+
+127.0.0.1:6379> linsert list1 after 1001 aaa
+(integer) 5
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "aaa"
+3) "1001"
+4) "aaa"
+5) "cow"
+
+8.lrem删除值
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "aaa"
+3) "1001"
+4) "aaa"
+5) "cow"
+127.0.0.1:6379> lrem list1 2 aaa
+(integer) 2
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "1001"
+3) "cow"
+
+9.ltrim截取值
+127.0.0.1:6379> lrange list1 0 -1
+1) "chicken"
+2) "1001"
+3) "cow"
+127.0.0.1:6379> ltrim list1 1 2
+OK
+127.0.0.1:6379> lrange list1 0 -1
+1) "1001"
+2) "cow"
+
+10.del删除list
+127.0.0.1:6379> del list1
+(integer) 1
+127.0.0.1:6379> lrange list1 0 -1
+(empty list or set)
+127.0.0.1:6379> keys *
+1) "list2"
