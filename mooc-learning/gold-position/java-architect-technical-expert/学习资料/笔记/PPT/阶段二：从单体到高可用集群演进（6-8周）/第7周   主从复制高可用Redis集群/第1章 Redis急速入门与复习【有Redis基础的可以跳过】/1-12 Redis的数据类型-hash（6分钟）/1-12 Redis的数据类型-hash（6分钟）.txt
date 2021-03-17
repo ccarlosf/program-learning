@@ -1,0 +1,68 @@
+Hash对象操作
+1.设置和获取对象属性
+127.0.0.1:6379> hset user name imooc
+(integer) 1
+127.0.0.1:6379> hget user name
+"imooc"
+
+2.批量设置多个属性
+127.0.0.1:6379> hmset user age 18 sex man
+OK
+127.0.0.1:6379> hmget user age sex name
+1) "18"
+2) "man"
+3) "imooc"
+
+3.获取全部属性
+127.0.0.1:6379> hgetall user
+1) "name"
+2) "imooc"
+3) "age"
+4) "18"
+5) "sex"
+6) "man"
+
+4.查询对象中包含几个属性
+127.0.0.1:6379> hlen user
+(integer) 3
+
+5.查看对象里所有的key
+127.0.0.1:6379> hkeys user
+1) "name"
+2) "age"
+3) "sex"
+
+6.查看对象里所有的值
+127.0.0.1:6379> hvals user
+1) "imooc"
+2) "18"
+3) "man"
+
+7.增长对象中属性的值
+127.0.0.1:6379> HINCRBY user age 3
+(integer) 21
+127.0.0.1:6379> HINCRBY user age 3
+(integer) 24
+127.0.0.1:6379> HINCRBYfloat user age 2.2
+"26.2"
+
+8.判断对象中某个属性是否存在
+127.0.0.1:6379> HEXISTS user age
+(integer) 1
+127.0.0.1:6379> HEXISTS user email
+(integer) 0
+
+9. 删除对象中的属性
+127.0.0.1:6379> HDEL user
+(error) ERR wrong number of arguments for 'hdel' command
+127.0.0.1:6379> HDEL user age
+(integer) 1
+127.0.0.1:6379> HDEL user name
+(integer) 1
+127.0.0.1:6379> HGETALL user
+1) "sex"
+2) "man"
+127.0.0.1:6379> HDEL user sex
+(integer) 1
+127.0.0.1:6379> HGETALL user
+(empty list or set)
