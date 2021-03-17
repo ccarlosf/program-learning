@@ -525,3 +525,7 @@ OK
 (empty list or set)
 127.0.0.1:6379> keys *
 1) "list2"
+
+
+
+1-15 附：Redis的数据类型 - list.txt
