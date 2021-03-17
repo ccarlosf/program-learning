@@ -528,4 +528,146 @@ OK
 
 
 
-1-15 附：Redis的数据类型 - list.txt
+1-15 附：Redis的数据类型 - list
+
+
+
+1-16 Redis的数据类型 - set（8分钟）
+set操作
+1.添加到set
+127.0.0.1:6379> sadd set duck ping cow sheep sheep shheep pig
+(integer) 6
+127.0.0.1:6379> sadd set duck ping cow sheep sheep shheep pig
+(integer) 0
+
+2.查看set成员
+127.0.0.1:6379> SMEMBERS set
+1) "cow"
+2) "pig"
+3) "sheep"
+4) "ping"
+5) "duck"
+6) "shheep"
+
+3.查看set中包含的数量
+127.0.0.1:6379> scard set
+(integer) 6
+
+4.判断某个成员是否在set中
+127.0.0.1:6379> sismember set pig
+(integer) 1
+127.0.0.1:6379> sismember set chicken
+(integer) 0
+
+5.srem删除set成员
+127.0.0.1:6379> srem set duck
+(integer) 1
+127.0.0.1:6379> SMEMBERS set
+1) "cow"
+2) "pig"
+3) "sheep"
+4) "ping"
+5) "shheep"
+
+6.弹出元素
+127.0.0.1:6379> spop set
+"shheep"
+
+127.0.0.1:6379> spop set 2
+1) "ping"
+2) "sheep"
+
+7.SRANDMEMBER随机获取元素
+127.0.0.1:6379> sadd set1 1 2 3 4 5 6 7 8 9 10
+(integer) 10
+127.0.0.1:6379> SMEMBERS set1
+ 1) "1"
+ 2) "2"
+ 3) "3"
+ 4) "4"
+ 5) "5"
+ 6) "6"
+ 7) "7"
+ 8) "8"
+ 9) "9"
+10) "10"
+127.0.0.1:6379> SRANDMEMBER set1 3
+1) "2"
+2) "1"
+3) "7"
+
+8.把set1中的元素移动到set2中
+127.0.0.1:6379> smove set1 set2 10
+(integer) 1
+127.0.0.1:6379> SMEMBERS set2
+1) "1"
+2) "3"
+3) "5"
+4) "7"
+5) "9"
+6) "10"
+7) "11"
+8) "13"
+9) "15"
+127.0.0.1:6379> SMEMBERS set1
+1) "1"
+2) "2"
+3) "3"
+4) "4"
+5) "5"
+6) "6"
+7) "7"
+8) "8"
+9) "9"
+
+9.求差集
+set1中包含，但是set2中不包含
+127.0.0.1:6379> SMEMBERS set1
+1) "1"
+2) "2"
+3) "3"
+4) "4"
+5) "5"
+6) "6"
+7) "7"
+8) "8"
+9) "9"
+127.0.0.1:6379> SMEMBERS set2
+1) "1"
+2) "3"
+3) "5"
+4) "7"
+5) "9"
+6) "10"
+7) "11"
+8) "13"
+9) "15"
+127.0.0.1:6379> sdiff set1 set2
+1) "2"
+2) "4"
+3) "6"
+4) "8"
+
+10.sinter求交集
+127.0.0.1:6379> sinter set1 set2
+1) "1"
+2) "3"
+3) "5"
+4) "7"
+5) "9"
+
+11.sunion求并集
+127.0.0.1:6379> sunion set1 set2
+ 1) "1"
+ 2) "2"
+ 3) "3"
+ 4) "4"
+ 5) "5"
+ 6) "6"
+ 7) "7"
+ 8) "8"
+ 9) "9"
+10) "10"
+11) "11"
+12) "13"
+13) "15"
