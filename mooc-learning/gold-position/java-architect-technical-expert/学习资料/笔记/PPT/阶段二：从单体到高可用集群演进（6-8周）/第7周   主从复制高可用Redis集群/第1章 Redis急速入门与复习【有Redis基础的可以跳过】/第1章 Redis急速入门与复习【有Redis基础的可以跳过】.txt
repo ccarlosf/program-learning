@@ -671,3 +671,106 @@ set1中包含，但是set2中不包含
 11) "11"
 12) "13"
 13) "15"
+
+
+
+1-17 Redis的数据类型 - zset（10分钟）
+zset操作
+1.zadd zset 添加到有序集合zset
+127.0.0.1:6379> zadd zset 10 duck 20 pig 30 chicken 40 beef 50 sheep
+(integer) 5
+
+2.查询有序集合
+127.0.0.1:6379> zrange zset 0 -1
+1) "duck"
+2) "pig"
+3) "chicken"
+4) "beef"
+5) "sheep"
+127.0.0.1:6379> zrange zset 0 -1 withscores
+ 1) "duck"
+ 2) "10"
+ 3) "pig"
+ 4) "20"
+ 5) "chicken"
+ 6) "30"
+ 7) "beef"
+ 8) "40"
+ 9) "sheep"
+10) "50"
+
+3.追加到集合zadd zset
+127.0.0.1:6379> zadd zset 25 abc 35 xyz
+(integer) 2
+127.0.0.1:6379> zrange zset 0 -1 withscores
+ 1) "duck"
+ 2) "10"
+ 3) "pig"
+ 4) "20"
+ 5) "abc"
+ 6) "25"
+ 7) "chicken"
+ 8) "30"
+ 9) "xyz"
+10) "35"
+11) "beef"
+12) "40"
+13) "sheep"
+14) "50"
+
+4.zrank查看元素的下标
+127.0.0.1:6379>  zrank zset beef
+(integer) 5
+
+5.zscore获取某个元素的分数
+127.0.0.1:6379>  zscore zset beef
+"40"
+
+6.zcard统计集合元素的个数
+127.0.0.1:6379> zcard zset
+(integer) 7
+
+7.统计某个分数区间内元素的个数
+127.0.0.1:6379> zcount zset 20 40
+(integer) 5
+
+8.ZRANGEBYSCORE通过分数区间查询元素
+127.0.0.1:6379> ZRANGEBYSCORE zset 20 40
+1) "pig"
+2) "abc"
+3) "chicken"
+4) "xyz"
+5) "beef"
+127.0.0.1:6379> ZRANGEBYSCORE zset 20 40 withscores
+ 1) "pig"
+ 2) "20"
+ 3) "abc"
+ 4) "25"
+ 5) "chicken"
+ 6) "30"
+ 7) "xyz"
+ 8) "35"
+ 9) "beef"
+10) "40"
+127.0.0.1:6379> ZRANGEBYSCORE zset 20 (40 withscores
+1) "pig"
+2) "20"
+3) "abc"
+4) "25"
+5) "chicken"
+6) "30"
+7) "xyz"
+8) "35"
+127.0.0.1:6379> ZRANGEBYSCORE zset (20 (40 withscores
+1) "abc"
+2) "25"
+3) "chicken"
+4) "30"
+5) "xyz"
+6) "35"
+127.0.0.1:6379> ZRANGEBYSCORE zset 20 40 limit 1 2
+1) "abc"
+2) "chicken"
+
+9.zrem删除集合中的元素
+127.0.0.1:6379> zrem zset sheep beef
