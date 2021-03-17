@@ -410,3 +410,7 @@ OK
 (integer) 1
 127.0.0.1:6379> HGETALL user
 (empty list or set)
+
+
+
+1-13 附：Redis的数据类型 - hash
