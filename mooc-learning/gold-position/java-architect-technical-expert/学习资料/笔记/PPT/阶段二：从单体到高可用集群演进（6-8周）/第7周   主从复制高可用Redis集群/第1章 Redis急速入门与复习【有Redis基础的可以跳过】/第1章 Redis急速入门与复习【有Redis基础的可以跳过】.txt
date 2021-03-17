@@ -774,3 +774,7 @@ zset操作
 
 9.zrem删除集合中的元素
 127.0.0.1:6379> zrem zset sheep beef
+
+
+
+1-18 附：Redis的数据类型 - zset
