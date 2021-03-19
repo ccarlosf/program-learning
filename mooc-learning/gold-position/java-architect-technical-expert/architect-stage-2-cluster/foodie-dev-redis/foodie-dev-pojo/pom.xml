@@ -3,22 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>java-architect-technical-expert</artifactId>
+        <artifactId>foodie-dev</artifactId>
         <groupId>com.ccarlosf</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>architect-stage-2-cluster</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>nginx-url-hash</module>
-        <module>foodie-dev-redis</module>
-    </modules>
+    <artifactId>foodie-dev-pojo</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <dependencies>
+
+        <dependency>
+            <groupId>com.ccarlosf</groupId>
+            <artifactId>foodie-dev-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 
 </project>
