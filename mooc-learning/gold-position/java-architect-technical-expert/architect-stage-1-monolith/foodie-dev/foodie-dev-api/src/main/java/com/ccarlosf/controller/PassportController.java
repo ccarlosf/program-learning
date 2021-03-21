@@ -161,7 +161,45 @@ public class PassportController extends BaseController {
             // redis不为空，cookie不为空，合并cookie和redis中购物车的商品数据（同一商品则覆盖redis）
             if (StringUtils.isNotBlank(shopcartStrCookie)) {
 
-               } else {
+                /**
+                 * 1. 已经存在的，把cookie中对应的数量，覆盖redis（参考京东）
+                 * 2. 该项商品标记为待删除，统一放入一个待删除的list
+                 * 3. 从cookie中清理所有的待删除list
+                 * 4. 合并redis和cookie中的数据
+                 * 5. 更新到redis和cookie中
+                 */
+
+                List<ShopcartBO> shopcartListRedis = JsonUtils.jsonToList(shopcartJsonRedis, ShopcartBO.class);
+                List<ShopcartBO> shopcartListCookie = JsonUtils.jsonToList(shopcartStrCookie, ShopcartBO.class);
+
+                // 定义一个待删除list
+                List<ShopcartBO> pendingDeleteList = new ArrayList<>();
+
+                for (ShopcartBO redisShopcart : shopcartListRedis) {
+                    String redisSpecId = redisShopcart.getSpecId();
+
+                    for (ShopcartBO cookieShopcart : shopcartListCookie) {
+                        String cookieSpecId = cookieShopcart.getSpecId();
+
+                        if (redisSpecId.equals(cookieSpecId)) {
+                            // 覆盖购买数量，不累加，参考京东
+                            redisShopcart.setBuyCounts(cookieShopcart.getBuyCounts());
+                            // 把cookieShopcart放入待删除列表，用于最后的删除与合并
+                            pendingDeleteList.add(cookieShopcart);
+                        }
+
+                    }
+                }
+
+                // 从现有cookie中删除对应的覆盖过的商品数据
+                shopcartListCookie.removeAll(pendingDeleteList);
+
+                // 合并两个list
+                shopcartListRedis.addAll(shopcartListCookie);
+                // 更新到redis和cookie
+                CookieUtils.setCookie(request, response, FOODIE_SHOPCART, JsonUtils.objectToJson(shopcartListRedis), true);
+                redisOperator.set(FOODIE_SHOPCART + ":" + userId, JsonUtils.objectToJson(shopcartListRedis));
+            } else {
                 // redis不为空，cookie为空，直接把redis覆盖cookie
                 CookieUtils.setCookie(request, response, FOODIE_SHOPCART, shopcartJsonRedis, true);
             }
