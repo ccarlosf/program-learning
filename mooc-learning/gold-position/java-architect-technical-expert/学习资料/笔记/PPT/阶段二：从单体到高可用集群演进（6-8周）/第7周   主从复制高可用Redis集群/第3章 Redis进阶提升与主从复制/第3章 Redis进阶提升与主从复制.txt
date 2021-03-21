@@ -80,3 +80,7 @@ rdbcompression yes
 # RDB files created with checksum disabled have a checksum of zero that will
 # tell the loading code to skip the check.
 rdbchecksum yes
+
+
+
+3-3 附：Redis的持久化机制 - RDB
