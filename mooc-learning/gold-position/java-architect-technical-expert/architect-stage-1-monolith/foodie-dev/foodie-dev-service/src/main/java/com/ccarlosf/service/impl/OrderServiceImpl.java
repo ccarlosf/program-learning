@@ -90,10 +90,12 @@ public class OrderServiceImpl implements OrderService {
         String itemSpecIdArr[] = itemSpecIds.split(",");
         Integer totalAmount = 0;    // 商品原价累计
         Integer realPayAmount = 0;  // 优惠后的实际支付价格累计
+        List<ShopcartBO> toBeRemovedShopcatdList = new ArrayList<>();
         for (String itemSpecId : itemSpecIdArr) {
             ShopcartBO cartItem = getBuyCountsFromShopcart(shopcartList, itemSpecId);
             // 整合redis后，商品购买的数量重新从redis的购物车中获取
             int buyCounts = cartItem.getBuyCounts();
+            toBeRemovedShopcatdList.add(cartItem);
 
             // 2.1 根据规格id，查询规格的具体信息，主要获取价格
             ItemsSpec itemSpec = itemService.queryItemSpecById(itemSpecId);
@@ -144,6 +146,7 @@ public class OrderServiceImpl implements OrderService {
         OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersVO(merchantOrdersVO);
+        orderVO.setToBeRemovedShopcatdList(toBeRemovedShopcatdList);
 
         return orderVO;
     }

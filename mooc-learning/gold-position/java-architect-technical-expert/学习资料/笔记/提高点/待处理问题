@@ -74,3 +74,5 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 4.首页分类存入缓存中
 
 5.安装最新版Navicat
+
+6.使用lombok优化项目
