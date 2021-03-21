@@ -3,13 +3,17 @@ package com.ccarlosf.controller;
 import com.ccarlosf.enums.OrderStatusEnum;
 import com.ccarlosf.enums.PayMethod;
 import com.ccarlosf.pojo.OrderStatus;
+import com.ccarlosf.pojo.bo.ShopcartBO;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
 import com.ccarlosf.pojo.vo.MerchantOrdersVO;
 import com.ccarlosf.pojo.vo.OrderVO;
 import com.ccarlosf.service.OrderService;
 import com.ccarlosf.utils.JSONResult;
+import com.ccarlosf.utils.JsonUtils;
+import com.ccarlosf.utils.RedisOperator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Api(value = "订单相关", tags = {"订单相关的api接口"})
 @RequestMapping("orders")
@@ -35,6 +40,9 @@ public class OrdersController extends BaseController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private RedisOperator redisOperator;
 
 
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
@@ -52,8 +60,14 @@ public class OrdersController extends BaseController {
 
 //        System.out.println(submitOrderBO.toString());
 
+        String shopcartJson = redisOperator.get(FOODIE_SHOPCART + ":" + submitOrderBO.getUserId());
+        if (StringUtils.isBlank(shopcartJson)) {
+            return JSONResult.errorMsg("购物数据不正确");
+        }
+        List<ShopcartBO> shopcartList = JsonUtils.jsonToList(shopcartJson, ShopcartBO.class);
+
         // 1. 创建订单
-        OrderVO orderVO = orderService.createOrder(submitOrderBO);
+        OrderVO orderVO = orderService.createOrder(shopcartList, submitOrderBO);
         String orderId = orderVO.getOrderId();
 
         // 2. 创建订单以后，移除购物车中已结算（已提交）的商品

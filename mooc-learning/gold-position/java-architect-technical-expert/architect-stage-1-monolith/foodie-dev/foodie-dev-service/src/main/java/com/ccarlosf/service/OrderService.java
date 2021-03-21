@@ -1,8 +1,11 @@
 package com.ccarlosf.service;
 
 import com.ccarlosf.pojo.OrderStatus;
+import com.ccarlosf.pojo.bo.ShopcartBO;
 import com.ccarlosf.pojo.bo.SubmitOrderBO;
 import com.ccarlosf.pojo.vo.OrderVO;
+
+import java.util.List;
 
 public interface OrderService {
 
@@ -11,7 +14,7 @@ public interface OrderService {
      *
      * @param submitOrderBO
      */
-    public OrderVO createOrder(SubmitOrderBO submitOrderBO);
+    public OrderVO createOrder(List<ShopcartBO> shopcartList, SubmitOrderBO submitOrderBO);
 
     /**
      * 修改订单状态
