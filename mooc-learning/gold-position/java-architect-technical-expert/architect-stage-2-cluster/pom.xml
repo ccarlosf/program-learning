@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>nginx-url-hash</module>
-        <module>foodie-dev-redis</module>
     </modules>
 
     <properties>
