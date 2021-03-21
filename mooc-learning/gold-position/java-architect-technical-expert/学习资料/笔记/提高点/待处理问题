@@ -23,6 +23,8 @@ String payReturnUrl = "http://api.z.mukewang.com:8088/foodie-dev-api/orders/noti
 
 11.1-21  【加餐】经历了拼多多5轮Java面试，都面了些啥？
 
+12.单机架构，应用服务器部署，hosts文件配置域名测试
+
 
 
 阶段二：从单体到高可用集群演进（6-8周）
