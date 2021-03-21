@@ -1,8 +1,3 @@
-3-1 Redis 的发布（pub）与订阅（sub）（10分钟）
-
-
-
-3-2 Redis的持久化机制 - RDB（20分钟）
 1.进入redis目录
 cd /usr/local/redis/
 vim redis.conf
