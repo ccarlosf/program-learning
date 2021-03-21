@@ -1,0 +1,20 @@
+1.登录三个客户端
+redis-cli
+
+2.客户端2和客户端3订阅
+客户端2 SUBSCRIBE food imooc-bigdata imooc-backend imooc-frontend
+客户端3 SUBSCRIBE food food imooc-bigdata
+
+3.客户端1发布消息
+PUBLISH imooc-backend java
+PUBLISH food duck
+
+4.客户端4批量订阅
+PSUBSCRIBE imooc*
+
+5.客户端1发布消息
+127.0.0.1:6379[1]> PUBLISH imooc-backend java
+(integer) 2
+127.0.0.1:6379[1]> PUBLISH imooc-bigdata spark
+(integer) 3
+127.0.0.1:6379[1]> PUBLISH imooc-frontend html
