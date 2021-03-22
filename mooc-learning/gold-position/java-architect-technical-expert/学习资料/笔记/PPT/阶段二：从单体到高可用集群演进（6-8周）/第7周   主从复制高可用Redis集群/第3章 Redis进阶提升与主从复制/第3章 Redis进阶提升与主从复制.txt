@@ -187,3 +187,21 @@ OK
 
 
 3-7 多虚拟机克隆方案（9分钟）
+1.克隆虚拟机 从redis-1克隆出redis-base
+
+2.ip addr
+mac地址
+link/ether 00:0c:29:a8:2e:1b
+
+3.修改relues.d
+vim /etc/udev/rules.d/70-persistent-ipoib.rules
+# ACTION=="add", SUBSYSTEM=="net", DRIVERS=="?*", ATTR{type}=="32", ATTR{address}=="00:0c:29:a8:2e:1b", NAME="mlx4_ib3"
+
+vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+4.重启网络服务
+service network restart
+
+
+
+3-8 搭建Redis主从复制（读写分离）（17分钟）
