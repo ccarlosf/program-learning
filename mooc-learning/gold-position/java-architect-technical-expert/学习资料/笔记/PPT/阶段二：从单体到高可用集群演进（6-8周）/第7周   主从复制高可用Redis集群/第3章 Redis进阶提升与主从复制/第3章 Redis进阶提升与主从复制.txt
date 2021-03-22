@@ -175,3 +175,7 @@ OK
 1) "sex"
 2) "age"
 3) "imooc"
+
+
+
+3-5 附：Redis的持久化机制 - AOF
