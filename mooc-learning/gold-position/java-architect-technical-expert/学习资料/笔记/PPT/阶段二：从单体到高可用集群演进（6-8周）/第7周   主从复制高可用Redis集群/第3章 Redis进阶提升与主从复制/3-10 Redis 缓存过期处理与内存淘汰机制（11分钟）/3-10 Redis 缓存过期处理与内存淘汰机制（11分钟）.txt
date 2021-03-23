@@ -1,0 +1,84 @@
+1.hz 1秒抽查10次key 主动（定期删除）
+# Redis calls an internal function to perform many background tasks, like
+# closing connections of clients in timeout, purging expired keys that are
+# never requested, and so forth.
+#
+# Not all tasks are performed with the same frequency, but Redis checks for
+# tasks to perform according to the specified "hz" value.
+#
+# By default "hz" is set to 10. Raising the value will use more CPU when
+# Redis is idle, but at the same time will make Redis more responsive when
+# there are many keys expiring at the same time, and timeouts may be
+# handled with more precision.
+#
+# The range is between 1 and 500, however a value over 100 is usually not
+# a good idea. Most users should use the default of 10 and raise this up to
+# 100 only in environments where very low latency is required.
+hz 10
+
+2.maxmemory <bytes>设置最大内存（如果超过，redis会进行自动清理）
+############################## MEMORY MANAGEMENT ################################
+
+# Set a memory usage limit to the specified amount of bytes.
+# When the memory limit is reached Redis will try to remove keys
+# according to the eviction policy selected (see maxmemory-policy).
+#
+# If Redis can't remove keys according to the policy, or if the policy is
+# set to 'noeviction', Redis will start to reply with errors to commands
+# that would use more memory, like SET, LPUSH, and so on, and will continue
+# to reply to read-only commands like GET.
+#
+# This option is usually useful when using Redis as an LRU or LFU cache, or to
+# set a hard memory limit for an instance (using the 'noeviction' policy).
+#
+# WARNING: If you have replicas attached to an instance with maxmemory on,
+# the size of the output buffers needed to feed the replicas are subtracted
+# from the used memory count, so that network problems / resyncs will
+# not trigger a loop where keys are evicted, and in turn the output
+# buffer of replicas is full with DELs of keys evicted triggering the deletion
+# of more keys, and so forth until the database is completely emptied.
+#
+# In short... if you have replicas attached it is suggested that you set a lower
+# limit for maxmemory so that there is some free RAM on the system for replica
+# output buffers (but this is not needed if the policy is 'noeviction').
+#
+# maxmemory <bytes>
+
+3.清除算法maxmemory-policy noeviction（默认）
+noeviction -> Don't evict anything, just return an error on write operations.
+allkeys-lfu -> Evict any key using approximated LFU. 清理不常用到的所有缓存（常用）
+allkeys-random -> Remove a random key, any key. 随机删除缓存key
+volatile-lru -> Evict using approximated LRU among the keys with an expire set.清理不常用到的有过期时间的缓存
+volatile-random -> Remove a random key, any key. 随机删除有过期时间的缓存key
+volatile-ttl -> Remove the key with the nearest expire time (minor TTL) 删除即将缓存过期的key
+
+# MAXMEMORY POLICY: how Redis will select what to remove when maxmemory
+# is reached. You can select among five behaviors:
+#
+# volatile-lru -> Evict using approximated LRU among the keys with an expire set.
+# allkeys-lru -> Evict any key using approximated LRU.
+# volatile-lfu -> Evict using approximated LFU among the keys with an expire set.
+# allkeys-lfu -> Evict any key using approximated LFU.
+# volatile-random -> Remove a random key among the ones with an expire set.
+# allkeys-random -> Remove a random key, any key.
+# volatile-ttl -> Remove the key with the nearest expire time (minor TTL)
+# noeviction -> Don't evict anything, just return an error on write operations.
+#
+# LRU means Least Recently Used
+# LFU means Least Frequently Used
+#
+# Both LRU, LFU and volatile-ttl are implemented using approximated
+# randomized algorithms.
+#
+# Note: with any of the above policies, Redis will return an error on write
+#       operations, when there are no suitable keys for eviction.
+#
+#       At the date of writing these commands are: set setnx setex append
+#       incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd
+#       sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby
+#       zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby
+#       getset mset msetnx exec sort
+#
+# The default is:
+#
+# maxmemory-policy noeviction

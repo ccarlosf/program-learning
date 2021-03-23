@@ -42,4 +42,3 @@ repl-diskless-sync no
 # The delay is specified in seconds, and by default is 5 seconds. To disable
 # it entirely just set it to 0 seconds and the transfer will start ASAP.
 repl-diskless-sync-delay 5
-
