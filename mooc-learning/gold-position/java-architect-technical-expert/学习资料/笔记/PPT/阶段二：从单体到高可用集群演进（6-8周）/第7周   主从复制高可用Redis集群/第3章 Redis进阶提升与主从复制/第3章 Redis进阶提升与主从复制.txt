@@ -525,3 +525,7 @@ repl_backlog_active:1
 repl_backlog_size:1048576
 repl_backlog_first_byte_offset:45317
 repl_backlog_histlen:70309
+
+
+
+3-9 Redis无磁盘化复制原理解析（10分钟）
