@@ -661,3 +661,7 @@ volatile-ttl -> Remove the key with the nearest expire time (minor TTL) 删除�
 # The default is:
 #
 # maxmemory-policy noeviction
+
+
+
+3-11 附：Redis 缓存过期处理与内存淘汰机制.txt
