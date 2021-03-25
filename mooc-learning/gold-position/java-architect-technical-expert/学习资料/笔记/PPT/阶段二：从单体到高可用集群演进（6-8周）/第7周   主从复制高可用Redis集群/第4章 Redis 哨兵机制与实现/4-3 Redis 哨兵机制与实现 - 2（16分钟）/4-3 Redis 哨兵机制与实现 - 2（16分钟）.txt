@@ -1,0 +1,208 @@
+1.精简配置文件sentinel.conf
+/usr/local/redis
+vim sentinel.conf
+
+# Base
+protected-mode no
+port 26379
+daemonize yes
+pidfile /var/run/redis-sentinel.pid
+logfile /usr/local/redis/sentinel/redis-sentinel.log
+dir /usr/local/redis/sentinel
+
+# Core
+sentinel monitor imooc-master 192.168.253.155 6379 2
+sentinel auth-pass imooc-master imooc
+sentinel down-after-milliseconds imooc-master 10000
+sentinel parallel-syncs imooc-master 1
+sentinel failover-timeout imooc-master 180000
+
+2.Redis-1的sentinel.conf远程输入到Redis-2和Redis-3
+scp sentinel.conf root@192.168.253.156:/usr/local/redis/
+scp sentinel.conf root@192.168.253.157:/usr/local/redis/
+
+3.启动sentinel
+redis-1操作
+(1)启动sentinel /usr/local/redis/redis-sentinel
+提示报错信息
+Warning: no config file specified, using the default config. In order to specify a config file use redis-sentinel /path/to/sentinel.conf
+[root@pinyoyougou-docker redis]# redis-sentinel
+8973:X 25 Mar 2021 07:13:14.853 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+8973:X 25 Mar 2021 07:13:14.853 # Redis version=5.0.5, bits=64, commit=00000000, modified=0, pid=8973, just started
+8973:X 25 Mar 2021 07:13:14.853 # Warning: no config file specified, using the default config. In order to specify a config file use redis-sentinel /path/to/sentinel.conf
+8973:X 25 Mar 2021 07:13:14.853 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._
+           _.-``__ ''-._
+      _.-``    `.  `_.  ''-._           Redis 5.0.5 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._
+ (    '      ,       .-`  | `,    )     Running in sentinel mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 26379
+ |    `-._   `._    /     _.-'    |     PID: 8973
+  `-._    `-._  `-./  _.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |           http://redis.io
+  `-._    `-._`-.__.-'_.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |
+  `-._    `-._`-.__.-'_.-'    _.-'
+      `-._    `-.__.-'    _.-'
+          `-._        _.-'
+              `-.__.-'
+
+(2)查找redis-sentinel启动命令在哪
+[root@pinyoyougou-docker redis]# whereis redis-sentinel
+redis-sentinel: /usr/local/bin/redis-sentinel
+[root@pinyoyougou-docker redis]# cd /usr/local/bin
+[root@pinyoyougou-docker bin]# ll
+总用量 32748
+-rwxr-xr-x. 1 root root 4367400 3月  11 21:20 redis-benchmark
+-rwxr-xr-x. 1 root root 8117984 3月  11 21:20 redis-check-aof
+-rwxr-xr-x. 1 root root 8117984 3月  11 21:20 redis-check-rdb
+-rwxr-xr-x. 1 root root 4807752 3月  11 21:20 redis-cli
+lrwxrwxrwx. 1 root root      12 3月  11 21:20 redis-sentinel -> redis-server
+-rwxr-xr-x. 1 root root 8117984 3月  11 21:20 redis-server
+
+(3)指定配置文件再次启动redis-sentinel，提示文件不存在
+[root@pinyoyougou-docker local]# cd /usr/local/redis/
+[root@pinyoyougou-docker redis]# ll
+总用量 68
+-rw-r--r--. 1 root root 61824 3月  22 20:45 redis.conf
+-rw-r--r--. 1 root root   405 3月  24 22:24 sentinel.conf
+drwxr-xr-x. 2 root root    44 3月  23 21:17 working
+[root@pinyoyougou-docker redis]# redis-sentinel sentinel.conf
+
+*** FATAL CONFIG FILE ERROR ***
+Reading the configuration file, at line 6
+>>> 'logfile /usr/local/redis/sentinel/redis-sentinel.log'
+Can't open the log file: No such file or directory
+
+(4)创建运行所需要的目录(redis-1 redis-2 redis-3)
+mkdir /usr/local/redis/sentinel -p
+
+(6)运行sentinel(redis-1 redis-2 redis-3)
+redis-sentinel sentinel.conf
+
+(7)查看redis进程
+[root@pinyoyougou-docker redis]# ps -ef|grep redis
+root      3377     1  0 3月23 ?       00:06:53 /usr/local/bin/redis-server 0.0.0.0:6379
+root     10428     1  1 21:04 ?        00:00:00 redis-sentinel *:26379 [sentinel]
+root     10433  2168  0 21:05 pts/0    00:00:00 grep --color=auto redis
+
+(8)查看sentinel日志
+cd /usr/local/redis/sentinel
+[root@pinyoyougou-docker sentinel]# tail -f redis-sentinel.log
+10566:X 25 Mar 2021 21:01:37.702 # Configuration loaded
+10567:X 25 Mar 2021 21:01:37.765 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+10567:X 25 Mar 2021 21:01:37.766 * Running mode=sentinel, port=26379.
+10567:X 25 Mar 2021 21:01:37.767 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+10567:X 25 Mar 2021 21:01:37.772 # Sentinel ID is 4b6bbd3b03964274624fd319b37e6aeca92c18c9
+10567:X 25 Mar 2021 21:01:37.772 # +monitor master imooc-master 192.168.253.155 6379 quorum 2
+10567:X 25 Mar 2021 21:01:37.839 * +slave slave 192.168.253.156:6379 192.168.253.156 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:01:37.840 * +slave slave 192.168.253.157:6379 192.168.253.157 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:04:54.512 * +sentinel sentinel 1ed6e690d5b3a7d20e0e1a1935a9077ab6c1f637 192.168.253.156 26379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:04:57.350 * +sentinel sentinel d02b70653188a6f19e8928f2c18e8b5b83ec9828 192.168.253.157 26379 @ imooc-master 192.168.253.155 6379
+
+(9)测试
+redis-1操作
+登录redis redis-cli
+查看集群状态信息 info replication
+127.0.0.1:6379> info replication
+# Replication
+role:master
+connected_slaves:2
+slave0:ip=192.168.253.156,port=6379,state=online,offset=312115,lag=1
+slave1:ip=192.168.253.157,port=6379,state=online,offset=312115,lag=1
+master_replid:bbbdc3d54e70def49d9d93eb6a70b9186d82d0d7
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:312115
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:312115
+
+redis-2操作
+查看集群状态信息 info replication
+127.0.0.1:6379> info replication
+# Replication
+role:slave
+master_host:192.168.253.155
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:1
+master_sync_in_progress:0
+slave_repl_offset:328427
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_replid:bbbdc3d54e70def49d9d93eb6a70b9186d82d0d7
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:328427
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:328427
+
+停止redis-1
+/etc/init.d/redis_init_script stop
+redis-1 sentinel日志输出
+10567:X 25 Mar 2021 21:12:17.091 # +sdown master imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.174 # +odown master imooc-master 192.168.253.155 6379 #quorum 2/2
+10567:X 25 Mar 2021 21:12:17.174 # +new-epoch 1
+10567:X 25 Mar 2021 21:12:17.174 # +try-failover master imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.175 # +vote-for-leader 4b6bbd3b03964274624fd319b37e6aeca92c18c9 1
+10567:X 25 Mar 2021 21:12:17.180 # d02b70653188a6f19e8928f2c18e8b5b83ec9828 voted for 4b6bbd3b03964274624fd319b37e6aeca92c18c9 1
+10567:X 25 Mar 2021 21:12:17.223 # 1ed6e690d5b3a7d20e0e1a1935a9077ab6c1f637 voted for 4b6bbd3b03964274624fd319b37e6aeca92c18c9 1
+10567:X 25 Mar 2021 21:12:17.251 # +elected-leader master imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.251 # +failover-state-select-slave master imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.307 # +selected-slave slave 192.168.253.157:6379 192.168.253.157 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.307 * +failover-state-send-slaveof-noone slave 192.168.253.157:6379 192.168.253.157 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.363 * +failover-state-wait-promotion slave 192.168.253.157:6379 192.168.253.157 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.552 # +promoted-slave slave 192.168.253.157:6379 192.168.253.157 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.552 # +failover-state-reconf-slaves master imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:17.613 * +slave-reconf-sent slave 192.168.253.156:6379 192.168.253.156 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:18.331 # -odown master imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:18.636 * +slave-reconf-inprog slave 192.168.253.156:6379 192.168.253.156 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:18.636 * +slave-reconf-done slave 192.168.253.156:6379 192.168.253.156 6379 @ imooc-master 192.168.253.155 6379
+10567:X 25 Mar 2021 21:12:18.717 # +failover-end master imooc-master 192.168.2
+
+redis-2 集群状态信息
+127.0.0.1:6379> info replication
+# Replication
+role:slave
+master_host:192.168.253.157
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:0
+master_sync_in_progress:0
+slave_repl_offset:358482
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_replid:30cb87b6f8620311a2b1c4efc20cf971f4c01fe4
+master_replid2:bbbdc3d54e70def49d9d93eb6a70b9186d82d0d7
+master_repl_offset:358482
+second_repl_offset:348804
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:358482
+
+redis-3集群状态信息（成为主节点）
+127.0.0.1:6379> info replication
+# Replication
+role:master
+connected_slaves:1
+slave0:ip=192.168.253.156,port=6379,state=online,offset=361046,lag=0
+master_replid:30cb87b6f8620311a2b1c4efc20cf971f4c01fe4
+master_replid2:bbbdc3d54e70def49d9d93eb6a70b9186d82d0d7
+master_repl_offset:361046
+second_repl_offset:348804
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:361046
+
+redis-1重新启动后（成为从节点）
+/etc/init.d/redis_init_script start
