@@ -377,3 +377,7 @@ redis-1重新启动后（成为从节点）
 
 
 4-7 SpringBoot 集成Redis哨兵（5分钟）
+
+
+
+4-8 附：SpringBoot 集成Redis哨兵-配置
