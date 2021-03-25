@@ -1,0 +1,5 @@
+1.测试
+http://localhost:8088/redis/set?key=name&value=imooc
+http://localhost:8088/redis/get?key=name
+
+2.三个节点都有数据

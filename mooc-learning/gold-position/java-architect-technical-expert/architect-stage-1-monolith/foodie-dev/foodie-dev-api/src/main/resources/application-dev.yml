@@ -6,10 +6,17 @@ spring:
     url: jdbc:mysql://localhost:3306/foodie-shop-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     password: ILikeImooc,123
   redis:
+  # Redis 单机单实例
+#    database: 1
+#    host: 192.168.253.155
+#    port: 6379
+#    password: imooc
+    # Redis 哨兵模式
     database: 1
-    host: 192.168.253.155
-    port: 6379
     password: imooc
+    sentinel:
+      master: imooc-master
+      nodes: 192.168.253.155:26379,192.168.253.156:26379,192.168.253.157:26379
 
 mybatis:
   configuration:
