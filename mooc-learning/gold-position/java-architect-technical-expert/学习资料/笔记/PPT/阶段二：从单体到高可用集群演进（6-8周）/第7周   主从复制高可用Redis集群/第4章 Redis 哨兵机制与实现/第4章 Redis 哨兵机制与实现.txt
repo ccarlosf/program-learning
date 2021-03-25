@@ -361,3 +361,7 @@ repl_backlog_histlen:361046
 
 redis-1重新启动后（成为从节点）
 /etc/init.d/redis_init_script start
+
+
+
+4-4 解决原Master恢复后不同步问题
