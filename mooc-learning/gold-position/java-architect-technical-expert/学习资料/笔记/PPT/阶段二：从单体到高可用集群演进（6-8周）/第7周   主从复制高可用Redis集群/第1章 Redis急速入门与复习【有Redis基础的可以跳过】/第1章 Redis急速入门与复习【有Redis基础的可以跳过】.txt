@@ -97,6 +97,8 @@ cd /etc/init.d/
 vim redis_init_script
 CONF="/usr/local/redis/redis.conf"
 
+$CLIEXEC -a "imooc" -p $REDISPORT shutdown
+
 给redis脚本授予777权限
 chmod 777 redis_init_script
 
