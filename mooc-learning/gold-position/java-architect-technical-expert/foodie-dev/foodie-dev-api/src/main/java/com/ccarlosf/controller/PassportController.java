@@ -3,11 +3,13 @@ package com.ccarlosf.controller;
 import com.ccarlosf.pojo.Users;
 import com.ccarlosf.pojo.bo.ShopcartBO;
 import com.ccarlosf.pojo.bo.UserBO;
+import com.ccarlosf.pojo.vo.UsersVO;
 import com.ccarlosf.service.UserService;
 import com.ccarlosf.utils.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Api(value = "注册登录", tags = {"用于注册登录的相关接口"})
 @RestController
@@ -82,10 +85,14 @@ public class PassportController extends BaseController {
         // 4. 实现注册
         Users userResult = userService.createUser(userBO);
 
-        userResult = setNullProperty(userResult);
+//        userResult = setNullProperty(userResult);
+
+        // 实现用户的redis会话
+        UsersVO usersVO = conventUsersVO(userResult);
 
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
+                JsonUtils.objectToJson(usersVO), true);
+
 
         // 同步购物车数据
         synchShopcartData(userResult.getId(), request, response);
@@ -116,13 +123,14 @@ public class PassportController extends BaseController {
             return JSONResult.errorMsg("用户名或密码不正确");
         }
 
-        userResult = setNullProperty(userResult);
+        // userResult = setNullProperty(userResult);
+
+        // 实现用户的redis会话
+        UsersVO usersVO = conventUsersVO(userResult);
 
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
+                JsonUtils.objectToJson(usersVO), true);
 
-
-        // TODO 生成用户token，存入redis会话
         // 同步购物车数据
         synchShopcartData(userResult.getId(), request, response);
 
@@ -231,5 +239,17 @@ public class PassportController extends BaseController {
         // TODO 分布式会话中需要清除用户数据
 
         return JSONResult.ok();
+    }
+
+    public UsersVO conventUsersVO(Users user) {
+        // 实现用户的redis会话
+        String uniqueToken = UUID.randomUUID().toString().trim();
+        redisOperator.set(REDIS_USER_TOKEN + ":" + user.getId(),
+                uniqueToken);
+
+        UsersVO usersVO = new UsersVO();
+        BeanUtils.copyProperties(user, usersVO);
+        usersVO.setUserUniqueToken(uniqueToken);
+        return usersVO;
     }
 }
