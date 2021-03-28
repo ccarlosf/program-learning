@@ -10,3 +10,216 @@
 
 
 5-3 搭建Redis的三主三从集群模式（16分钟）
+1.Redis-Cluster-1操作
+(1).修改redis.conf
+cd /usr/local/redis/
+vim redis.conf
+
+搜索cluster
+/cluster
+################################ REDIS CLUSTER  ###############################
+
+# Normal Redis instances can't be part of a Redis Cluster; only nodes that are
+# started as cluster nodes can. In order to start a Redis instance as a
+# cluster node enable the cluster support uncommenting the following:
+#
+ cluster-enabled yes
+
+# Every cluster node has a cluster configuration file. This file is not
+# intended to be edited by hand. It is created and updated by Redis nodes.
+# Every Redis Cluster node requires a different cluster configuration file.
+# Make sure that instances running in the same system do not have
+# overlapping cluster configuration file names.
+#
+ cluster-config-file nodes-6379.conf
+
+# Cluster node timeout is the amount of milliseconds a node must be unreachable
+# for it to be considered in failure state.
+# Most other internal time limits are multiple of the node timeout.
+#
+ cluster-node-timeout 5000
+
+搜索appendonly
+/appendonly
+############################## APPEND ONLY MODE ###############################
+
+# By default Redis asynchronously dumps the dataset on disk. This mode is
+# good enough in many applications, but an issue with the Redis process or
+# a power outage may result into a few minutes of writes lost (depending on
+# the configured save points).
+#
+# The Append Only File is an alternative persistence mode that provides
+# much better durability. For instance using the default data fsync policy
+# (see later in the config file) Redis can lose just one second of writes in a
+# dramatic event like a server power outage, or a single write if something
+# wrong with the Redis process itself happens, but the operating system is
+# still running correctly.
+#
+# AOF and RDB persistence can be enabled at the same time without problems.
+# If the AOF is enabled on startup Redis will load the AOF, that is the file
+# with the better durability guarantees.
+#
+# Please check http://redis.io/topics/persistence for more information.
+
+appendonly yes
+
+(2)重启redis
+/etc/init.d/redis_init_script stop
+/etc/init.d/redis_init_script start
+
+(3)删除redis数据文件
+cd /usr/local/redis/working
+rm dump.rdb appendonly.aof
+
+(4)拷贝redis.conf到Redis-Cluster-2至Redis-Cluster-6
+scp redis.conf root@192.168.253.159:/usr/local/redis/
+scp redis.conf root@192.168.253.161:/usr/local/redis/
+scp redis.conf root@192.168.253.162:/usr/local/redis/
+scp redis.conf root@192.168.253.163:/usr/local/redis/
+scp redis.conf root@192.168.253.164:/usr/local/redis/
+
+2.Redis-Cluster-2至Redis-Cluster-6操作
+(1).删除数据文件
+cd /usr/local/redis/working
+rm dump.rdb
+
+(2).重启redis
+/etc/init.d/redis_init_script stop
+/etc/init.d/redis_init_script start
+
+(3).老版本的redis集群构建需要使用的ruby脚本
+[root@pinyoyougou-docker working]# ls /home/software/redis-5.0.5/src/*.rb/home/software/redis-5.0.5/src/redis-trib.rb
+
+3.Redis-Cluset-1集群构建
+(1).帮助文档命令
+redis-cli --cluster
+redis-cli --cluster help
+[root@pinyoyougou-docker working]# redis-cli --cluster help
+Cluster Manager Commands:
+  create         host1:port1 ... hostN:portN
+                 --cluster-replicas <arg>
+  check          host:port
+                 --cluster-search-multiple-owners
+  info           host:port
+  fix            host:port
+                 --cluster-search-multiple-owners
+  reshard        host:port
+                 --cluster-from <arg>
+                 --cluster-to <arg>
+                 --cluster-slots <arg>
+                 --cluster-yes
+                 --cluster-timeout <arg>
+                 --cluster-pipeline <arg>
+                 --cluster-replace
+  rebalance      host:port
+                 --cluster-weight <node1=w1...nodeN=wN>
+                 --cluster-use-empty-masters
+                 --cluster-timeout <arg>
+                 --cluster-simulate
+                 --cluster-pipeline <arg>
+                 --cluster-threshold <arg>
+                 --cluster-replace
+  add-node       new_host:new_port existing_host:existing_port
+                 --cluster-slave
+                 --cluster-master-id <arg>
+  del-node       host:port node_id
+  call           host:port command arg arg .. arg
+  set-timeout    host:port milliseconds
+  import         host:port
+                 --cluster-from <arg>
+                 --cluster-copy
+                 --cluster-replace
+  help
+
+(2).使用命令构建集群
+Redis-Cluster-1操作
+redis-cli -a imooc --cluster create 192.168.253.158:6379 192.168.253.159:6379 192.168.253.161:6379 192.168.253.162:6379 192.168.253.163:6379 192.168.253.164:6379 --cluster-replicas 1
+
+[root@pinyoyougou-docker working]# redis-cli -a imooc --cluster create 192.168.253.158:6379 192.168.253.159:6379 192.168.253.161:6379 192.168.253.162:6379 192.168.253.163:6379 192.168.253.164:6379 --cluster-replicas 1
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 192.168.253.163:6379 to 192.168.253.158:6379
+Adding replica 192.168.253.164:6379 to 192.168.253.159:6379
+Adding replica 192.168.253.162:6379 to 192.168.253.161:6379
+M: c3c46f97a94d15e9563b4663d418b28f373aef72 192.168.253.158:6379
+   slots:[0-5460] (5461 slots) master
+M: b486e589e48cf852c463e7fdaff32e723c352ed7 192.168.253.159:6379
+   slots:[5461-10922] (5462 slots) master
+M: 04adfae6ec6694413384ac92a3aa407169c28927 192.168.253.161:6379
+   slots:[10923-16383] (5461 slots) master
+S: 41056b4b69a1a7314224c0ee5234941204a29fa2 192.168.253.162:6379
+   replicates 04adfae6ec6694413384ac92a3aa407169c28927
+S: 5e2e6efa8f58396d4550a8eb4b3778d744235454 192.168.253.163:6379
+   replicates c3c46f97a94d15e9563b4663d418b28f373aef72
+S: c4a37e8e7924634adc3e733c19f3a367ffdb2783 192.168.253.164:6379
+   replicates b486e589e48cf852c463e7fdaff32e723c352ed7
+
+(3).查看集群状态呢信息
+Redis-Cluster-1操作
+redis-cli -a imooc --cluster check 192.168.253.158:6379
+redis-cli -a imooc --cluster check 192.168.253.163:6379
+
+[root@pinyoyougou-docker working]# redis-cli -a imooc --cluster check 192.168.253.158:6379
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+192.168.253.158:6379 (c3c46f97...) -> 0 keys | 5461 slots | 1 slaves.
+192.168.253.159:6379 (b486e589...) -> 0 keys | 5462 slots | 1 slaves.
+192.168.253.161:6379 (04adfae6...) -> 0 keys | 5461 slots | 1 slaves.
+[OK] 0 keys in 3 masters.
+0.00 keys per slot on average.
+>>> Performing Cluster Check (using node 192.168.253.158:6379)
+M: c3c46f97a94d15e9563b4663d418b28f373aef72 192.168.253.158:6379
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: 5e2e6efa8f58396d4550a8eb4b3778d744235454 192.168.253.163:6379
+   slots: (0 slots) slave
+   replicates c3c46f97a94d15e9563b4663d418b28f373aef72
+S: 41056b4b69a1a7314224c0ee5234941204a29fa2 192.168.253.162:6379
+   slots: (0 slots) slave
+   replicates 04adfae6ec6694413384ac92a3aa407169c28927
+M: b486e589e48cf852c463e7fdaff32e723c352ed7 192.168.253.159:6379
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+S: c4a37e8e7924634adc3e733c19f3a367ffdb2783 192.168.253.164:6379
+   slots: (0 slots) slave
+   replicates b486e589e48cf852c463e7fdaff32e723c352ed7
+M: 04adfae6ec6694413384ac92a3aa407169c28927 192.168.253.161:6379
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+
+[root@pinyoyougou-docker working]# redis-cli -a imooc --cluster check 192.168.253.163:6379
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+192.168.253.159:6379 (b486e589...) -> 0 keys | 5462 slots | 1 slaves.
+192.168.253.158:6379 (c3c46f97...) -> 0 keys | 5461 slots | 1 slaves.
+192.168.253.161:6379 (04adfae6...) -> 0 keys | 5461 slots | 1 slaves.
+[OK] 0 keys in 3 masters.
+0.00 keys per slot on average.
+>>> Performing Cluster Check (using node 192.168.253.163:6379)
+S: 5e2e6efa8f58396d4550a8eb4b3778d744235454 192.168.253.163:6379
+   slots: (0 slots) slave
+   replicates c3c46f97a94d15e9563b4663d418b28f373aef72
+S: c4a37e8e7924634adc3e733c19f3a367ffdb2783 192.168.253.164:6379
+   slots: (0 slots) slave
+   replicates b486e589e48cf852c463e7fdaff32e723c352ed7
+M: b486e589e48cf852c463e7fdaff32e723c352ed7 192.168.253.159:6379
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+M: c3c46f97a94d15e9563b4663d418b28f373aef72 192.168.253.158:6379
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+M: 04adfae6ec6694413384ac92a3aa407169c28927 192.168.253.161:6379
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+S: 41056b4b69a1a7314224c0ee5234941204a29fa2 192.168.253.162:6379
+   slots: (0 slots) slave
+   replicates 04adfae6ec6694413384ac92a3aa407169c28927
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
