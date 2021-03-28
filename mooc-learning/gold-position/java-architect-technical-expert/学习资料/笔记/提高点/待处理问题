@@ -28,7 +28,7 @@ String payReturnUrl = "http://api.z.mukewang.com:8088/foodie-dev-api/orders/noti
 
 
 阶段二：从单体到高可用集群演进（6-8周）
-第6周   LVS+Nginx实现高可用集群
+第6周 LVS+Nginx实现高可用集群
 1. 192.168.253.129服务器中nginx可以监听81端口，监听不了80和77端口
 访问 www.tomcats.com不可以，http://192.168.253.129/可以，为什么？
 
@@ -64,7 +64,7 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 
 
-第7周   主从复制高可用Redis集群
+第7周 主从复制高可用Redis集群
 1.不使用脚本的方式安装redis（单机版redis）
 
 2.下载安装最新版Redis Desktop Manager
@@ -87,5 +87,5 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 
 
-第8周   Redis缓存雪崩，穿透
+第8周 Redis缓存雪崩，穿透
 1.1-10 可能会遇到的面试题
