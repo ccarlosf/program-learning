@@ -223,3 +223,7 @@ S: 41056b4b69a1a7314224c0ee5234941204a29fa2 192.168.253.162:6379
 >>> Check for open slots...
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
+
+
+
+5-4 附：构建Redis集群
