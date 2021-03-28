@@ -7,3 +7,9 @@ http://localhost:8088/hello，被拦截
 2-2 分布式会话拦截器2 - 会话判断（12分钟）
 1.测试
 http://localhost:8088/hello，被拦截
+
+
+
+2-3 分布式会话拦截器3 - 错误返回（7分钟）
+1.测试
+http://localhost:8088/hello，被拦截
