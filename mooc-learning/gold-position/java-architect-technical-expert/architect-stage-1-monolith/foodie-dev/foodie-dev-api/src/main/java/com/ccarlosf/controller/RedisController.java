@@ -1,6 +1,7 @@
 package com.ccarlosf.controller;
 
 import com.ccarlosf.utils.RedisOperator;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @ApiIgnore
@@ -41,6 +43,33 @@ public class RedisController {
 //        redisTemplate.delete(key);
         redisOperator.del(key);
         return "OK";
+    }
+
+    /**
+     * 大量key查询
+     *
+     * @param keys
+     * @return
+     */
+    @GetMapping("/getALot")
+    public Object getALot(String... keys) {
+        List<String> resutl = Lists.newArrayList();
+        for (String k : keys) {
+            resutl.add(redisOperator.get(k));
+        }
+        return resutl;
+    }
+
+    /**
+     * 批量查询 mget
+     *
+     * @param keys
+     * @return
+     */
+    @GetMapping("/mget")
+    public Object mget(String... keys) {
+        List<String> keysList = Arrays.asList(keys);
+        return redisOperator.mget(keysList);
     }
 
 }

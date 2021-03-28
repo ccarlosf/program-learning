@@ -7,10 +7,10 @@ spring:
     password: ILikeImooc,123
   redis:
   # Redis 单机单实例
-#    database: 1
-#    host: 192.168.253.155
-#    port: 6379
-#    password: imooc
+    database: 1
+    host: 192.168.253.165
+    port: 6379
+    password: imooc
   # Redis 哨兵模式
 #    database: 1
 #    password: imooc
@@ -18,9 +18,9 @@ spring:
 #      master: imooc-master
 #      nodes: 192.168.253.155:26379,192.168.253.156:26379,192.168.253.157:26379
    # Redis 集群模式
-     password: imooc
-     cluster:
-       nodes: 192.168.253.158:6379,192.168.253.159:6379,192.168.253.161:6379,192.168.253.162:6379,192.168.253.163:6379,192.168.253.164:6379
+#     password: imooc
+#     cluster:
+#       nodes: 192.168.253.158:6379,192.168.253.159:6379,192.168.253.161:6379,192.168.253.162:6379,192.168.253.163:6379,192.168.253.164:6379
 
 mybatis:
   configuration:
