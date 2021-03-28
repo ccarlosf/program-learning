@@ -66,3 +66,4 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 1.为什么在用户上传头像和修改用户信息时，redis中存的uuid需要发生变化？
 2.使用SpringSession改造项目，例子localhost:8088/setSession @EnableRedisHttpSession
 3.SpringSession的原理
+4.interceptor包应当挪到和controller同级包
