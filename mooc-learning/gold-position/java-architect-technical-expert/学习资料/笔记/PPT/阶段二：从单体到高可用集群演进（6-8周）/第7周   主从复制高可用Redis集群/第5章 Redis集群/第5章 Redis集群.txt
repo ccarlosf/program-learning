@@ -1,0 +1,4 @@
+5-1 Redis-Cluster 集群（6分钟）
+1.安装redis Redis-Cluster-1操作
+
+2.复制克隆 Redis-Cluster-1到Redis-Cluster-6
