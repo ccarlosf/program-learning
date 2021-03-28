@@ -344,3 +344,24 @@ OK
 192.168.253.159:6379> keys *
 1) "name"
 192.168.253.159:6379>
+
+
+
+5-6 Springboot集成Redis集群（5分钟）
+1.启动项目
+http://localhost:8088/redis/set?key=addr&value=beijing
+http://localhost:8088/redis/get?key=addr
+[root@pinyoyougou-docker working]# redis-cli -c -a imooc -h 192.168.253.162 -p 6379
+192.168.253.159:6379> get addr
+-> Redirected to slot [12790] located at 192.168.253.161:6379
+"beijing"
+
+
+http://localhost:8088/redis/set?key=email&value=admin@imooc.com
+http://localhost:8088/redis/get?key=email
+
+192.168.253.161:6379> keys *
+1) "addr"
+192.168.253.161:6379> get email
+-> Redirected to slot [10780] located at 192.168.253.159:6379
+"admin@imooc.com"
