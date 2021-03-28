@@ -3,21 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>gold-position</artifactId>
+        <artifactId>java-architect-technical-expert</artifactId>
         <groupId>com.ccarlosf</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>java-architect-technical-expert</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>foodie-dev</module>
-        <module>foodie-payment</module>
-        <module>architect-stage-1-monolith</module>
-        <module>architect-stage-2-cluster</module>
-        <module>architect-stage-3-distributed</module>
-    </modules>
+    <artifactId>architect-stage-3-distributed</artifactId>
 
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
 </project>
