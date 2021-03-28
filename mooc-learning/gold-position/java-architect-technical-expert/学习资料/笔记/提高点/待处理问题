@@ -67,3 +67,8 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 2.使用SpringSession改造项目，例子localhost:8088/setSession @EnableRedisHttpSession
 3.SpringSession的原理
 4.interceptor包应当挪到和controller同级包
+5.if (!uniqueToken.equals(userToken)) {
+                      // TODO 为什么
+                      System.out.println("账号在异地登录...");
+                      return false;
+                  }
