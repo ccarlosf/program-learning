@@ -1,0 +1,4 @@
+1.http://localhost:8088/login
+用户名：user
+密码：Using generated security password: 8b27b59b-c9ca-4329-83bf-2f1bad79c484（控制台日志打印）
+

@@ -1,28 +1,17 @@
 阶段一：单体电商项目架构，开发与上线（1~5周）
 1.SpringBoot默认Mysql版本8与版本使用的5冲突问题？
-
 2.内网穿透工具natapp的使用
-
 3.延迟队列，关闭超时订单
-
 4.商品搜索使用ElasticSearch
-
 5.扣减库存使用分布式锁
-
 6.使用构造器注入方式
-
 7.VO拆分出门户端和个人中心端
-
 8.使用BaseService中的setterPagedGrid简化代码
-
 9.部署支付中心 生产环境
 测试支付流程、回调通知，有8088端口号
 String payReturnUrl = "http://api.z.mukewang.com:8088/foodie-dev-api/orders/notifyMerchantOrderPaid";
-
 10.1-20  【加餐】mybatis项目面试题
-
 11.1-21  【加餐】经历了拼多多5轮Java面试，都面了些啥？
-
 12.单机架构，应用服务器部署，hosts文件配置域名测试
 
 
@@ -31,58 +20,38 @@ String payReturnUrl = "http://api.z.mukewang.com:8088/foodie-dev-api/orders/noti
 第6周 LVS+Nginx实现高可用集群
 1. 192.168.253.129服务器中nginx可以监听81端口，监听不了80和77端口
 访问 www.tomcats.com不可以，http://192.168.253.129/可以，为什么？
-
 2.部署支付中心 生产环境 nginx-tomcat集群模式 测试支付流程
 去掉8088端口号，回调通知测试
 String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMerchantOrderPaid";
-
 3. 3-6 把Keepalived 注册为系统服务（7分钟）（已解决）
 无法通过vip 192.168.253.161 进行访问
-
 4../keepalived启动的服务无法通过systemctl stop keepalived.service停止？
-
 5. 3-13 实现keepalived双主热备 主从节点加入脚本自动检查启动nginx
-
 6.keepalived主备模式和双主热备模式，部署项目
 主备模式：在一个时间点，只有一台nginx
 双主热备：在一个时间点，有两台nginx提供服务，经过DNS解析后，通过VIP访问
-
 7.搭建Keepalived+Lvs+Nginx高可用集群负载均衡，（单LVS和多LVS）部署项目
-
 8.充电实现多LVS多节点部署，不仅要实现LVS的健康检查，还要实现nginx集群里自动重启keepalived提供的健康检查（nginx内不需vip，只需要健康检查即可）
 多LVS节点部署，不仅要实现LVS的健康检查，还要实现nginx集群里自动重启keepalived提供的健康检查（去除主备模式、和双主热备模式中的虚拟VIP，因为是直接通过LVS访问的，没必要加入）
 即实现LVS的健康检查和nginx的主备（健康检查）
 可以实现即实现LVS的健康检查和nginx的双主热备（健康检查），因为有两个人vip
-
 9.主备模式（双机主备）、双主热备，实现nginx集群里自动重启keepalived提供的健康检查（从节点加入keepalived自动重启nginx脚本）
-
 10.单LVS节点使用配置文件部署，而不是命令行（没完成是因为keepalived才支持配置文件形式）
-
 11.搭建双主热备LVS
-
 12.关闭虚拟机后，重新运行LVS+keepalived+nginx主备模式，nginx+keepalived双机主备和双主热备模式
 
 
 
 第7周 主从复制高可用Redis集群
 1.不使用脚本的方式安装redis（单机版redis）
-
 2.下载安装最新版Redis Desktop Manager
-
 3.项目使用构造器注入
-
 4.首页分类存入缓存中
-
 5.安装最新版Navicat
-
 6.使用lombok优化项目
-
 7.SpringBoot已经整合了Redis哨兵模式，还要整合一主一从、一主二从模式
-
 8.搭建redis三主集群（不需要从节点）
-
 9.redis三主三从集群中，触发主备切换
-
 10.搭建redis三从六从集群
 
 
@@ -95,3 +64,5 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 阶段三：分布式架构-逐个击破分布式核心问题（9-17周）
 第9周   分布式会话与单点登录SSO
 1.为什么在用户上传头像和修改用户信息时，redis中存的uuid需要发生变化？
+2.使用SpringSession改造项目，例子localhost:8088/setSession @EnableRedisHttpSession
+3.SpringSession的原理
