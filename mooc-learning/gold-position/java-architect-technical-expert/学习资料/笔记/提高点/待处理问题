@@ -89,3 +89,9 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 第8周 Redis缓存雪崩，穿透
 1.1-10 可能会遇到的面试题
+
+
+
+阶段三：分布式架构-逐个击破分布式核心问题（9-17周）
+第9周   分布式会话与单点登录SSO
+1.为什么在用户上传头像和修改用户信息时，redis中存的uuid需要发生变化？

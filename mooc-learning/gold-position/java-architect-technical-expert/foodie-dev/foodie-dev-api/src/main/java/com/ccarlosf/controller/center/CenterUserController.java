@@ -4,6 +4,7 @@ package com.ccarlosf.controller.center;
 import com.ccarlosf.controller.BaseController;
 import com.ccarlosf.pojo.Users;
 import com.ccarlosf.pojo.bo.center.CenterUserBO;
+import com.ccarlosf.pojo.vo.UsersVO;
 import com.ccarlosf.resource.FileUpload;
 import com.ccarlosf.service.center.CenterUserService;
 import com.ccarlosf.utils.CookieUtils;
@@ -125,11 +126,12 @@ public class CenterUserController extends BaseController {
         // 更新用户头像到数据库
         Users userResult = centerUserService.updateUserFace(userId, finalUserFaceUrl);
 
-        userResult = setNullProperty(userResult);
-        CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
+        // 用户信息同步到redis中
+        UsersVO usersVO = conventUsersVO(userResult);
 
-        // TODO 后续要改，增加令牌token，会整合进redis，分布式会话
+//        userResult = setNullProperty(userResult);
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(usersVO), true);
 
         return JSONResult.ok();
     }
@@ -154,11 +156,12 @@ public class CenterUserController extends BaseController {
 
         Users userResult = centerUserService.updateUserInfo(userId, centerUserBO);
 
-        userResult = setNullProperty(userResult);
-        CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
+        // 用户信息同步到redis中
+        UsersVO usersVO = conventUsersVO(userResult);
 
-        // TODO 后续要改，增加令牌token，会整合进redis，分布式会话
+//        userResult = setNullProperty(userResult);
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(usersVO), true);
 
         return JSONResult.ok();
     }
