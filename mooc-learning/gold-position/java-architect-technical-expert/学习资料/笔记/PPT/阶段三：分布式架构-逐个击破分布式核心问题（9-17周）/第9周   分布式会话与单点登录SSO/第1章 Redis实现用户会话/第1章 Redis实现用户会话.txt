@@ -23,3 +23,7 @@
 
 
 1-7 SpringSession实现用户会话（12分钟）
+
+
+
+1-8 附：SpringSession 整合
