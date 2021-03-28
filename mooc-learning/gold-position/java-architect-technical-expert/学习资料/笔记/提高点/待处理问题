@@ -84,3 +84,8 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 9.redis三主三从集群中，触发主备切换
 
 10.搭建redis三从六从集群
+
+
+
+第8周   Redis缓存雪崩，穿透
+1.1-10 可能会遇到的面试题
