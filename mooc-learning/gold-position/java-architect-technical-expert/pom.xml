@@ -12,6 +12,8 @@
     <artifactId>java-architect-technical-expert</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>foodie-dev</module>
+        <module>foodie-payment</module>
         <module>architect-stage-1-monolith</module>
         <module>architect-stage-2-cluster</module>
     </modules>

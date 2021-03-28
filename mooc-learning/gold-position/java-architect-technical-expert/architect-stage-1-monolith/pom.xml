@@ -12,9 +12,7 @@
     <artifactId>architect-stage-1-monolith</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>foodie-dev</module>
         <module>mybatis-generator</module>
-        <module>foodie-payment</module>
     </modules>
 
 
