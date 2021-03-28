@@ -1,6 +1,7 @@
 package com.ccarlosf.controller.interceptor;
 
 import com.ccarlosf.utils.JSONResult;
+import com.ccarlosf.utils.JsonUtils;
 import com.ccarlosf.utils.RedisOperator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class UserTokenInterceptor implements HandlerInterceptor {
 
@@ -37,17 +40,20 @@ public class UserTokenInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(userToken)) {
             String uniqueToken = redisOperator.get(REDIS_USER_TOKEN + ":" + userId);
             if (StringUtils.isBlank(uniqueToken)) {
-                System.out.println("请登录...");
+//                System.out.println("请登录...");
+                returnErrorResponse(response, JSONResult.errorMsg("请登录..."));
                 return false;
             } else {
                 if (!uniqueToken.equals(userToken)) {
                     // TODO 为什么
-                    System.out.println("账号在异地登录...");
+//                    System.out.println("账号在异地登录...");
+                    returnErrorResponse(response, JSONResult.errorMsg("账号在异地登录..."));
                     return false;
                 }
             }
         } else {
-            System.out.println("请登录...");
+//            System.out.println("请登录...");
+            returnErrorResponse(response, JSONResult.errorMsg("请登录..."));
             return false;
         }
 
@@ -59,6 +65,28 @@ public class UserTokenInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    public void returnErrorResponse(HttpServletResponse response,
+                                    JSONResult result) {
+        OutputStream out = null;
+        try {
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("text/json");
+            out = response.getOutputStream();
+            out.write(JsonUtils.objectToJson(result).getBytes("utf-8"));
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
     /**
      * 请求访问controller之后，渲染视图之前
