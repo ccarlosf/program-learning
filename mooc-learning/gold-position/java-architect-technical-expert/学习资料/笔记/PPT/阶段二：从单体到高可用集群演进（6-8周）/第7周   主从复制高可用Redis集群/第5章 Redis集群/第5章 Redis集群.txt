@@ -2,3 +2,7 @@
 1.安装redis Redis-Cluster-1操作
 
 2.复制克隆 Redis-Cluster-1到Redis-Cluster-6
+
+
+
+5-2 附：Redis 集群与环境准备
