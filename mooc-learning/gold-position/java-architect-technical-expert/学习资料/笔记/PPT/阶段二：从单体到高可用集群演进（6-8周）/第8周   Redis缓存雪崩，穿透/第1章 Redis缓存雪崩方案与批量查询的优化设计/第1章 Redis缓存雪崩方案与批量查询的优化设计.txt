@@ -24,3 +24,17 @@ http://localhost:8088/redis/getALot?keys=c1,c2,c3,c4,c5,c6,c7,c8,c9
 
 2.批量查询
 http://localhost:8088/redis/mget?keys=c1,c2,c3,c4,c5,c6,c7,c8,c9
+
+
+
+1-7 pipeline 批量查询优化（11分钟）
+ /**
+     * 批量查询 pipeline
+     * @param keys
+     * @return
+     */
+    @GetMapping("/batchGet")
+    public Object batchGet(String... keys) {
+        List<String> keysList = Arrays.asList(keys);
+        return redisOperator.batchGet(keysList);
+    }
