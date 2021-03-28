@@ -79,4 +79,8 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 7.SpringBoot已经整合了Redis哨兵模式，还要整合一主一从、一主二从模式
 
-8.redis搭建三主集群
+8.搭建redis三主集群（不需要从节点）
+
+9.redis三主三从集群中，触发主备切换
+
+10.搭建redis三从六从集群
