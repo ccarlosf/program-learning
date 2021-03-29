@@ -1,0 +1,5 @@
+修改hosts文件
+127.0.0.1 www.mtv.com
+127.0.0.1 www.music.com
+127.0.0.1 www.sso.com
+127.0.0.1 www.cas.com
