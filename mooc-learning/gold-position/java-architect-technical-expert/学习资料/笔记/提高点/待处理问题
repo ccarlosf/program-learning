@@ -72,3 +72,4 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
                       System.out.println("账号在异地登录...");
                       return false;
                   }
+6.foodie-sso 为什么缺失jackson-databind此包项目运行不起来

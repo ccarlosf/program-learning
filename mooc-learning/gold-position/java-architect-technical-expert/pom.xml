@@ -14,6 +14,7 @@
     <modules>
         <module>foodie-dev</module>
         <module>foodie-payment</module>
+        <module>foodie-sso</module>
         <module>architect-stage-1-monolith</module>
         <module>architect-stage-2-cluster</module>
         <module>architect-stage-3-distributed</module>
