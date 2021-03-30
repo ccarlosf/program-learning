@@ -1,0 +1,2 @@
+访问http://www.mtv.com:8080/sso-mtv/
+跳转到单点登录页面

@@ -73,3 +73,4 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
                       return false;
                   }
 6.foodie-sso 为什么缺失jackson-databind此包项目运行不起来
+             spring-boot-starter-thymeleaf 为什么要指定版本号才可以
