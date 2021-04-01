@@ -1,54 +1,7 @@
-package com.ccarlosf.controller;
+访问http://www.mtv.com:8080/sso-mtv/
+跳转到单点登录页面
 
-import com.ccarlosf.pojo.Users;
-import com.ccarlosf.pojo.vo.UsersVO;
-import com.ccarlosf.service.UserService;
-import com.ccarlosf.utils.JsonUtils;
-import com.ccarlosf.utils.MD5Utils;
-import com.ccarlosf.utils.RedisOperator;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
-
-@Controller
-public class SSOController {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RedisOperator redisOperator;
-
-    public static final String REDIS_USER_TOKEN = "redis_user_token";
-    public static final String REDIS_USER_TICKET = "redis_user_ticket";
-    public static final String REDIS_TMP_TICKET = "redis_tmp_ticket";
-
-    public static final String COOKIE_USER_TICKET = "cookie_user_ticket";
-
-    @GetMapping("/login")
-    public String login(String returnUrl,
-                        Model model,
-                        HttpServletRequest request,
-                        HttpServletResponse response) {
-
-        model.addAttribute("returnUrl", returnUrl);
-
-        // TODO 后续完善校验是否登录
-
-        // 用户从未登录过，第一次进入则跳转到CAS的统一登录页面
-        return "login";
-    }
-
-    /**
+   /**
      * CAS的统一登录接口
      * 目的：
      * 1. 登录后创建用户的全局会话                 ->  uniqueToken
@@ -129,4 +82,3 @@ public class SSOController {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
-}
