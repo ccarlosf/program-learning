@@ -641,3 +641,399 @@ Response:
 
 
 2-13 附：文档乐观锁控制 if_seq_no与if_primary_term
+1.标准分词
+http://192.168.253.166:9200/_analyze   POST
+(1).请求响应1
+Request1:
+{
+    "analyzer": "standard",
+    "text": "I study in imooc.com"
+}
+
+Response1:
+{
+    "tokens": [
+        {
+            "token": "i",
+            "start_offset": 0,
+            "end_offset": 1,
+            "type": "<ALPHANUM>",
+            "position": 0
+        },
+        {
+            "token": "study",
+            "start_offset": 2,
+            "end_offset": 7,
+            "type": "<ALPHANUM>",
+            "position": 1
+        },
+        {
+            "token": "in",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "<ALPHANUM>",
+            "position": 2
+        },
+        {
+            "token": "imooc.com",
+            "start_offset": 11,
+            "end_offset": 20,
+            "type": "<ALPHANUM>",
+            "position": 3
+        }
+    ]
+}
+
+(2).请求响应2:
+Request2:
+{
+    "analyzer": "standard",
+    "text": "我在慕课网学习"
+}
+
+Response2:
+{
+    "tokens": [
+        {
+            "token": "我",
+            "start_offset": 0,
+            "end_offset": 1,
+            "type": "<IDEOGRAPHIC>",
+            "position": 0
+        },
+        {
+            "token": "在",
+            "start_offset": 1,
+            "end_offset": 2,
+            "type": "<IDEOGRAPHIC>",
+            "position": 1
+        },
+        {
+            "token": "慕",
+            "start_offset": 2,
+            "end_offset": 3,
+            "type": "<IDEOGRAPHIC>",
+            "position": 2
+        },
+        {
+            "token": "课",
+            "start_offset": 3,
+            "end_offset": 4,
+            "type": "<IDEOGRAPHIC>",
+            "position": 3
+        },
+        {
+            "token": "网",
+            "start_offset": 4,
+            "end_offset": 5,
+            "type": "<IDEOGRAPHIC>",
+            "position": 4
+        },
+        {
+            "token": "学",
+            "start_offset": 5,
+            "end_offset": 6,
+            "type": "<IDEOGRAPHIC>",
+            "position": 5
+        },
+        {
+            "token": "习",
+            "start_offset": 6,
+            "end_offset": 7,
+            "type": "<IDEOGRAPHIC>",
+            "position": 6
+        }
+    ]
+}
+
+2.基于索引库分词
+http://192.168.253.166:9200/my_doc/_analyze   POST
+Request:
+{
+    "analyzer": "standard",
+    "field": "name",
+    "text": "study in imooc"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "study",
+            "start_offset": 0,
+            "end_offset": 5,
+            "type": "<ALPHANUM>",
+            "position": 0
+        },
+        {
+            "token": "in",
+            "start_offset": 6,
+            "end_offset": 8,
+            "type": "<ALPHANUM>",
+            "position": 1
+        },
+        {
+            "token": "imooc",
+            "start_offset": 9,
+            "end_offset": 14,
+            "type": "<ALPHANUM>",
+            "position": 2
+        }
+    ]
+}
+
+3.simple分词（去除非字幕）
+http://192.168.253.166:9200/_analyze   POST
+Request:
+{
+    "analyzer": "simple",
+    "text": "My 1 name 2 is Peter Parker,I am a 3 Super Hero"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "my",
+            "start_offset": 0,
+            "end_offset": 2,
+            "type": "word",
+            "position": 0
+        },
+        {
+            "token": "name",
+            "start_offset": 5,
+            "end_offset": 9,
+            "type": "word",
+            "position": 1
+        },
+        {
+            "token": "is",
+            "start_offset": 12,
+            "end_offset": 14,
+            "type": "word",
+            "position": 2
+        },
+        {
+            "token": "peter",
+            "start_offset": 15,
+            "end_offset": 20,
+            "type": "word",
+            "position": 3
+        },
+        {
+            "token": "parker",
+            "start_offset": 21,
+            "end_offset": 27,
+            "type": "word",
+            "position": 4
+        },
+        {
+            "token": "i",
+            "start_offset": 28,
+            "end_offset": 29,
+            "type": "word",
+            "position": 5
+        },
+        {
+            "token": "am",
+            "start_offset": 30,
+            "end_offset": 32,
+            "type": "word",
+            "position": 6
+        },
+        {
+            "token": "a",
+            "start_offset": 33,
+            "end_offset": 34,
+            "type": "word",
+            "position": 7
+        },
+        {
+            "token": "super",
+            "start_offset": 37,
+            "end_offset": 42,
+            "type": "word",
+            "position": 8
+        },
+        {
+            "token": "hero",
+            "start_offset": 43,
+            "end_offset": 47,
+            "type": "word",
+            "position": 9
+        }
+    ]
+}
+
+4.whitespace分词
+http://192.168.253.166:9200/_analyze   POST
+Request:
+{
+    "analyzer": "whitespace",
+    "text": "My name is Peter Parker,I am a Super Hero"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "My",
+            "start_offset": 0,
+            "end_offset": 2,
+            "type": "word",
+            "position": 0
+        },
+        {
+            "token": "name",
+            "start_offset": 3,
+            "end_offset": 7,
+            "type": "word",
+            "position": 1
+        },
+        {
+            "token": "is",
+            "start_offset": 8,
+            "end_offset": 10,
+            "type": "word",
+            "position": 2
+        },
+        {
+            "token": "Peter",
+            "start_offset": 11,
+            "end_offset": 16,
+            "type": "word",
+            "position": 3
+        },
+        {
+            "token": "Parker,I",
+            "start_offset": 17,
+            "end_offset": 25,
+            "type": "word",
+            "position": 4
+        },
+        {
+            "token": "am",
+            "start_offset": 26,
+            "end_offset": 28,
+            "type": "word",
+            "position": 5
+        },
+        {
+            "token": "a",
+            "start_offset": 29,
+            "end_offset": 30,
+            "type": "word",
+            "position": 6
+        },
+        {
+            "token": "Super",
+            "start_offset": 31,
+            "end_offset": 36,
+            "type": "word",
+            "position": 7
+        },
+        {
+            "token": "Hero",
+            "start_offset": 37,
+            "end_offset": 41,
+            "type": "word",
+            "position": 8
+        }
+    ]
+}
+
+5.stop分词
+http://192.168.253.166:9200/_analyze   POST
+Request:
+{
+    "analyzer": "stop",
+    "text": "My name is Peter Parker,I am a Super Hero"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "my",
+            "start_offset": 0,
+            "end_offset": 2,
+            "type": "word",
+            "position": 0
+        },
+        {
+            "token": "name",
+            "start_offset": 3,
+            "end_offset": 7,
+            "type": "word",
+            "position": 1
+        },
+        {
+            "token": "peter",
+            "start_offset": 11,
+            "end_offset": 16,
+            "type": "word",
+            "position": 3
+        },
+        {
+            "token": "parker",
+            "start_offset": 17,
+            "end_offset": 23,
+            "type": "word",
+            "position": 4
+        },
+        {
+            "token": "i",
+            "start_offset": 24,
+            "end_offset": 25,
+            "type": "word",
+            "position": 5
+        },
+        {
+            "token": "am",
+            "start_offset": 26,
+            "end_offset": 28,
+            "type": "word",
+            "position": 6
+        },
+        {
+            "token": "super",
+            "start_offset": 31,
+            "end_offset": 36,
+            "type": "word",
+            "position": 8
+        },
+        {
+            "token": "hero",
+            "start_offset": 37,
+            "end_offset": 41,
+            "type": "word",
+            "position": 9
+        }
+    ]
+}
+
+6.keyword分词
+http://192.168.253.166:9200/_analyze   POST
+Request:
+{
+    "analyzer": "keyword",
+    "text": "My name is Peter Parker,I am a Super Hero"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "My name is Peter Parker,I am a Super Hero",
+            "start_offset": 0,
+            "end_offset": 41,
+            "type": "word",
+            "position": 0
+        }
+    ]
+}
+
+
+
+2-14 分词与内置分词器（11分钟）
