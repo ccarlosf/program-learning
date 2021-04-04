@@ -31,3 +31,7 @@ Response:
     "shards_acknowledged": true,
     "index": "index_temp"
 }
+
+
+
+2-4 附：索引的mappings映射
