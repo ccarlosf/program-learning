@@ -1,32 +1,3 @@
-1-1 本章概述（7分钟）
-
-
-
-1-2  【重中之重】大家学习中有疑问该怎么办？
-
-
-
-1-3 分布式搜索引擎：Lucene VS Solr VS Elasticsearch（8分钟）
-
-
-
-1-4 Elasticsearch 核心术语（8分钟）
-
-
-
-1-5 附：Elasticsearch 核心术语
-
-
-
-1-6 Elasticsearch 集群架构原理（4分钟）
-
-
-
-1-7 什么是倒排索引（6分钟）
-
-
-
-1-8 安装 Elasticsearch（19分钟）
 1.上传elasticsearch-7.4.2-linux-x86_64.tar.gz至服务器
 
 2.解压elasticsearch-7.4.2-linux-x86_64.tar.gz
