@@ -198,3 +198,7 @@ Request5:
     "birthday": "1989-03-14",
     "face": "https://www.imooc.com/static/img/index/logo.png"
 }
+
+
+
+3-2 附：DSL搜索 - 数据准备
