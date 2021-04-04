@@ -202,3 +202,57 @@
         // 验证成功，返回OK，携带用户会话
         return JSONResult.ok(JsonUtils.jsonToPojo(userRedis, UsersVO.class));
     }
+
+
+
+3-10 CAS单点登录 - 二次登录验证全局门票（8分钟）
+访问http://www.mtv.com:8080/sso-music/
+显示已登录页面
+ @GetMapping("/login")
+    public String login(String returnUrl,
+                        Model model,
+                        HttpServletRequest request,
+                        HttpServletResponse response) {
+
+        model.addAttribute("returnUrl", returnUrl);
+
+        // 1. 获取userTicket门票，如果cookie中能够获取到，证明用户登录过，此时签发一个一次性的临时票据并且回跳
+        String userTicket = getCookie(request, COOKIE_USER_TICKET);
+
+        boolean isVerified = verifyUserTicket(userTicket);
+        if (isVerified) {
+            String tmpTicket = createTmpTicket();
+            return "redirect:" + returnUrl + "?tmpTicket=" + tmpTicket;
+        }
+
+
+        // 2. 用户从未登录过，第一次进入则跳转到CAS的统一登录页面
+        return "login";
+    }
+
+    /**
+     * 校验CAS全局用户门票
+     * @param userTicket
+     * @return
+     */
+    private boolean verifyUserTicket(String userTicket) {
+
+        // 0. 验证CAS门票不能为空
+        if (StringUtils.isBlank(userTicket)) {
+            return false;
+        }
+
+        // 1. 验证CAS门票是否有效
+        String userId = redisOperator.get(REDIS_USER_TICKET + ":" + userTicket);
+        if (StringUtils.isBlank(userId)) {
+            return false;
+        }
+
+        // 2. 验证门票对应的user会话是否存在
+        String userRedis = redisOperator.get(REDIS_USER_TOKEN + ":" + userId);
+        if (StringUtils.isBlank(userRedis)) {
+            return false;
+        }
+
+        return true;
+    }
