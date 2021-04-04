@@ -1,0 +1,45 @@
+(1).根据id查询
+http://192.168.253.166:9200/my_doc/_doc/1   GET
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 8,
+    "_seq_no": 21,
+    "_primary_term": 1,
+    "found": true,
+    "_source": {
+        "id": 1,
+        "name": "update-imooc",
+        "desc": "慕课网很强大！",
+        "create_date": "2020-12-25"
+    }
+}
+
+(2).查询所有文档信息
+http://192.168.253.166:9200/my_doc/_doc/_search   GET
+
+(3).根据id查询特定字段
+http://192.168.253.166:9200/my_doc/_doc/1?_source=id,name   GET
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 8,
+    "_seq_no": 21,
+    "_primary_term": 1,
+    "found": true,
+    "_source": {
+        "name": "update-imooc",
+        "id": 1
+    }
+}
+
+(4).查询所有文档特定字段
+http://192.168.253.166:9200/my_doc/_doc/_search?_source=id,name   GET
+
+(5).根据id查询文档是否存在
+http://192.168.253.166:9200/my_doc/_doc/1   HEAD
+响应状态码:存在200，不存在404
