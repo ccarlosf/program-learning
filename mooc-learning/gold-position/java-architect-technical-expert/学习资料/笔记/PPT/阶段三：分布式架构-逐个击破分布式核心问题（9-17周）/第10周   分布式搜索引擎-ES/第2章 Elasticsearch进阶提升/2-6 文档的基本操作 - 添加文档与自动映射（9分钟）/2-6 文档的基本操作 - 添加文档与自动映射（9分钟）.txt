@@ -1,0 +1,181 @@
+1.添加文档1
+http://192.168.253.166:9200/my_doc/_doc/1   POST
+Request:
+{
+    "id": 1001,
+    "name": "imooc-1",
+    "desc": "imooc is very good, 慕课网非常牛！",
+    "create_date": "2019-12-24"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 0,
+    "_primary_term": 1
+}
+
+2.添加文档2
+http://192.168.253.166:9200/my_doc/_doc/2   POST
+Request:
+{
+    "id": 1002,
+    "name": "imooc-2",
+    "desc": "imooc is very fashion, 慕课网非常时尚！",
+    "create_date": "2019-12-25"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 2,
+    "result": "updated",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 1,
+    "_primary_term": 1
+}
+
+3.添加文档3
+http://192.168.253.166:9200/my_doc/_doc/3   POST
+Request:
+{
+    "id": 1003,
+    "name": "imooc-3",
+    "desc": "imooc is niubility, 慕课网很好很强大！",
+    "create_date": "2019-12-26"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 2,
+    "result": "updated",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 1,
+    "_primary_term": 1
+}
+
+4.添加文档4:
+http://192.168.253.166:9200/my_doc/_doc/4   POST
+Request:
+{
+    "id": 1004,
+    "name": "imooc-4",
+    "desc": "imooc is good~",
+    "create_date": "2019-12-27"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "4",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 7,
+    "_primary_term": 1
+}
+
+5.添加文档5
+http://192.168.253.166:9200/my_doc/_doc/5   POST
+Request:
+{
+    "id": 1004,
+    "name": "imooc-5",
+    "desc": "慕课网 is 强大！",
+    "create_date": "2019-12-28"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "4",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 7,
+    "_primary_term": 1
+}
+
+6.添加文档6
+http://192.168.253.166:9200/my_doc/_doc/ POST
+Request:
+{
+    "id": 1006,
+    "name": "imooc-6",
+    "desc": "慕课网是一个强大网站！",
+    "create_date": "2019-12-29"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "edM2nHgBCUz0_7OR6T4N",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 9,
+    "_primary_term": 1
+}
+
+7.添加文档7
+http://192.168.253.166:9200/my_doc/_doc/ POST
+Request:
+{
+    "id": 1008,
+    "name": "imooc-8",
+    "desc": "慕课网是很好看！",
+    "create_date": "2019-12-31"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "edM2nHgBCUz0_7OR6T4N",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 9,
+    "_primary_term": 1
+}
