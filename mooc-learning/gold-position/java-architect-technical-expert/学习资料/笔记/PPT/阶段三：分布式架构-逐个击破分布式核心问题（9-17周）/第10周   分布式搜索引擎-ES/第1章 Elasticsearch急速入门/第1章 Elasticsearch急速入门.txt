@@ -197,3 +197,7 @@ http://192.168.253.166:9200/
 
 13.后台启动es
 ./elasticsearch -d
+
+
+
+1-9 附：安装Elasticsearch
