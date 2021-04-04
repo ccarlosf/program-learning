@@ -637,3 +637,7 @@ Response:
     "_seq_no": 25,
     "_primary_term": 1
 }
+
+
+
+2-13 附：文档乐观锁控制 if_seq_no与if_primary_term
