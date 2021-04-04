@@ -1041,3 +1041,191 @@ Response:
 
 
 2-15 附：分词与内置分词器
+
+
+
+2-16 建立IK中文分词器（8分钟）
+1.上传ik分词器服务器
+/home/software
+
+2.解压分词器到指定/plugins/ik目录
+unzip elasticsearch-analysis-ik-7.4.2.zip -d /usr/local/elasticsearch-7.4.2/plugins/ik
+
+3.重启es
+[esuser@pinyoyougou-docker bin]$ ./elasticsearch -d
+OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+
+4.ik_max_word分词
+http://192.168.253.166:9200/_analyze   POST
+(1).请求响应1
+Request1:
+{
+    "analyzer": "ik_max_word",
+    "text": "My name is Peter Parker,I am a Super Hero"
+}
+
+Response1:
+{
+    "tokens": [
+        {
+            "token": "my",
+            "start_offset": 0,
+            "end_offset": 2,
+            "type": "ENGLISH",
+            "position": 0
+        },
+        {
+            "token": "name",
+            "start_offset": 3,
+            "end_offset": 7,
+            "type": "ENGLISH",
+            "position": 1
+        },
+        {
+            "token": "peter",
+            "start_offset": 11,
+            "end_offset": 16,
+            "type": "ENGLISH",
+            "position": 2
+        },
+        {
+            "token": "parker",
+            "start_offset": 17,
+            "end_offset": 23,
+            "type": "ENGLISH",
+            "position": 3
+        },
+        {
+            "token": "i",
+            "start_offset": 24,
+            "end_offset": 25,
+            "type": "ENGLISH",
+            "position": 4
+        },
+        {
+            "token": "am",
+            "start_offset": 26,
+            "end_offset": 28,
+            "type": "ENGLISH",
+            "position": 5
+        },
+        {
+            "token": "super",
+            "start_offset": 31,
+            "end_offset": 36,
+            "type": "ENGLISH",
+            "position": 6
+        },
+        {
+            "token": "hero",
+            "start_offset": 37,
+            "end_offset": 41,
+            "type": "ENGLISH",
+            "position": 7
+        }
+    ]
+}
+
+(2).请求响应2:
+Request2:
+{
+    "analyzer": "ik_max_word",
+    "text": "上下班车流量很大。"
+}
+
+Response2:
+{
+    "tokens": [
+        {
+            "token": "上下班",
+            "start_offset": 0,
+            "end_offset": 3,
+            "type": "CN_WORD",
+            "position": 0
+        },
+        {
+            "token": "上下",
+            "start_offset": 0,
+            "end_offset": 2,
+            "type": "CN_WORD",
+            "position": 1
+        },
+        {
+            "token": "下班",
+            "start_offset": 1,
+            "end_offset": 3,
+            "type": "CN_WORD",
+            "position": 2
+        },
+        {
+            "token": "班车",
+            "start_offset": 2,
+            "end_offset": 4,
+            "type": "CN_WORD",
+            "position": 3
+        },
+        {
+            "token": "车流量",
+            "start_offset": 3,
+            "end_offset": 6,
+            "type": "CN_WORD",
+            "position": 4
+        },
+        {
+            "token": "车流",
+            "start_offset": 3,
+            "end_offset": 5,
+            "type": "CN_WORD",
+            "position": 5
+        },
+        {
+            "token": "流量",
+            "start_offset": 4,
+            "end_offset": 6,
+            "type": "CN_WORD",
+            "position": 6
+        },
+        {
+            "token": "很大",
+            "start_offset": 6,
+            "end_offset": 8,
+            "type": "CN_WORD",
+            "position": 7
+        }
+    ]
+}
+
+5.ik_smart分词
+http://192.168.253.166:9200/_analyze   POST
+Request:
+{
+    "analyzer": "ik_smart",
+    "text": "上下班车流量很大。"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "上下班",
+            "start_offset": 0,
+            "end_offset": 3,
+            "type": "CN_WORD",
+            "position": 0
+        },
+        {
+            "token": "车流量",
+            "start_offset": 3,
+            "end_offset": 6,
+            "type": "CN_WORD",
+            "position": 1
+        },
+        {
+            "token": "很大",
+            "start_offset": 6,
+            "end_offset": 8,
+            "type": "CN_WORD",
+            "position": 2
+        }
+    ]
+}
