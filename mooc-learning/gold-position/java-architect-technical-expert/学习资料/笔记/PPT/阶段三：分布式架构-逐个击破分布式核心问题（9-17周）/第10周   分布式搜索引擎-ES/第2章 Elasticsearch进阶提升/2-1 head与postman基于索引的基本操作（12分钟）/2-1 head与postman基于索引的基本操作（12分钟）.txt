@@ -98,4 +98,3 @@ green open index_temp lGfuKVaUSgC96YhsNihnRg 3 0 0 0  690b  690b
 health status index      uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 green  open   index_demo AxCxyPZ0RJOUsxPS6QEDdQ   5   0          0            0      1.3kb          1.3kb
 green  open   index_temp lGfuKVaUSgC96YhsNihnRg   3   0          0            0       690b           690b
-
