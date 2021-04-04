@@ -1,0 +1,101 @@
+1.查询es信息
+http://192.168.253.166:9200/   GET
+Response:
+{
+    "name": "es-node1",
+    "cluster_name": "imooc-elasticsearch",
+    "cluster_uuid": "5tn-E1zNRSCSDnps_CJHBw",
+    "version": {
+        "number": "7.4.2",
+        "build_flavor": "default",
+        "build_type": "tar",
+        "build_hash": "2f90bbf7b93631e52bafb59b3b049cb44ec25e96",
+        "build_date": "2019-10-28T20:40:44.881551Z",
+        "build_snapshot": false,
+        "lucene_version": "8.2.0",
+        "minimum_wire_compatibility_version": "6.8.0",
+        "minimum_index_compatibility_version": "6.0.0-beta1"
+    },
+    "tagline": "You Know, for Search"
+}
+
+2.查询集群状态信息
+http://192.168.253.166:9200/_cluster/health   GET
+Response:
+{
+    "cluster_name": "imooc-elasticsearch",
+    "status": "yellow",
+    "timed_out": false,
+    "number_of_nodes": 1,
+    "number_of_data_nodes": 1,
+    "active_primary_shards": 10,
+    "active_shards": 10,
+    "relocating_shards": 0,
+    "initializing_shards": 0,
+    "unassigned_shards": 5,
+    "delayed_unassigned_shards": 0,
+    "number_of_pending_tasks": 0,
+    "number_of_in_flight_fetch": 0,
+    "task_max_waiting_in_queue_millis": 0,
+    "active_shards_percent_as_number": 66.66666666666666
+}
+
+3.删除索引
+http://192.168.253.166:9200/index_123   DELETE
+Response:
+{
+    "acknowledged": true
+}
+
+4.创建索引
+http://192.168.253.166:9200/index_temp   PUT
+Request:
+{
+    "settings":{
+        "index":{
+            "number_of_shards": "3",
+            "number_of_replicas": "0"
+        }
+    }
+}
+
+Response:
+{
+    "acknowledged": true,
+    "shards_acknowledged": true,
+    "index": "index_temp"
+}
+
+5.查询索引
+http://192.168.253.166:9200/index_temp   GET
+Response:
+{
+    "index_temp": {
+        "aliases": {},
+        "mappings": {},
+        "settings": {
+            "index": {
+                "creation_date": "1617523908764",
+                "number_of_shards": "3",
+                "number_of_replicas": "0",
+                "uuid": "lGfuKVaUSgC96YhsNihnRg",
+                "version": {
+                    "created": "7040299"
+                },
+                "provided_name": "index_temp"
+            }
+        }
+    }
+}
+
+6.查询所有索引
+(1).http://192.168.253.166:9200/_cat/indices   GET
+Response:
+green open index_demo AxCxyPZ0RJOUsxPS6QEDdQ 5 0 0 0 1.3kb 1.3kb
+green open index_temp lGfuKVaUSgC96YhsNihnRg 3 0 0 0  690b  690b
+
+(2).http://192.168.253.166:9200/_cat/indices?v   GET
+health status index      uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   index_demo AxCxyPZ0RJOUsxPS6QEDdQ   5   0          0            0      1.3kb          1.3kb
+green  open   index_temp lGfuKVaUSgC96YhsNihnRg   3   0          0            0       690b           690b
+
