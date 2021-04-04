@@ -139,3 +139,144 @@ Response:
 
 
 2-5 mappings新增数据类型与analyze（10分钟）
+1.分词
+http://192.168.253.166:9200/index_mapping/_analyze   GET
+(1).请求响应1
+Request1:
+{
+    "field": "realname",
+    "text": "imooc is very good~!"
+}
+
+Response1:
+{
+    "tokens": [
+        {
+            "token": "imooc",
+            "start_offset": 0,
+            "end_offset": 5,
+            "type": "<ALPHANUM>",
+            "position": 0
+        },
+        {
+            "token": "is",
+            "start_offset": 6,
+            "end_offset": 8,
+            "type": "<ALPHANUM>",
+            "position": 1
+        },
+        {
+            "token": "very",
+            "start_offset": 9,
+            "end_offset": 13,
+            "type": "<ALPHANUM>",
+            "position": 2
+        },
+        {
+            "token": "good",
+            "start_offset": 14,
+            "end_offset": 18,
+            "type": "<ALPHANUM>",
+            "position": 3
+        }
+    ]
+}
+
+(2).请求响应2
+Request1:
+{
+    "field": "username",
+    "text": "imooc is very good~!"
+}
+
+Response2:
+{
+    "tokens": [
+        {
+            "token": "imooc is very good~!",
+            "start_offset": 0,
+            "end_offset": 20,
+            "type": "word",
+            "position": 0
+        }
+    ]
+}
+
+
+
+2.已存在索引，添加mapping
+http://192.168.253.166:9200/index_mapping/_mapping   POST
+(1).请求响应1:
+Request1:
+{
+       "properties": {
+           "id": {
+               "type": "long"
+           },
+           "age": {
+               "type": "integer"
+           }
+   }
+}
+
+Response1:
+{
+    "acknowledged": true
+}
+
+(2).请求响应2:
+Request2:
+{
+       "properties": {
+           "money1": {
+               "type": "double"
+           },
+           "money2": {
+               "type": "integer"
+           }
+   }
+}
+
+Response2:
+{
+    "acknowledged": true
+}
+
+(3).请求响应3:
+Request3:
+{
+       "properties": {
+           "sex": {
+               "type": "byte"
+           },
+           "score": {
+               "type": "short"
+           }
+   }
+}
+
+Response3:
+{
+    "acknowledged": true
+}
+
+(4).请求响应4:
+Request4:
+{
+       "properties": {
+           "is_teenger": {
+               "type": "boolean"
+           },
+           "birthday": {
+               "type": "date"
+           },
+            "relationship": {
+               "type": "object"
+           }
+   }
+}
+
+Response4:
+{
+    "acknowledged": true
+}
