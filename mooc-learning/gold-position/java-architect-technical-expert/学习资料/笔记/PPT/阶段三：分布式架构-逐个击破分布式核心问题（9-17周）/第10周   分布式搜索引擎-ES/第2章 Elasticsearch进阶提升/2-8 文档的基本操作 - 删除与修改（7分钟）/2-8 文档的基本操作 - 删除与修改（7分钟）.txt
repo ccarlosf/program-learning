@@ -1,0 +1,69 @@
+1.删除文档
+http://192.168.253.166:9200/my_doc/_doc/5   DELETE
+http://192.168.253.166:9200/my_doc/_doc/fNM5nHgBCUz0_7ORmD7_   DELETE
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "5",
+    "_version": 2,
+    "result": "deleted",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 13,
+    "_primary_term": 1
+}
+
+2.局部修改文档
+http://192.168.253.166:9200/my_doc/_doc/1/_update   POST
+Request:
+{
+    "doc": {
+        "name": "我是慕课网"
+    }
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 6,
+    "result": "noop",
+    "_shards": {
+        "total": 0,
+        "successful": 0,
+        "failed": 0
+    },
+    "_seq_no": 19,
+    "_primary_term": 1
+}
+
+3.全量修改文档
+http://192.168.253.166:9200/my_doc/_doc/1   PUT
+Request:
+{
+    "id": 1,
+    "name": "update-imooc",
+    "desc": "慕课网很强大！",
+    "create_date": "2020-12-25"
+}
+
+Response:
+{
+    "_index": "my_doc",
+    "_type": "_doc",
+    "_id": "1",
+    "_version": 7,
+    "result": "updated",
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 20,
+    "_primary_term": 1
+}
