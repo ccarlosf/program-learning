@@ -140,7 +140,21 @@ public class SSOController {
             redisOperator.del(REDIS_TMP_TICKET + ":" + tmpTicket);
         }
 
-        return JSONResult.ok();
+        // 1. 验证并且获取用户的userTicket
+        String userTicket = getCookie(request, COOKIE_USER_TICKET);
+        String userId = redisOperator.get(REDIS_USER_TICKET + ":" + userTicket);
+        if (StringUtils.isBlank(userId)) {
+            return JSONResult.errorUserTicket("用户票据异常");
+        }
+
+        // 2. 验证门票对应的user会话是否存在
+        String userRedis = redisOperator.get(REDIS_USER_TOKEN + ":" + userId);
+        if (StringUtils.isBlank(userRedis)) {
+            return JSONResult.errorUserTicket("用户票据异常");
+        }
+
+        // 验证成功，返回OK，携带用户会话
+        return JSONResult.ok(JsonUtils.jsonToPojo(userRedis, UsersVO.class));
     }
 
     /**
