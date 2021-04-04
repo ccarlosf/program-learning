@@ -1,0 +1,71 @@
+1.进入分词器配置文件目录
+/usr/local/elasticsearch-7.4.2/plugins/ik/config
+
+2.创建custom.dic
+vim custom.dic
+慕课网
+骚年
+
+3.修改IKAnalyzer.cfg.xml
+vim IKAnalyzer.cfg.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <comment>IK Analyzer 扩展配置</comment>
+        <!--用户可以在这里配置自己的扩展字典 -->
+        <entry key="ext_dict">custom.dic</entry>
+         <!--用户可以在这里配置自己的扩展停止词字典-->
+        <entry key="ext_stopwords"></entry>
+        <!--用户可以在这里配置远程扩展字典 -->
+        <!-- <entry key="remote_ext_dict">words_location</entry> -->
+        <!--用户可以在这里配置远程扩展停止词字典-->
+        <!-- <entry key="remote_ext_stopwords">words_location</entry> -->
+</properties>
+
+
+4.重启es
+[esuser@pinyoyougou-docker bin]$ ./elasticsearch -d
+[esuser@pinyoyougou-docker bin]$ OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+
+5.自定义分词
+http://192.168.253.166:9200/_analyze   POST
+Request:
+{
+    "analyzer": "ik_max_word",
+    "text": "骚年在慕课网学习。"
+}
+
+Response:
+{
+    "tokens": [
+        {
+            "token": "骚年",
+            "start_offset": 0,
+            "end_offset": 2,
+            "type": "CN_WORD",
+            "position": 0
+        },
+        {
+            "token": "年在",
+            "start_offset": 1,
+            "end_offset": 3,
+            "type": "CN_WORD",
+            "position": 1
+        },
+        {
+            "token": "慕课网",
+            "start_offset": 3,
+            "end_offset": 6,
+            "type": "CN_WORD",
+            "position": 2
+        },
+        {
+            "token": "学习",
+            "start_offset": 6,
+            "end_offset": 8,
+            "type": "CN_WORD",
+            "position": 3
+        }
+    ]
+}
