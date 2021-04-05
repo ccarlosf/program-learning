@@ -1,0 +1,443 @@
+1.bool查询（must）
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "multi_match": {
+                        "query": "慕课网",
+                        "fields": ["desc","nickename"]
+                    }
+                },
+                {
+                    "term": {
+                        "sex": 0
+                    }
+                },
+                {
+                    "term": {
+                        "birthday": "1992-12-24"
+                    }
+                }
+            ]
+        }
+    },
+    "_source": [
+        "id",
+        "sex",
+        "nickename",
+        "desc",
+        "birthday"
+    ]
+}
+
+Response:
+{
+    "took": 30,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 1,
+            "relation": "eq"
+        },
+        "max_score": 4.79934,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 4.79934,
+                "_source": {
+                    "birthday": "1992-12-24",
+                    "sex": 0,
+                    "nickename": "慕课网",
+                    "id": 1001,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识"
+                }
+            }
+        ]
+    }
+}
+
+2.bool查询（should）
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "multi_match": {
+                        "query": "慕课网",
+                        "fields": ["desc","nickename"]
+                    }
+                },
+                {
+                    "term": {
+                        "sex": 0
+                    }
+                },
+                {
+                    "term": {
+                        "birthday": "1992-12-24"
+                    }
+                }
+            ]
+        }
+    },
+    "_source": [
+        "id",
+        "sex",
+        "nickename",
+        "desc",
+        "birthday"
+    ]
+}
+
+Response:
+{
+    "took": 27,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 5,
+            "relation": "eq"
+        },
+        "max_score": 6.060153,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 6.060153,
+                "_source": {
+                    "birthday": "1995-01-14",
+                    "sex": 1,
+                    "nickename": "飞翔的巨鹰",
+                    "id": 1003,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 4.79934,
+                "_source": {
+                    "birthday": "1992-12-24",
+                    "sex": 0,
+                    "nickename": "慕课网",
+                    "id": 1001,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 1.8092036,
+                "_source": {
+                    "birthday": "1988-02-14",
+                    "sex": 0,
+                    "nickename": "水中鱼",
+                    "id": 1004,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 1.8092036,
+                "_source": {
+                    "birthday": "1988-02-14",
+                    "sex": 0,
+                    "nickename": "super hero",
+                    "id": 1005,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1002",
+                "_score": 1.0,
+                "_source": {
+                    "birthday": "1992-12-24",
+                    "sex": 1,
+                    "nickename": "周杰混",
+                    "id": 1002,
+                    "desc": "今天下班很堵,车流量很大"
+                }
+            }
+        ]
+    }
+}
+
+3.bool查询（must_not）
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "bool": {
+            "must_not": [
+                {
+                    "multi_match": {
+                        "query": "慕课网",
+                        "fields": ["desc","nickename"]
+                    }
+                },
+                {
+                    "term": {
+                        "sex": 0
+                    }
+                },
+                {
+                    "term": {
+                        "birthday": "1992-12-24"
+                    }
+                }
+            ]
+        }
+    },
+    "_source": [
+        "id",
+        "sex",
+        "nickename",
+        "desc",
+        "birthday"
+    ]
+}
+
+Response:
+{
+    "took": 28,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 1,
+            "relation": "eq"
+        },
+        "max_score": 0.0,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1007",
+                "_score": 0.0,
+                "_source": {
+                    "birthday": "1989-03-14",
+                    "sex": 1,
+                    "nickename": "ps游戏机",
+                    "id": 1007,
+                    "desc": "今天生日,女友送了我一台playstation游戏机"
+                }
+            }
+        ]
+    }
+}
+
+4.bool查询（组合查询）
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "desc": "慕"
+                    }
+                },
+                {
+                    "match": {
+                        "nickename": "慕"
+                    }
+                }
+            ],
+            "should": [
+                {
+                    "match": {
+                        "sex": 0
+                    }
+                }
+            ],
+            "must_not": [
+                {
+                    "term": {
+                        "birthday": "1992-12-23"
+                    }
+                }
+            ]
+        }
+    },
+    "_source": [
+        "id",
+        "sex",
+        "nickename",
+        "desc",
+        "birthday"
+    ]
+}
+
+Response:
+{
+    "took": 42,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 1,
+            "relation": "eq"
+        },
+        "max_score": 2.0834136,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 2.0834136,
+                "_source": {
+                    "birthday": "1992-12-24",
+                    "sex": 0,
+                    "nickename": "慕课网",
+                    "id": 1001,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识"
+                }
+            }
+        ]
+    }
+}
+
+5.bool查询（加权查询）
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "match": {
+                        "desc": {
+                            "query": "慕课网",
+                            "boost": 2
+                        }
+                    }
+                },
+                {
+                    "match": {
+                        "desc": {
+                            "query": "学校",
+                            "boost": 100
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "_source": [
+        "id",
+        "sex",
+        "nickename",
+        "desc",
+        "birthday"
+    ]
+}
+
+Response:
+{
+    "took": 33,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 4,
+            "relation": "eq"
+        },
+        "max_score": 46.135387,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 46.135387,
+                "_source": {
+                    "birthday": "1988-02-14",
+                    "sex": 0,
+                    "nickename": "水中鱼",
+                    "id": 1004,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 46.135387,
+                "_source": {
+                    "birthday": "1988-02-14",
+                    "sex": 0,
+                    "nickename": "super hero",
+                    "id": 1005,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 12.120306,
+                "_source": {
+                    "birthday": "1995-01-14",
+                    "sex": 1,
+                    "nickename": "飞翔的巨鹰",
+                    "id": 1003,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 1.8036056,
+                "_source": {
+                    "birthday": "1992-12-24",
+                    "sex": 0,
+                    "nickename": "慕课网",
+                    "id": 1001,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识"
+                }
+            }
+        ]
+    }
+}

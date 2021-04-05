@@ -6,7 +6,7 @@ Request:
         "multi_match": {
                 "query": "飞翔的巨鹰慕课网",
                 "fields": [
-                    "desc","nickename^10"
+                    "desc","nickename^10" #加权
                 ]
         }
     },
