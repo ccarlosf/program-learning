@@ -197,3 +197,132 @@ Response:
 
 
 4-6 附：scroll 滚动搜索
+
+
+
+4-7 批量查询 _mget（5分钟）
+1.批量查询 _ids
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "ids": {
+            "type": "_doc",
+            "values": ["1001","1003","1005"]
+        }
+    }
+}
+
+Response:
+{
+    "took": 16,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 2,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1003,
+                    "age": 20,
+                    "username": "bigFace",
+                    "nickename": "飞翔的巨鹰",
+                    "money": 66.8,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲",
+                    "sex": 1,
+                    "birthday": "1995-01-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1001,
+                    "age": 18,
+                    "username": "imoocAmazing",
+                    "nickename": "慕课网",
+                    "money": 88.8,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识",
+                    "sex": 0,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            }
+        ]
+    }
+}
+
+2.批量查询 _mget
+http://192.168.253.166:9200/shop/_doc/_mget   POST
+Request:
+{
+    "ids": ["1001","1003","1005"]
+}
+
+Response:
+{
+    "docs": [
+        {
+            "_index": "shop",
+            "_type": "_doc",
+            "_id": "1001",
+            "_version": 1,
+            "_seq_no": 0,
+            "_primary_term": 1,
+            "found": true,
+            "_source": {
+                "id": 1001,
+                "age": 18,
+                "username": "imoocAmazing",
+                "nickename": "慕课网",
+                "money": 88.8,
+                "desc": "我在慕课网学习Java和前端，学习到了很多知识",
+                "sex": 0,
+                "birthday": "1992-12-24",
+                "face": "https://www.imooc.com/static/img/index/logo.png"
+            }
+        },
+        {
+            "_index": "shop",
+            "_type": "_doc",
+            "_id": "1003",
+            "_version": 1,
+            "_seq_no": 2,
+            "_primary_term": 1,
+            "found": true,
+            "_source": {
+                "id": 1003,
+                "age": 20,
+                "username": "bigFace",
+                "nickename": "飞翔的巨鹰",
+                "money": 66.8,
+                "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲",
+                "sex": 1,
+                "birthday": "1995-01-14",
+                "face": "https://www.imooc.com/static/img/index/logo.png"
+            }
+        },
+        {
+            "_index": "shop",
+            "_type": "_doc",
+            "_id": "1005",
+            "found": false
+        }
+    ]
+}
