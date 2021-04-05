@@ -2097,3 +2097,80 @@ Response:
 
 
 3-16 附：DSL搜索 - 布尔查询
+
+
+
+3-17 DSL搜索 - 过滤器（6分钟）
+1.过滤器查询
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "match": {
+            "desc": "慕课网游戏"
+        }
+    },
+    "post_filter": {
+        "range": {
+            "money": {
+                "gte": 88.8,
+                "lt": 1000
+            }
+        }
+    }
+}
+
+Response:
+{
+    "took": 11,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 2,
+            "relation": "eq"
+        },
+        "max_score": 1.1745546,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1007",
+                "_score": 1.1745546,
+                "_source": {
+                    "id": 1007,
+                    "age": 25,
+                    "username": "gotoplay",
+                    "nickename": "ps游戏机",
+                    "money": 155.8,
+                    "desc": "今天生日,女友送了我一台playstation游戏机",
+                    "sex": 1,
+                    "birthday": "1989-03-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 0.9018028,
+                "_source": {
+                    "id": 1001,
+                    "age": 18,
+                    "username": "imoocAmazing",
+                    "nickename": "慕课网",
+                    "money": 88.8,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识",
+                    "sex": 0,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            }
+        ]
+    }
+}
