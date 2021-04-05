@@ -100,3 +100,23 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
     },
     "status": 400
 }
+2.虚拟机搭建的es7，为什么要尝试多次才能成功？
+{
+    "error": {
+        "root_cause": [
+            {
+                "type": "circuit_breaking_exception",
+                "reason": "[parent] Data too large, data for [<http_request>] would be [128607760/122.6mb], which is larger than the limit of [123273216/117.5mb], real usage: [128607584/122.6mb], new bytes reserved: [176/176b], usages [request=0/0b, fielddata=0/0b, in_flight_requests=176/176b, accounting=17080/16.6kb]",
+                "bytes_wanted": 128607760,
+                "bytes_limit": 123273216,
+                "durability": "PERMANENT"
+            }
+        ],
+        "type": "circuit_breaking_exception",
+        "reason": "[parent] Data too large, data for [<http_request>] would be [128607760/122.6mb], which is larger than the limit of [123273216/117.5mb], real usage: [128607584/122.6mb], new bytes reserved: [176/176b], usages [request=0/0b, fielddata=0/0b, in_flight_requests=176/176b, accounting=17080/16.6kb]",
+        "bytes_wanted": 128607760,
+        "bytes_limit": 123273216,
+        "durability": "PERMANENT"
+    },
+    "status": 429
+}
