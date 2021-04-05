@@ -1,0 +1,185 @@
+1.批量操作 bulk 之 update
+http://192.168.253.166:9200/shop2/_doc/_bulk   POST
+Request:
+{"update": {"_id": "2004"}}
+{"doc": {"id": "3304"}}
+{"update": {"_id": "2007"}}
+{"doc":{"nickname": "name-update"}}
+
+Response:
+{
+    "took": 1,
+    "errors": false,
+    "items": [
+        {
+            "update": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2004",
+                "_version": 12,
+                "result": "noop",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 14,
+                "_primary_term": 1,
+                "status": 200
+            }
+        },
+        {
+            "update": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2007",
+                "_version": 11,
+                "result": "noop",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 11,
+                "_primary_term": 1,
+                "status": 200
+            }
+        }
+    ]
+}
+
+
+
+2.批量操作 bulk 之 delete
+http://192.168.253.166:9200/shop2/_doc/_bulk   POST
+Request:
+{"delete": {"_id": "2004"}}
+{"delete": {"_id": "2007"}}
+
+Response:
+{
+    "took": 87,
+    "errors": false,
+    "items": [
+        {
+            "delete": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2004",
+                "_version": 13,
+                "result": "deleted",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 15,
+                "_primary_term": 1,
+                "status": 200
+            }
+        },
+        {
+            "delete": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2007",
+                "_version": 12,
+                "result": "deleted",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 12,
+                "_primary_term": 1,
+                "status": 200
+            }
+        }
+    ]
+}
+
+3.批量操作 bulk 之 组合
+http://192.168.253.166:9200/shop2/_doc/_bulk   POST
+Request:
+{"delete": {"_id": "2001"}}
+{"delete": {"_id": "2003"}}
+{"create": {"_id": "8008"}}
+{"id": "8008", "nickname": "name-8008"}
+{"update": {"_id": "2002"}}
+{"doc": {"id": "2222"}}
+
+Response:
+{
+    "took": 29,
+    "errors": false,
+    "items": [
+        {
+            "delete": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2001",
+                "_version": 2,
+                "result": "deleted",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 16,
+                "_primary_term": 1,
+                "status": 200
+            }
+        },
+        {
+            "delete": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2003",
+                "_version": 2,
+                "result": "deleted",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 17,
+                "_primary_term": 1,
+                "status": 200
+            }
+        },
+        {
+            "create": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "8008",
+                "_version": 1,
+                "result": "created",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 18,
+                "_primary_term": 1,
+                "status": 201
+            }
+        },
+        {
+            "update": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2002",
+                "_version": 2,
+                "result": "updated",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 1,
+                "_primary_term": 1,
+                "status": 200
+            }
+        }
+    ]
+}

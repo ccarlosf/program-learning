@@ -64,11 +64,11 @@ Response:
 2.批量操作 bulk 之 index
 http://192.168.253.166:9200/_bulk   POST
 Request:
-{"index": {"_index": "shop2", "_type": "_doc", "_id": "2004"}}
+{"index": {"_id": "2004"}}
 {"id": "2004", "nickname": "index-2004"}
-{"index": {"_index": "shop2", "_type": "_doc", "_id": "2007"}}
+{"index": {"_id": "2007"}}
 {"id": "2007", "nickname": "name-2007"}
-{"index": {"_index": "shop2", "_type": "_doc", "_id": "2008"}}
+{"index": {"_id": "2008"}}
 {"id": "2008", "nickname": "name-2008"}
 
 Response:
