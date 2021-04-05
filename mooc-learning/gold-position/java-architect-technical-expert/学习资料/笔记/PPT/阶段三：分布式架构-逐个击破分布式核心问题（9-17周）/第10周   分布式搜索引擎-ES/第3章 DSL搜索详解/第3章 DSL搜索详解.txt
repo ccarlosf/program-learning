@@ -1555,3 +1555,7 @@ Response:
 
 
 3-12 附：DSL搜索 - match（operator）与ids
+
+
+
+3-13 DSL搜索 - multi_match与boost（6分钟）
