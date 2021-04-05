@@ -87,3 +87,109 @@ Response:
 
 
 4-4 附：深度分页 - 提升搜索量
+
+
+
+4-5 scroll 滚动搜索（11分钟）
+1.滚动搜索-初始化
+http://192.168.253.166:9200/shop/_search?scroll=1m   POST
+Request:
+{
+    "query": {
+        "match_all": {}
+    },
+    "sort": ["_doc"],
+    "size": 2
+}
+
+Response:
+{
+    "_scroll_id": "DnF1ZXJ5VGhlbkZldGNoAwAAAAAAAAJmFmhFOXdabzQ0VEYtRUZsOXptOWtzdHcAAAAAAAACaBZoRTl3Wm80NFRGLUVGbDl6bTlrc3R3AAAAAAAAAmcWaEU5d1pvNDRURi1FRmw5em05a3N0dw==",
+    "took": 17,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 6,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": null,
+                "_source": {
+                    "id": 1001,
+                    "age": 18,
+                    "username": "imoocAmazing",
+                    "nickename": "慕课网",
+                    "money": 88.8,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识",
+                    "sex": 0,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                },
+                "sort": [
+                    0
+                ]
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1002",
+                "_score": null,
+                "_source": {
+                    "id": 1002,
+                    "age": 19,
+                    "username": "justbuy",
+                    "nickename": "周杰混",
+                    "money": 77.8,
+                    "desc": "今天下班很堵,车流量很大",
+                    "sex": 1,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                },
+                "sort": [
+                    1
+                ]
+            }
+        ]
+    }
+}
+
+2.滚动搜索-再查询
+http://192.168.253.166:9200/_search/scroll   POST
+Request:
+{
+    "scroll_id": "DnF1ZXJ5VGhlbkZldGNoAwAAAAAAAAJmFmhFOXdabzQ0VEYtRUZsOXptOWtzdHcAAAAAAAACaBZoRTl3Wm80NFRGLUVGbDl6bTlrc3R3AAAAAAAAAmcWaEU5d1pvNDRURi1FRmw5em05a3N0dw==",
+    "scroll": "1m"
+}
+
+Response:
+{
+    "_scroll_id": "DnF1ZXJ5VGhlbkZldGNoAwAAAAAAAAJmFmhFOXdabzQ0VEYtRUZsOXptOWtzdHcAAAAAAAACaBZoRTl3Wm80NFRGLUVGbDl6bTlrc3R3AAAAAAAAAmcWaEU5d1pvNDRURi1FRmw5em05a3N0dw==",
+    "took": 3,
+    "timed_out": false,
+    "terminated_early": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 6,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    }
+}
