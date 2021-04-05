@@ -1,12 +1,3 @@
-5-1 Elasticsearch集群的概念（6分钟）
-
-
-
-5-2 附：Elasticsearch集群的概念
-
-
-
-5-3 搭建Elasticsearch集群（12分钟）
 1.修改主机名
 sudo hostnamectl set-hostname es1
 sudo hostnamectl set-hostname es2
