@@ -1559,3 +1559,86 @@ Response:
 
 
 3-13 DSL搜索 - multi_match与boost（6分钟）
+1.multi_match查询
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "multi_match": {
+                "query": "飞翔的巨鹰慕课网",
+                "fields": [
+                    "desc","nickename^10"
+                ]
+        }
+    },
+    "_source": [
+        "id",
+        "nickename",
+        "desc"
+    ]
+}
+
+Response:
+{
+    "took": 45,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 4,
+            "relation": "eq"
+        },
+        "max_score": 52.974808,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 52.974808,
+                "_source": {
+                    "nickename": "飞翔的巨鹰",
+                    "id": 1003,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 27.993399,
+                "_source": {
+                    "nickename": "慕课网",
+                    "id": 1001,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 1.2543734,
+                "_source": {
+                    "nickename": "水中鱼",
+                    "id": 1004,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 1.2543734,
+                "_source": {
+                    "nickename": "super hero",
+                    "id": 1005,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了"
+                }
+            }
+        ]
+    }
+}
