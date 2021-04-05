@@ -1642,3 +1642,7 @@ Response:
         ]
     }
 }
+
+
+
+3-14 附：DSL搜索 - multi_match与boost
