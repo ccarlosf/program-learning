@@ -205,3 +205,7 @@ node.master: true
 node.data: true
 discovery.seed_hosts: ["192.168.253.167", "192.168.253.168","192.168.253.169"]
 cluster.initial_master_nodes: ["es-node1"]
+
+
+
+5-4 附：搭建Elasticsearch集群
