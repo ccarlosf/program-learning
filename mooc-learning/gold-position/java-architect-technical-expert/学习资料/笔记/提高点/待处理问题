@@ -62,7 +62,7 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
 
 
 阶段三：分布式架构-逐个击破分布式核心问题（9-17周）
-第9周   分布式会话与单点登录SSO
+第9周 分布式会话与单点登录SSO
 1.为什么在用户上传头像和修改用户信息时，redis中存的uuid需要发生变化？
 2.使用SpringSession改造项目，例子localhost:8088/setSession @EnableRedisHttpSession
 3.SpringSession的原理
@@ -76,3 +76,27 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
              spring-boot-starter-thymeleaf 为什么要指定版本号才可以
 7.为什么单点登录系统针对Chrome不起效
 8.应用单点登录系统至项目中
+
+
+
+第10周 分布式搜索引擎-ES
+1.为什么es使用http://192.168.253.166:9200/my_doc/_doc/_search   GET
+和http://192.168.253.166:9200/my_doc/_doc/_search?_source=id,name   GET
+查询不了，报错
+{
+    "error": {
+        "root_cause": [
+            {
+                "type": "parsing_exception",
+                "reason": "Unknown key for a START_OBJECT in [properties].",
+                "line": 2,
+                "col": 19
+            }
+        ],
+        "type": "parsing_exception",
+        "reason": "Unknown key for a START_OBJECT in [properties].",
+        "line": 2,
+        "col": 19
+    },
+    "status": 400
+}
