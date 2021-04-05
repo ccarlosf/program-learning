@@ -48,3 +48,38 @@ Response:
 
 
 4-2 附：深度分页
+
+
+
+4-3 深度分页 - 提升搜索量（3分钟）
+1.查询索引设置
+http://192.168.253.166:9200/shop/_settings   GET
+Response:
+{
+    "shop": {
+        "settings": {
+            "index": {
+                "creation_date": "1617544244668",
+                "number_of_shards": "3",
+                "number_of_replicas": "1",
+                "uuid": "Ng0i0-SaSkS7i5I5uGO5sw",
+                "version": {
+                    "created": "7040299"
+                },
+                "provided_name": "shop"
+            }
+        }
+    }
+}
+
+2.提升搜索量
+http://192.168.253.166:9200/shop/_settings   PUT
+Request:
+{
+    "index.max_result_window": 100000
+}
+
+Response:
+{
+    "acknowledged": true
+}
