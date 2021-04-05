@@ -1329,3 +1329,7 @@ Response:
 
 
 3-8 附： DSL搜索 - term与match
+
+
+
+3-9 DSL搜索 - match_phrase（4分钟）

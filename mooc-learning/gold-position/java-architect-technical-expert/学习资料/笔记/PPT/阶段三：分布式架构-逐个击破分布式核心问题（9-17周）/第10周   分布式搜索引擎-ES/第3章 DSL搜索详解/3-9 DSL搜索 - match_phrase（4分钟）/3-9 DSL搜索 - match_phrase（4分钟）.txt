@@ -1,0 +1,50 @@
+1.match_phrase查询
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "match_phrase": {
+            "desc": {
+                "query": "慕课网 飞机",
+                "slop": 4 # 中间可以跳过多少个词
+            }
+        }
+    },
+    "_source": [
+        "id",
+        "nickename",
+        "desc"
+    ]
+}
+
+Response:
+{
+    "took": 22,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 1,
+            "relation": "eq"
+        },
+        "max_score": 2.0347545,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 2.0347545,
+                "_source": {
+                    "nickename": "飞翔的巨鹰",
+                    "id": 1003,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲"
+                }
+            }
+        ]
+    }
+}
