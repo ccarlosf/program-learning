@@ -1,0 +1,449 @@
+1.查询所有内容(Query String)
+http://192.168.253.166:9200/shop/_doc/_search   GET
+Response:
+{
+    "took": 27,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 6,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1002",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1002,
+                    "age": 19,
+                    "username": "justbuy",
+                    "nickename": "周杰混",
+                    "money": 77.8,
+                    "desc": "今天下班很堵,车流量很大",
+                    "sex": 1,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1003,
+                    "age": 20,
+                    "username": "bigFace",
+                    "nickename": "飞翔的巨鹰",
+                    "money": 66.8,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲",
+                    "sex": 1,
+                    "birthday": "1995-01-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1007",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1007,
+                    "age": 25,
+                    "username": "gotoplay",
+                    "nickename": "ps游戏机",
+                    "money": 155.8,
+                    "desc": "今天生日,女友送了我一台playstation游戏机",
+                    "sex": 1,
+                    "birthday": "1989-03-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1001,
+                    "age": 18,
+                    "username": "imoocAmazing",
+                    "nickename": "慕课网",
+                    "money": 88.8,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识",
+                    "sex": 0,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1004,
+                    "age": 22,
+                    "username": "flysish",
+                    "nickename": "水中鱼",
+                    "money": 55.8,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了",
+                    "sex": 0,
+                    "birthday": "1988-02-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1005,
+                    "age": 22,
+                    "username": "super hero",
+                    "nickename": "super hero",
+                    "money": 55.8,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了",
+                    "sex": 0,
+                    "birthday": "1988-02-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            }
+        ]
+    }
+}
+
+2.查询所有内容（DSL）
+(1).查询所有字段
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+Response:
+{
+    "took": 17,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 6,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1002",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1002,
+                    "age": 19,
+                    "username": "justbuy",
+                    "nickename": "周杰混",
+                    "money": 77.8,
+                    "desc": "今天下班很堵,车流量很大",
+                    "sex": 1,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1003,
+                    "age": 20,
+                    "username": "bigFace",
+                    "nickename": "飞翔的巨鹰",
+                    "money": 66.8,
+                    "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲",
+                    "sex": 1,
+                    "birthday": "1995-01-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1007",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1007,
+                    "age": 25,
+                    "username": "gotoplay",
+                    "nickename": "ps游戏机",
+                    "money": 155.8,
+                    "desc": "今天生日,女友送了我一台playstation游戏机",
+                    "sex": 1,
+                    "birthday": "1989-03-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1001,
+                    "age": 18,
+                    "username": "imoocAmazing",
+                    "nickename": "慕课网",
+                    "money": 88.8,
+                    "desc": "我在慕课网学习Java和前端，学习到了很多知识",
+                    "sex": 0,
+                    "birthday": "1992-12-24",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1004,
+                    "age": 22,
+                    "username": "flysish",
+                    "nickename": "水中鱼",
+                    "money": 55.8,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了",
+                    "sex": 0,
+                    "birthday": "1988-02-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1005,
+                    "age": 22,
+                    "username": "super hero",
+                    "nickename": "super hero",
+                    "money": 55.8,
+                    "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了",
+                    "sex": 0,
+                    "birthday": "1988-02-14",
+                    "face": "https://www.imooc.com/static/img/index/logo.png"
+                }
+            }
+        ]
+    }
+}
+
+(2).查询特定字段
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "match_all": {}
+    },
+    "_source": [
+        "id",
+        "nickname",
+        "age"
+    ]
+}
+
+Response:
+{
+    "took": 76,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 6,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1002",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1002,
+                    "age": 19
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1003,
+                    "age": 20
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1007",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1007,
+                    "age": 25
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1001,
+                    "age": 18
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1004,
+                    "age": 22
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1005,
+                    "age": 22
+                }
+            }
+        ]
+    }
+}
+
+(3).分页查询
+http://192.168.253.166:9200/shop/_doc/_search   POST
+Request:
+{
+    "query": {
+        "match_all": {}
+    },
+    "_source": [
+        "id",
+        "nickname",
+        "age"
+    ],
+    "from": 0,
+    "size": 10
+}
+
+Response:
+{
+    "took": 34,
+    "timed_out": false,
+    "_shards": {
+        "total": 3,
+        "successful": 3,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 6,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1002",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1002,
+                    "age": 19
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1003",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1003,
+                    "age": 20
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1007",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1007,
+                    "age": 25
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1001",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1001,
+                    "age": 18
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1004",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1004,
+                    "age": 22
+                }
+            },
+            {
+                "_index": "shop",
+                "_type": "_doc",
+                "_id": "1006",
+                "_score": 1.0,
+                "_source": {
+                    "id": 1005,
+                    "age": 22
+                }
+            }
+        ]
+    }
+}
