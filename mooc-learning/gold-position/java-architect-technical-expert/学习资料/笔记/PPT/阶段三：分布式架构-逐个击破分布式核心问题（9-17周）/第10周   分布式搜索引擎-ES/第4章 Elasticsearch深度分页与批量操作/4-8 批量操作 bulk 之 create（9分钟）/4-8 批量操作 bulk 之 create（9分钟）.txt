@@ -1,4 +1,4 @@
-批量操作 bulk 之 create
+1.批量操作 bulk 之 create
 http://192.168.253.166:9200/_bulk   POST
 Request:
 {"create": {"_index": "shop2", "_type": "_doc", "_id": "2004"}}

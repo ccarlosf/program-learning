@@ -1,0 +1,131 @@
+1.批量操作 bulk 之 create 公共提取
+http://192.168.253.166:9200/shop2/_doc/_bulk   POST
+Request:
+{"create": {"_id": "2004"}}
+{"id": "2004", "nickname": "name-2004"}
+{"create": {"_id": "2005"}}
+{"id": "2005", "nickname": "name-2005"}
+{"create": {"_id": "2003"}}
+{"id": "2003", "nickname": "name-2003"}
+
+Response:
+{
+    "took": 24,
+    "errors": true,
+    "items": [
+        {
+            "create": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2004",
+                "status": 409,
+                "error": {
+                    "type": "version_conflict_engine_exception",
+                    "reason": "[2004]: version conflict, document already exists (current version [1])",
+                    "index_uuid": "Ei6OVUt2T8Wmt21u9H2Z_w",
+                    "shard": "4",
+                    "index": "shop2"
+                }
+            }
+        },
+        {
+            "create": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2005",
+                "status": 409,
+                "error": {
+                    "type": "version_conflict_engine_exception",
+                    "reason": "[2005]: version conflict, document already exists (current version [1])",
+                    "index_uuid": "Ei6OVUt2T8Wmt21u9H2Z_w",
+                    "shard": "4",
+                    "index": "shop2"
+                }
+            }
+        },
+        {
+            "create": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2003",
+                "status": 409,
+                "error": {
+                    "type": "version_conflict_engine_exception",
+                    "reason": "[2003]: version conflict, document already exists (current version [1])",
+                    "index_uuid": "Ei6OVUt2T8Wmt21u9H2Z_w",
+                    "shard": "4",
+                    "index": "shop2"
+                }
+            }
+        }
+    ]
+}
+
+2.批量操作 bulk 之 index
+http://192.168.253.166:9200/_bulk   POST
+Request:
+{"index": {"_index": "shop2", "_type": "_doc", "_id": "2004"}}
+{"id": "2004", "nickname": "index-2004"}
+{"index": {"_index": "shop2", "_type": "_doc", "_id": "2007"}}
+{"id": "2007", "nickname": "name-2007"}
+{"index": {"_index": "shop2", "_type": "_doc", "_id": "2008"}}
+{"id": "2008", "nickname": "name-2008"}
+
+Response:
+{
+    "took": 40,
+    "errors": false,
+    "items": [
+        {
+            "index": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2004",
+                "_version": 3,
+                "result": "updated",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 5,
+                "_primary_term": 1,
+                "status": 200
+            }
+        },
+        {
+            "index": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2007",
+                "_version": 2,
+                "result": "updated",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 2,
+                "_primary_term": 1,
+                "status": 200
+            }
+        },
+        {
+            "index": {
+                "_index": "shop2",
+                "_type": "_doc",
+                "_id": "2008",
+                "_version": 2,
+                "result": "updated",
+                "_shards": {
+                    "total": 2,
+                    "successful": 1,
+                    "failed": 0
+                },
+                "_seq_no": 3,
+                "_primary_term": 1,
+                "status": 200
+            }
+        }
+    ]
+}
