@@ -251,3 +251,7 @@ es-1主节点 es-2和es-3为从节点
 
 
 5-8 附：Elasticsearch集群脑裂现象探讨
+
+
+
+5-9 Elasticsearch集群的文档读写原理（6分钟）
