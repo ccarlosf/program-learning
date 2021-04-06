@@ -247,3 +247,7 @@ es-1主节点 es-2和es-3为从节点
 
 
 5-7 Elasticsearch集群脑裂现象探讨（6分钟）
+
+
+
+5-8 附：Elasticsearch集群脑裂现象探讨

@@ -120,3 +120,10 @@ String payReturnUrl = "http://api.z.mukewang.com/foodie-dev-api/orders/notifyMer
     },
     "status": 429
 }
+3.es脑裂
+N的设值?
+脑裂解决方案
+master主节点要经过多个master节点共同选举后才能成为新的主节点。就跟班级里选班长一样，并不是你1个人能决定的，需要班里半数以上的人决定。
+解决实现原理：半数以上的节点同意选举，节点方可成为新的master。
+discovery.zen.minimum_master_nodes=(N/2)+1
+N为集群的中master节点的数量，也就是那些 node.master=true 设置的那些服务器节点总数。
