@@ -116,6 +116,38 @@ export PATH=$PATH:$JAVA_HOME/bin
 (6).刷新profile，使其生效
 source /etc/profile
 
+3.整合中文分词器
+(1).上传ik分词器服务器
+/home/software
+
+(2).解压分词器到指定/plugins/ik目录
+unzip elasticsearch-analysis-ik-6.4.3.zip -d /usr/local/elasticsearch-6.4.3/plugins/ik
+
+(3).进入分词器配置文件目录
+cd /usr/local/elasticsearch-6.4.3/plugins/ik/config
+
+(4).创建custom.dic
+vim custom.dic
+慕课网
+骚年
+
+(5).修改IKAnalyzer.cfg.xml
+vim IKAnalyzer.cfg.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <comment>IK Analyzer 扩展配置</comment>
+        <!--用户可以在这里配置自己的扩展字典 -->
+        <entry key="ext_dict">custom.dic</entry>
+         <!--用户可以在这里配置自己的扩展停止词字典-->
+        <entry key="ext_stopwords"></entry>
+        <!--用户可以在这里配置远程扩展字典 -->
+        <!-- <entry key="remote_ext_dict">words_location</entry> -->
+        <!--用户可以在这里配置远程扩展停止词字典-->
+        <!-- <entry key="remote_ext_stopwords">words_location</entry> -->
+</properties>
+
 
 
 6-2 附：Elasticsearch整合SpringBoot - 配置文件
