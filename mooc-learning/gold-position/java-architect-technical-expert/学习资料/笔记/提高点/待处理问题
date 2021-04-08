@@ -127,3 +127,4 @@ master主节点要经过多个master节点共同选举后才能成为新的主�
 解决实现原理：半数以上的节点同意选举，节点方可成为新的master。
 discovery.zen.minimum_master_nodes=(N/2)+1
 N为集群的中master节点的数量，也就是那些 node.master=true 设置的那些服务器节点总数。
+4.ES7整合SpringBoot(已实现ES6整合SpringBoot)
