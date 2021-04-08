@@ -1,1 +1,117 @@
 6-1 Elasticsearch整合SpringBoot - 配置文件（16分钟）
+1.搭建elasticsearch6
+(1).上传elasticsearch-6.4.3.tar.gz至服务器
+
+(2).解压elasticsearch-6.4.3.tar.gz
+tar -zxvf elasticsearch-6.4.3.tar.gz
+
+(3).移动文件夹
+mv elasticsearch-6.4.3 /usr/local
+
+(4).进入elasticsearch-6.4.3文件夹
+cd /usr/local/elasticsearch-6.4.3
+
+(5).创建数据文件存储目录
+mkdir data
+
+(6).修改elasticsearch.yml
+cd config/
+vim elasticsearch.yml
+
+# ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+cluster.name: es6
+#
+# ------------------------------------ Node ------------------------------------
+#
+# Use a descriptive name for the node:
+#
+node.name: node0
+#
+# Add custom attributes to the node:
+#
+#node.attr.rack: r1
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+path.data: /usr/local/elasticsearch-6.4.3/data
+#
+# Path to log files:
+#
+path.logs: /usr/local/elasticsearch-6.4.3/logs
+#
+# ---------------------------------- Network -----------------------------------
+#
+# Set the bind address to a specific IP (IPv4 or IPv6):
+#
+network.host: 0.0.0.0
+#
+# Set a custom port for HTTP:
+#
+#http.port: 9200
+#
+# For more information, consult the network module documentation.
+#
+
+(7).配置参数
+su root
+修改limits.conf
+vim /etc/security/limits.conf
+* soft nofile 65536
+* hard nofile 131072
+* soft nproc 2048
+* hard nproc 4096
+
+修改sysctl.conf
+vim /etc/sysctl.conf
+vm.max_map_count=262145
+
+刷新sysctl.conf
+[root@pinyoyougou-docker bin]# sysctl -p
+vm.max_map_count = 262145
+
+(8).添加es用户
+(1).添加用户
+useradd esuser
+
+(2).用户授权
+回到elasticsearch目录 cd /usr/local/elasticsearch-6.4.3
+chown -R esuser /usr/local/elasticsearch-6.4.3
+
+(8).修改jvm.options
+vim jvm.options
+
+################################################################
+
+# Xms represents the initial size of total heap space
+# Xmx represents the maximum size of total heap space
+
+-Xms128m
+-Xmx128m
+
+2.安装jdk
+(1).新建jdk安装目录
+mkdir /usr/java
+
+(2).使用xftp上传jdk
+mkdir /home/software
+
+(3.解压jdk安装包
+tar -zxvf jdk-8u191-linux-x64.tar.gz
+
+(4).把解压后的jdk放到 /usr/java下
+mv jdk1.8.0_191 /usr/java
+
+(5).配置环境变量
+修改profile文件
+vim /etc/profile
+export JAVA_HOME=/usr/java/jdk1.8.0_191
+export CLASSPATH=.:%JAVA_HOME%/lib/dt.jar:%JAVA_HOME%/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
+
+(6).刷新profile，使其生效
+source /etc/profile
