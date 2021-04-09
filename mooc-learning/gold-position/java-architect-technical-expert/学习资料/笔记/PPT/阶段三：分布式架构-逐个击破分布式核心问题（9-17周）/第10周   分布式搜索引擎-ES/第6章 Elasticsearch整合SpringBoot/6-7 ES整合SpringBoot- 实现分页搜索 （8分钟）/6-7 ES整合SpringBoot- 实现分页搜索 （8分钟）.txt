@@ -1,0 +1,18 @@
+1.实现分页搜索
+@Test
+ public void searchStuDoc() {
+
+     Pageable pageable = PageRequest.of(0, 2);
+
+     SearchQuery query = new NativeSearchQueryBuilder()
+             .withQuery(QueryBuilders.matchQuery("description", "save man"))
+             .withPageable(pageable)
+             .build();
+     AggregatedPage<Stu> pagedStu = esTemplate.queryForPage(query, Stu.class);
+     System.out.println("检索后的总分页数目为：" + pagedStu.getTotalPages());
+     List<Stu> stuList = pagedStu.getContent();
+     for (Stu s : stuList) {
+         System.out.println(s);
+     }
+
+ }

@@ -3,15 +3,20 @@ package com.test;
 import com.ccarlosf.FoodieSearchApplication;
 import com.ccarlosf.es.pojo.Stu;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -87,5 +92,25 @@ public class ESTest {
     @Test
     public void deleteStuDoc() {
         esTemplate.delete(Stu.class, "1002");
+    }
+
+//    ------------------------- 我是分割线 --------------------------------
+
+    @Test
+    public void searchStuDoc() {
+
+        Pageable pageable = PageRequest.of(0, 2);
+
+        SearchQuery query = new NativeSearchQueryBuilder()
+                .withQuery(QueryBuilders.matchQuery("description", "save man"))
+                .withPageable(pageable)
+                .build();
+        AggregatedPage<Stu> pagedStu = esTemplate.queryForPage(query, Stu.class);
+        System.out.println("检索后的总分页数目为：" + pagedStu.getTotalPages());
+        List<Stu> stuList = pagedStu.getContent();
+        for (Stu s : stuList) {
+            System.out.println(s);
+        }
+
     }
 }
