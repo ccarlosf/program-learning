@@ -2,6 +2,7 @@ package com.test;
 
 import com.ccarlosf.FoodieSearchApplication;
 import com.ccarlosf.es.pojo.Stu;
+import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.UpdateQuery;
+import org.springframework.data.elasticsearch.core.query.UpdateQueryBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FoodieSearchApplication.class)
@@ -45,6 +51,30 @@ public class ESTest {
     @Test
     public void deleteIndexStu() {
         esTemplate.deleteIndex(Stu.class);
+    }
+
+//    ------------------------- 我是分割线 --------------------------------
+
+    @Test
+    public void updateStuDoc() {
+
+        Map<String, Object> sourceMap = new HashMap<>();
+        sourceMap.put("sign", "I am not super man");
+        sourceMap.put("money", 88.6f);
+        sourceMap.put("age", 33);
+
+        IndexRequest indexRequest = new IndexRequest();
+        indexRequest.source(sourceMap);
+
+        UpdateQuery updateQuery = new UpdateQueryBuilder()
+                .withClass(Stu.class)
+                .withId("1002")
+                .withIndexRequest(indexRequest)
+                .build();
+
+//        update stu set sign='abc',age=33,money=88.6 where docId='1002'
+
+        esTemplate.update(updateQuery);
     }
 
 }
