@@ -349,3 +349,23 @@ public class Stu {
 
         esTemplate.update(updateQuery);
     }
+
+
+
+6-6 Elasticsearch整合SpringBoot - 文档数据的查询与删除 （04:17）
+1.查询文档
+@Test
+public void getStuDoc() {
+
+    GetQuery query = new GetQuery();
+    query.setId("1002");
+    Stu stu = esTemplate.queryForObject(query, Stu.class);
+
+    System.out.println(stu);
+}
+
+2.删除文档
+@Test
+public void deleteStuDoc() {
+    esTemplate.delete(Stu.class, "1002");
+}

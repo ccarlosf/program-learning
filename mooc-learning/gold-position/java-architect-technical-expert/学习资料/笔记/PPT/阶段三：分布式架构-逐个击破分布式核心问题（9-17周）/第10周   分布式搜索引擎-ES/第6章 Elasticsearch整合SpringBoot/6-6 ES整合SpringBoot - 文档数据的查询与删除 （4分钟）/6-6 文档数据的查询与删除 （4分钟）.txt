@@ -1,0 +1,16 @@
+1.查询文档
+@Test
+public void getStuDoc() {
+
+    GetQuery query = new GetQuery();
+    query.setId("1002");
+    Stu stu = esTemplate.queryForObject(query, Stu.class);
+
+    System.out.println(stu);
+}
+
+2.删除文档
+@Test
+public void deleteStuDoc() {
+    esTemplate.delete(Stu.class, "1002");
+}
