@@ -138,3 +138,4 @@ UPDATE items SET updated_time =
 9.整合搜索引擎后
 axios.get('http://localhost:8033/items/es/search?keywords=' + keywords + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
 serverUrl前端动态变化
+10.充分使用ES和redis至项目中的各个接口
