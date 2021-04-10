@@ -132,18 +132,11 @@ public class ESTest {
 
         Pageable pageable = PageRequest.of(0, 10);
 
-        SortBuilder sortBuilder = new FieldSortBuilder("money")
-                .order(SortOrder.DESC);
-        SortBuilder sortBuilderAge = new FieldSortBuilder("age")
-                .order(SortOrder.ASC);
-
         SearchQuery query = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.matchQuery("description", "save man"))
                 .withHighlightFields(new HighlightBuilder.Field("description")
                         .preTags(preTag)
                         .postTags(postTag))
-                .withSort(sortBuilder)
-                .withSort(sortBuilderAge)
                 .withPageable(pageable)
                 .build();
         AggregatedPage<Stu> pagedStu = esTemplate.queryForPage(query, Stu.class, new SearchResultMapper() {
