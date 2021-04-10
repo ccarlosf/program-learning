@@ -102,3 +102,32 @@ axios.get('http://localhost:8033/items/es/search?keywords=' + keywords + "&sort=
 			font-weight: bold;
 		}
 	</style>
+
+
+
+8-6 Elasticsearch整合项目 - 实现商品搜索排序（3分钟）
+1.代码实现
+ SortBuilder sortBuilder = null;
+        if (sort.equals("c")) {
+            sortBuilder = new FieldSortBuilder("sellCounts")
+                    .order(SortOrder.DESC);
+        } else if (sort.equals("p")) {
+            sortBuilder = new FieldSortBuilder("price")
+                    .order(SortOrder.ASC);
+        } else {
+            sortBuilder = new FieldSortBuilder("itemName.keyword")
+                    .order(SortOrder.ASC);
+        }
+
+        String itemNameFiled = "itemName";
+
+        SearchQuery query = new NativeSearchQueryBuilder()
+                .withQuery(QueryBuilders.matchQuery(itemNameFiled, keywords))
+                .withHighlightFields(new HighlightBuilder.Field(itemNameFiled)
+//                        .preTags(preTag)
+//                        .postTags(postTag)
+                )
+                .withSort(sortBuilder)
+//                .withSort(sortBuilderAge)
+                .withPageable(pageable)
+                .build();
