@@ -75,3 +75,23 @@ http://localhost:8033/items/es/search?keywords=%E5%A5%BD%E5%90%83%E7%9A%84%E5%90
 
         return gridResult;
     }
+
+
+
+8-4 Elasticsearch整合项目 - 前后端联调（5分钟）
+1.前端修改
+foodie-shop项目
+catItems页面
+(1).html修改
+<p class="title fl">{{item.itemName}}</p>
+改为
+<p class="title fl" v-html="item.itemName"></p>
+
+(2).JS修改
+axios.get(serverUrl + '/items/search?keywords=' + keywords + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
+改为
+axios.get('http://localhost:8033/items/es/search?keywords=' + keywords + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
+
+
+
+8-5 ES整合项目 - 前端自定义高亮样式（2分钟）

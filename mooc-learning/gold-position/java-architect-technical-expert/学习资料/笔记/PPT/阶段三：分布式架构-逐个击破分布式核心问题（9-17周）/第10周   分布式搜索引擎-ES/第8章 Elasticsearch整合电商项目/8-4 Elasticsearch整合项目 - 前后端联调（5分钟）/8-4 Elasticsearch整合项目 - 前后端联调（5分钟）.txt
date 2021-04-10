@@ -1,0 +1,12 @@
+1.前端修改
+foodie-shop项目
+catItems页面
+(1).html修改
+<p class="title fl">{{item.itemName}}</p>
+改为
+<p class="title fl" v-html="item.itemName"></p>
+
+(2).JS修改
+axios.get(serverUrl + '/items/search?keywords=' + keywords + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
+改为
+axios.get('http://localhost:8033/items/es/search?keywords=' + keywords + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})

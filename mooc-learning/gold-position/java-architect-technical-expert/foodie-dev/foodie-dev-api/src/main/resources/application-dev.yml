@@ -7,10 +7,13 @@ spring:
     password: ILikeImooc,123
   redis:
   # Redis 单机单实例
+    #database: 1
+    #host: 192.168.253.165
+    #port: 6379
+    #password: imooc
     database: 1
-    host: 192.168.253.165
+    host: 127.0.0.1
     port: 6379
-    password: imooc
   # Redis 哨兵模式
 #    database: 1
 #    password: imooc
