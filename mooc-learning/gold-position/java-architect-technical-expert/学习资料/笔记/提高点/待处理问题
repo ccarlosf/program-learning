@@ -134,3 +134,4 @@ N为集群的中master节点的数量，也就是那些 node.master=true 设置�
 # 更新时间
 UPDATE items SET updated_time =
    DATE_ADD(updated_time, INTERVAL 1 MONTH);
+8.为什么logstash自动创建的索引的type是doc，而api调用创建的索引的type是_doc
