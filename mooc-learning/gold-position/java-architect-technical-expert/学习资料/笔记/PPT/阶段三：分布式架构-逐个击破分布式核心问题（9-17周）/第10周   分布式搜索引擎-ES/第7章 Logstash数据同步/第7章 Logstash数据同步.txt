@@ -112,3 +112,7 @@ cd /usr/local/logstash-6.4.3/bin
 UPDATE items SET updated_time =
    DATE_ADD(updated_time, INTERVAL 4 MONTH)
 UPDATE items SET updated_time = '2020-01-02 00:00:00';
+
+
+
+7-4 附：logstash数据同步 - 数据同步配置
