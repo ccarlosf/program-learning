@@ -6,3 +6,7 @@
 副本数0
 
 2.上传jdk、logstash、mysql-connector至服务器
+
+
+
+7-2 附： Logstash数据同步 - Logstash介绍
