@@ -120,7 +120,6 @@ UPDATE items SET updated_time = '2020-01-02 00:00:00';
 
 
 7-5 Logstash数据同步 - 测试数据新增与修改（6分钟）
-7-5 Logstash数据同步 - 测试数据新增与修改（6分钟）
 1.修改数据测试同步
 id:tea-153的item_name修改为“美女最爱下午茶 奶茶泡泡更悠闲-修改数据-测试同步”
 
@@ -414,3 +413,7 @@ itemName就可以设置上分词器了
 # 更新时间，再进行数据同步
 UPDATE items SET updated_time =
    DATE_ADD(updated_time, INTERVAL 1 MONTH);
+
+
+
+7-7 附：Logstash数据同步 - 自定义模板配置中文分词
