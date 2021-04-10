@@ -1,0 +1,29 @@
+7-5 Logstash数据同步 - 测试数据新增与修改（6分钟）
+1.修改数据测试同步
+id:tea-153的item_name修改为“美女最爱下午茶 奶茶泡泡更悠闲-修改数据-测试同步”
+
+2.查看logstash追踪时间
+vim track_time
+--- 2020-01-02 00:00:00.000000000 +08:00
+需要大于“2020-01-02 00:00:00”才能进行数据的同步
+
+3.测试修改
+id:tea-153的update_time修改为"2020-02-02 00:00:00"
+vim track_time 时间变更为
+--- 2020-02-02 00:00:00.000000000 +08:00
+
+4.测试新增
+新增logstash-1001的数据
+INSERT INTO `foodie-shop-dev`.`items` (`id`, `item_name`, `cat_id`, `root_cat_id`, `sell_counts`, `on_off_status`, `content`, `created_time`, `updated_time`) VALUES ('logstash-1001', '123', '153', '8', '2931', '1', '23', '2019-12-10 13:39:19', '2019-12-10 13:39:19');
+INSERT INTO `foodie-shop-dev`.`items_img` (`id`, `item_id`, `url`, `sort`, `is_main`, `created_time`, `updated_time`) VALUES ('123', 'logstash-1001', '123', '1', '1', '2019-12-10 13:41:19', '2019-12-10 13:41:19');
+INSERT INTO `foodie-shop-dev`.`items_spec` (`id`, `item_id`, `name`, `stock`, `discounts`, `price_discount`, `price_normal`, `created_time`, `updated_time`) VALUES ('dasdad', 'logstash-1001', 'qq', '100', '0.80', '100', '100', '2019-12-10 13:42:37', '2019-12-10 13:42:37');
+
+数据不会进行同步，因为时间不大于2020-02-02
+把id:logstash-1001的update_time修改为"2020-02-03 13:39:19"后数据被同步到es中
+vim track_time 时间还是
+--- 2020-02-02 00:00:00.000000000 +08:00
+为什么呢？
+
+id:tea-153的update_time修改为"2020-02-07 00:00:00"
+vim track_time 时间变更为
+--- 2020-02-07 00:00:00.000000000 +08:00
