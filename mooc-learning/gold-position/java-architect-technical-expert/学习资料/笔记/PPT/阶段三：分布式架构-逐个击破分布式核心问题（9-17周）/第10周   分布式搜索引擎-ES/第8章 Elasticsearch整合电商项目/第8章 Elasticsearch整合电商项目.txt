@@ -95,3 +95,10 @@ axios.get('http://localhost:8033/items/es/search?keywords=' + keywords + "&sort=
 
 
 8-5 ES整合项目 - 前端自定义高亮样式（2分钟）
+1.catItems添加
+	<style>
+		em {
+			color: green;
+			font-weight: bold;
+		}
+	</style>
