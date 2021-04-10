@@ -2,3 +2,5 @@
 8-1 Elasticsearch整合项目 - 初始化web环境（06:52）
 
 
+
+8-2 ES整合项目 - 创建controller与service（9分钟）
