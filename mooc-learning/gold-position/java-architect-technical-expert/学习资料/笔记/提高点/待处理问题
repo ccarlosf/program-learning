@@ -130,3 +130,7 @@ N为集群的中master节点的数量，也就是那些 node.master=true 设置�
 4.ES7整合SpringBoot(已实现ES6整合SpringBoot)
 5.收集各个安装的开源软件
 6.收集各个安装的开源软件的配置文件
+7.logstash不通过修改数据库时间，进行数据同步，而是通过修改trace_time进行数据同步，或者其它更好地方式
+# 更新时间
+UPDATE items SET updated_time =
+   DATE_ADD(updated_time, INTERVAL 1 MONTH);
