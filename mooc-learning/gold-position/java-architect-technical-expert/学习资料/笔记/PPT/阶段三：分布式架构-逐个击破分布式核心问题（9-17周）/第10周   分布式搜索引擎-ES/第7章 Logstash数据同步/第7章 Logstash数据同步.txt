@@ -1,0 +1,8 @@
+第7章 Logstash数据同步
+7-1 Logstash数据同步 - Logstash介绍（08:33）
+1.创建索引foodie-items
+索引名称foodie-items
+分片数1
+副本数0
+
+2.上传jdk、logstash、mysql-connector至服务器
