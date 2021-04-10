@@ -1,0 +1,15 @@
+1.排序查询
+SortBuilder sortBuilder = new FieldSortBuilder("money")
+         .order(SortOrder.DESC);
+ SortBuilder sortBuilderAge = new FieldSortBuilder("age")
+         .order(SortOrder.ASC);
+
+ SearchQuery query = new NativeSearchQueryBuilder()
+         .withQuery(QueryBuilders.matchQuery("description", "save man"))
+         .withHighlightFields(new HighlightBuilder.Field("description")
+                 .preTags(preTag)
+                 .postTags(postTag))
+         .withSort(sortBuilder)
+         .withSort(sortBuilderAge)
+         .withPageable(pageable)
+         .build();
