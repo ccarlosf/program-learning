@@ -1,0 +1,20 @@
+第7周 主从复制高可用Redis集群
+1.不使用脚本的方式安装redis（单机版redis）
+
+2.下载安装最新版Redis Desktop Manager
+
+3.项目使用构造器注入
+
+4.首页分类存入缓存中
+
+5.安装最新版Navicat
+
+6.使用lombok优化项目
+
+7.SpringBoot已经整合了Redis哨兵模式，还要整合一主一从、一主二从模式
+
+8.搭建redis三主集群（不需要从节点）
+
+9.redis三主三从集群中，触发主备切换
+
+10.搭建redis三从六从集群

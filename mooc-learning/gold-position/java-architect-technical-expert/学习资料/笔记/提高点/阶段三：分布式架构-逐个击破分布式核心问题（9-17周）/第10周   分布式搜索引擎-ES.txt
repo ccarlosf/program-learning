@@ -1,0 +1,69 @@
+第10周 分布式搜索引擎-ES
+1.为什么es使用http://192.168.253.166:9200/my_doc/_doc/_search   GET
+和http://192.168.253.166:9200/my_doc/_doc/_search?_source=id,name   GET
+查询不了，报错
+{
+    "error": {
+        "root_cause": [
+            {
+                "type": "parsing_exception",
+                "reason": "Unknown key for a START_OBJECT in [properties].",
+                "line": 2,
+                "col": 19
+            }
+        ],
+        "type": "parsing_exception",
+        "reason": "Unknown key for a START_OBJECT in [properties].",
+        "line": 2,
+        "col": 19
+    },
+    "status": 400
+}
+
+2.虚拟机搭建的es7，为什么要尝试多次才能成功？
+{
+    "error": {
+        "root_cause": [
+            {
+                "type": "circuit_breaking_exception",
+                "reason": "[parent] Data too large, data for [<http_request>] would be [128607760/122.6mb], which is larger than the limit of [123273216/117.5mb], real usage: [128607584/122.6mb], new bytes reserved: [176/176b], usages [request=0/0b, fielddata=0/0b, in_flight_requests=176/176b, accounting=17080/16.6kb]",
+                "bytes_wanted": 128607760,
+                "bytes_limit": 123273216,
+                "durability": "PERMANENT"
+            }
+        ],
+        "type": "circuit_breaking_exception",
+        "reason": "[parent] Data too large, data for [<http_request>] would be [128607760/122.6mb], which is larger than the limit of [123273216/117.5mb], real usage: [128607584/122.6mb], new bytes reserved: [176/176b], usages [request=0/0b, fielddata=0/0b, in_flight_requests=176/176b, accounting=17080/16.6kb]",
+        "bytes_wanted": 128607760,
+        "bytes_limit": 123273216,
+        "durability": "PERMANENT"
+    },
+    "status": 429
+}
+
+3.es脑裂
+N的设值?
+脑裂解决方案
+master主节点要经过多个master节点共同选举后才能成为新的主节点。就跟班级里选班长一样，并不是你1个人能决定的，需要班里半数以上的人决定。
+解决实现原理：半数以上的节点同意选举，节点方可成为新的master。
+discovery.zen.minimum_master_nodes=(N/2)+1
+N为集群的中master节点的数量，也就是那些 node.master=true 设置的那些服务器节点总数。
+
+4.ES7整合SpringBoot(已实现ES6整合SpringBoot)
+
+5.收集各个安装的开源软件
+
+6.收集各个安装的开源软件的配置文件
+
+7.logstash不通过修改数据库时间，进行数据同步，而是通过修改trace_time进行数据同步，或者其它更好地方式
+# 更新时间
+UPDATE items SET updated_time =
+   DATE_ADD(updated_time, INTERVAL 1 MONTH);
+
+8.为什么logstash自动创建的索引的type是doc，而api调用创建的索引的type是_doc
+
+9.整合搜索引擎后
+axios.get('http://localhost:8033/items/es/search?keywords=' + keywords + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
+serverUrl前端动态变化
+
+10.充分使用ES和redis至项目中的各个接口

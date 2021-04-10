@@ -1,0 +1,26 @@
+阶段一：单体电商项目架构，开发与上线（1~5周）
+1.SpringBoot默认Mysql版本8与版本使用的5冲突问题？
+
+2.内网穿透工具natapp的使用
+
+3.延迟队列，关闭超时订单
+
+4.商品搜索使用ElasticSearch
+
+5.扣减库存使用分布式锁
+
+6.使用构造器注入方式
+
+7.VO拆分出门户端和个人中心端
+
+8.使用BaseService中的setterPagedGrid简化代码
+
+9.部署支付中心 生产环境
+测试支付流程、回调通知，有8088端口号
+String payReturnUrl = "http://api.z.mukewang.com:8088/foodie-dev-api/orders/notifyMerchantOrderPaid";
+
+10.1-20  【加餐】mybatis项目面试题
+
+11.1-21  【加餐】经历了拼多多5轮Java面试，都面了些啥？
+
+12.单机架构，应用服务器部署，hosts文件配置域名测试

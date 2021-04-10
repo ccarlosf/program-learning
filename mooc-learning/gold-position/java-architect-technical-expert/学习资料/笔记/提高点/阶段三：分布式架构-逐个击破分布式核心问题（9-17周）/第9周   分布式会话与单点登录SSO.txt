@@ -1,0 +1,21 @@
+第9周 分布式会话与单点登录SSO
+1.为什么在用户上传头像和修改用户信息时，redis中存的uuid需要发生变化？
+
+2.使用SpringSession改造项目，例子localhost:8088/setSession @EnableRedisHttpSession
+
+3.SpringSession的原理
+
+4.interceptor包应当挪到和controller同级包
+
+5.if (!uniqueToken.equals(userToken)) {
+                      // TODO 为什么
+                      System.out.println("账号在异地登录...");
+                      return false;
+                  }
+
+6.foodie-sso 为什么缺失jackson-databind此包项目运行不起来
+             spring-boot-starter-thymeleaf 为什么要指定版本号才可以
+
+7.为什么单点登录系统针对Chrome不起效
+
+8.应用单点登录系统至项目中
