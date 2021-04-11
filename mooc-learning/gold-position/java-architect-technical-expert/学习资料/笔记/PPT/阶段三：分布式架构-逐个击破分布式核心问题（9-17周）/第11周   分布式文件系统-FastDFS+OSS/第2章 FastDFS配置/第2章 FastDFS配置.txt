@@ -67,3 +67,26 @@ cp * /etc/fdfs/
 
 
 2-2 附：配置FastDFS环境准备工作
+
+
+
+2-3 配置tracker服务（4分钟）
+1.修改tracker.conf
+cd /etc/fdfs/
+
+vim tracker.conf
+修改内容:
+# the base path to store data and log files
+base_path=/usr/local/fastdfs/tracker
+
+创建目录
+mkdir /usr/local/fastdfs/tracker -p
+
+查看tracker.conf配置信息
+more tracker.conf | grep ^[^#]
+
+2.启动tracker服务
+[root@pinyoyougou-docker fdfs]# /usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf
+[root@pinyoyougou-docker fdfs]# ps -ef|grep tracker
+root      2975     1  0 09:13 ?        00:00:00 /usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf
+root      2983  2173  0 09:13 pts/0    00:00:00 grep --color=auto tracker
