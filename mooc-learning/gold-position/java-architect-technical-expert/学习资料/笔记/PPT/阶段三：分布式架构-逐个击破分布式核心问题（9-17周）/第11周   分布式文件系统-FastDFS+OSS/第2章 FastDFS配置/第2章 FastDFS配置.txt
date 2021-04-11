@@ -90,3 +90,7 @@ more tracker.conf | grep ^[^#]
 [root@pinyoyougou-docker fdfs]# ps -ef|grep tracker
 root      2975     1  0 09:13 ?        00:00:00 /usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf
 root      2983  2173  0 09:13 pts/0    00:00:00 grep --color=auto tracker
+
+
+
+2-4 附：配置tracker服务
