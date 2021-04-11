@@ -1,0 +1,99 @@
+2-7 配置 Nginx FastDFS实现文件服务器（16分钟）
+1.安装nginx模块服务
+Storage节点操作（nginx和Storage节点需要在同一台服务器）
+(1).解压fastdfs-nginx-module-1.22.tar.gz
+cd /home/software/FastDFS
+tar -zxvf fastdfs-nginx-module-1.22.tar.gz
+cd fastdfs-nginx-module-1.22
+cd src
+
+(2).修改配置文件config
+vim config
+ngx_module_incs="/usr/include"
+CORE_INCS="$CORE_INCS /usr/include"
+
+(3).拷贝配置文件至/etc/fdfs/
+cp mod_fastdfs.conf /etc/fdfs/
+
+2.安装nginx
+(1).安装基础环境
+yum install -y pcre pcre-devel
+yum install -y zlib zlib-devel
+yum install -y openssl openssl-devel
+(2).安装nginx服务
+tar -zxvf nginx-1.16.1.tar.gz
+cd nginx-1.16.1
+mkdir /var/temp/nginx -p
+配置:
+./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi \
+--add-module=/home/software/FastDFS/fastdfs-nginx-module-1.22/src
+编译:
+make
+安装:
+make install
+
+3.修改mod_fastdfs.conf
+cd /etc/fdfs/
+mkdir /usr/local/fastdfs/tmp
+vim mod_fastdfs.conf
+
+# the base path to store log files
+base_path=/usr/local/fastdfs/tmp
+
+# FastDFS tracker_server can ocur more than once, and tracker_server format is
+#  "host:port", host can be hostname or ip address
+# valid only when load_fdfs_parameters_from_tracker is true
+tracker_server=192.168.253.166:22122
+
+# the group name of the local storage server
+group_name=imooc
+
+# if the url / uri including the group name
+# set to false when uri like /M00/00/00/xxx
+# set to true when uri like ${group_name}/M00/00/00/xxx, such as group1/M00/xxx
+# default value is false
+url_have_group_name = true
+
+4.修改nginx配置文件
+cd /usr/local/nginx/conf
+80端口配置修改为
+    server {
+        listen       8888;
+        server_name  localhost;
+
+        location /imooc/M00 {
+           ngx_fastdfs_module;
+        }
+    }
+
+5.启动nginx
+../sbin/nginx
+
+6.测试
+cd /usr/local/fastdfs/storage/data/00/00/
+[root@pinyoyougou-docker 00]# ls
+wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg    wKj9qmByVdCAdX0tAAIxdMx6dLU135.jpg
+wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg-m  wKj9qmByVdCAdX0tAAIxdMx6dLU135.jpg-m
+
+访问http://192.168.253.170:8888/imooc/M00/00/00/wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg报404
+
+修改配置文件
+cd /etc/fdfs/
+vim mod_fastdfs.conf
+# store_path#, based 0, if store_path0 not exists, it's value is base_path
+# the paths must be exist
+# must same as storage.conf
+store_path0=/usr/local/fastdfs/storage
+
+再次访问http://192.168.253.170:8888/imooc/M00/00/00/wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg成功
