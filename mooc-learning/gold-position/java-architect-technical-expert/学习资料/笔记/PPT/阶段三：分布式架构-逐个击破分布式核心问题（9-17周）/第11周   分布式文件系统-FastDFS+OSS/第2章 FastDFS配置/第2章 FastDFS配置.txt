@@ -234,3 +234,7 @@ example file url: http://192.168.253.170/imooc/M00/00/00/wKj9qmByVdCAdX0tAAIxdMx
 [root@pinyoyougou-docker 00]# ls wKj9qmByVdCAdX0tAAIxdMx6dLU135*
 wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg    wKj9qmByVdCAdX0tAAIxdMx6dLU135.jpg
 wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg-m  wKj9qmByVdCAdX0tAAIxdMx6dLU135.jpg-m
+
+
+
+2-6 附：配置storage服务
