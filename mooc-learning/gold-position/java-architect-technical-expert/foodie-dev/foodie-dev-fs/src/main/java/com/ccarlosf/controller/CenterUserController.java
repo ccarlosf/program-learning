@@ -1,7 +1,13 @@
 package com.ccarlosf.controller;
 
+import com.ccarlosf.pojo.Users;
+import com.ccarlosf.pojo.vo.UsersVO;
+import com.ccarlosf.resourse.FileResource;
 import com.ccarlosf.service.FdfsService;
+import com.ccarlosf.service.center.CenterUserService;
+import com.ccarlosf.utils.CookieUtils;
 import com.ccarlosf.utils.JSONResult;
+import com.ccarlosf.utils.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("fdfs")
-public class CenterUserController {
+public class CenterUserController extends BaseController {
+
+    @Autowired
+    private FileResource fileResource;
+
+    @Autowired
+    private CenterUserService centerUserService;
 
     @Autowired
     private FdfsService fdfsService;
@@ -41,7 +53,7 @@ public class CenterUserController {
 
                 if (!suffix.equalsIgnoreCase("png") &&
                         !suffix.equalsIgnoreCase("jpg") &&
-                        !suffix.equalsIgnoreCase("jpeg")) {
+                        !suffix.equalsIgnoreCase("jpeg") ) {
                     return JSONResult.errorMsg("图片格式不正确！");
                 }
 
@@ -52,6 +64,19 @@ public class CenterUserController {
             }
         } else {
             return JSONResult.errorMsg("文件不能为空！");
+        }
+
+        if (StringUtils.isNotBlank(path)) {
+            String finalUserFaceUrl = fileResource.getHost() + path;
+
+            Users userResult = centerUserService.updateUserFace(userId, finalUserFaceUrl);
+
+            UsersVO usersVO = conventUsersVO(userResult);
+
+            CookieUtils.setCookie(request, response, "user",
+                    JsonUtils.objectToJson(usersVO), true);
+        } else {
+            return JSONResult.errorMsg("上传头像失败");
         }
 
         return JSONResult.ok();

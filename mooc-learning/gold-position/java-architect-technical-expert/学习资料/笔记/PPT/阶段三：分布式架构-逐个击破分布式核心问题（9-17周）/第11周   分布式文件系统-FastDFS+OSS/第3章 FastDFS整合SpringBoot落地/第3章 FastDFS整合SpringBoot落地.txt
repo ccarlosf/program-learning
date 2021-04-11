@@ -14,7 +14,6 @@
     }
 
 3-2 FastDFS整合SB - 实现头像上传（8分钟）
-3-2 FastDFS整合SB - 实现头像上传（8分钟）
 1.代码实现
  @PostMapping("uploadFace")
     public JSONResult uploadFace(
@@ -73,3 +72,62 @@
 										'headerUserToken': userInfo.userUniqueToken
 									}
 								})
+
+
+
+3-3 FS整合 - 完善头像上传与修改（8分钟）
+3-3 FastDFS整合SpringBoot - 完善头像上传与修改（08:07）
+1.代码实现
+
+        if (StringUtils.isNotBlank(path)) {
+            String finalUserFaceUrl = fileResource.getHost() + path;
+
+            Users userResult = centerUserService.updateUserFace(userId, finalUserFaceUrl);
+
+            UsersVO usersVO = conventUsersVO(userResult);
+
+            CookieUtils.setCookie(request, response, "user",
+                    JsonUtils.objectToJson(usersVO), true);
+        } else {
+            return JSONResult.errorMsg("上传头像失败");
+        }
+
+@Controller
+public class BaseController {
+
+    @Autowired
+    private RedisOperator redisOperator;
+
+    public static final String REDIS_USER_TOKEN = "redis_user_token";
+
+
+    public UsersVO conventUsersVO(Users user) {
+        // 实现用户的redis会话
+        String uniqueToken = UUID.randomUUID().toString().trim();
+        redisOperator.set(REDIS_USER_TOKEN + ":" + user.getId(),
+                uniqueToken);
+
+        UsersVO usersVO = new UsersVO();
+        BeanUtils.copyProperties(user, usersVO);
+        usersVO.setUserUniqueToken(uniqueToken);
+        return usersVO;
+    }
+}
+
+@Component
+@PropertySource("classpath:file.properties")
+@ConfigurationProperties(prefix = "file")
+public class FileResource {
+
+    private String host;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+}
+
+file.host=http://192.168.253.170:8888/
