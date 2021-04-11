@@ -3,7 +3,7 @@ package com.ccarlosf.controller;
 import com.ccarlosf.pojo.Users;
 import com.ccarlosf.pojo.vo.UsersVO;
 import com.ccarlosf.resourse.FileResource;
-import com.ccarlosf.service.FdfsService;
+import com.ccarlosf.service.FileService;
 import com.ccarlosf.service.center.CenterUserService;
 import com.ccarlosf.utils.CookieUtils;
 import com.ccarlosf.utils.JSONResult;
@@ -29,7 +29,7 @@ public class CenterUserController extends BaseController {
     private CenterUserService centerUserService;
 
     @Autowired
-    private FdfsService fdfsService;
+    private FileService fileService;
 
     @PostMapping("uploadFace")
     public JSONResult uploadFace(
@@ -57,9 +57,9 @@ public class CenterUserController extends BaseController {
                     return JSONResult.errorMsg("图片格式不正确！");
                 }
 
-                path = fdfsService.upload(file, suffix);
+//                path = fileService.upload(file, suffix);
 
-//                path = fdfsService.uploadOSS(file, userId, suffix);
+                path = fileService.uploadOSS(file, userId, suffix);
                 System.out.println(path);
             }
         } else {
@@ -67,7 +67,8 @@ public class CenterUserController extends BaseController {
         }
 
         if (StringUtils.isNotBlank(path)) {
-            String finalUserFaceUrl = fileResource.getHost() + path;
+//            String finalUserFaceUrl = fileResource.getHost() + path;
+            String finalUserFaceUrl = fileResource.getOssHost() + path;
 
             Users userResult = centerUserService.updateUserFace(userId, finalUserFaceUrl);
 
