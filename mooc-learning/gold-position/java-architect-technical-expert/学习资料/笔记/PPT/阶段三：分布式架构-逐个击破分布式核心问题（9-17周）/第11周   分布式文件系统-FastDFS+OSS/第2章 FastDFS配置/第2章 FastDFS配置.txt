@@ -63,3 +63,7 @@ cp * /etc/fdfs/
 -rw-r--r--. 1 root root   527 4月  11 08:51 storage_ids.conf.sample
 -rw-r--r--. 1 root root  8038 4月  11 08:56 tracker.conf
 -rw-r--r--. 1 root root  8038 4月  11 08:51 tracker.conf.sample
+
+
+
+2-2 附：配置FastDFS环境准备工作
