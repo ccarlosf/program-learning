@@ -1,4 +1,5 @@
 2-3 配置tracker服务（4分钟）
+tracker节点操作
 1.修改tracker.conf
 cd /etc/fdfs/
 
