@@ -5,3 +5,5 @@
 还需要搭建多个tracker（或者一个），多个group，每个group多个storage节点
 
 3.foodie-dev-file项目BaseController的公共简化（foodie-dev-api也存在BaseController）
+
+4.跟踪源码FastFileStorageClient自动装配过程, ossClient单例Bean实现
