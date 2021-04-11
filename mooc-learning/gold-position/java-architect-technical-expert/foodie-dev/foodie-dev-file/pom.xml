@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>foodie-dev-fs</artifactId>
+    <artifactId>foodie-dev-file</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

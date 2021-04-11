@@ -4,4 +4,4 @@
 2.现在的FastDFS架构是一个group，一个tracker，一个storage；
 还需要搭建多个tracker（或者一个），多个group，每个group多个storage节点
 
-3.foodie-dev-fs项目BaseController的公共简化（foodie-dev-api也存在BaseController）
+3.foodie-dev-file项目BaseController的公共简化（foodie-dev-api也存在BaseController）

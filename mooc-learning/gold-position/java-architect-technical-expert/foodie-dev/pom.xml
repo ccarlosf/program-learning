@@ -15,7 +15,7 @@
         <module>foodie-dev-service</module>
         <module>foodie-dev-api</module>
         <module>foodie-dev-search</module>
-        <module>foodie-dev-fs</module>
+        <module>foodie-dev-file</module>
     </modules>
 
     <!--
