@@ -1,13 +1,3 @@
-第4章 第三方云存储解决方案-OSS
-4-1 第三方云存储解决方案（6分钟）
-
-
-
-4-2 阿里OSS简介（13分钟）
-
-
-
-4-3 OSS的基本配置（13分钟）
 4-3 OSS的基本配置（13分钟）
 1.fie.properties
 file.endpoint=oss-cn-beijing.aliyuncs.com
