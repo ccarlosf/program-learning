@@ -225,12 +225,15 @@
 						multiForm.append('file', f, f.name);  	//append 向form表单添加数据
 
 						var userInfo = this.userInfo;
-						// console.log(userInfo);
+					    // console.log(userInfo);
 						// 请求后端获得最新数据
-						var serverUrl = app.serverUrl;
+						//var serverUrl = app.serverUrl;
+						//var fileServer = serverUrl + '/userInfo/uploadFace?userId=' + userInfo.id
+						var fileServer = 'http://localhost:8066/fdfs/uploadFace?userId=' + userInfo.id
 						axios.defaults.withCredentials = true;
 						axios.post(
-								serverUrl + '/userInfo/uploadFace?userId=' + userInfo.id, 
+							//	serverUrl + '/userInfo/uploadFace?userId=' + userInfo.id,
+							    fileServer,
 								multiForm, 
 								{
 									headers: {
