@@ -1,1 +1,64 @@
 2-1 配置FastDFS环境准备工作（9分钟）
+Tracker和Storage节点操作
+1.上传安装文件至服务器
+mkdir /home/software/FastDFS -p
+
+2.安装环境
+yum install -y gcc gcc-c++
+yum -y install libevent
+
+3.解压安装相关安装文件
+(1).解压安装libfastcommon
+解压:
+cd /home/software/FastDFS
+tar -zxvf libfastcommon-1.0.42.tar.gz
+编译安装:
+cd libfastcommon-1.0.42
+./make.sh
+./make.sh install
+
+(2).安装FastDFS
+解压:
+cd /home/software/FastDFS
+tar -zxvf fastdfs-6.04.tar.gz
+编译安装:
+cd fastdfs-6.04
+./make.sh
+./make.sh install
+
+4.查看FastDFS相关命令
+cd /usr/bin
+[root@pinyoyougou-docker fastdfs-6.04]# cd /usr/bin/
+[root@pinyoyougou-docker bin]# ls fdfs_*
+fdfs_appender_test   fdfs_delete_file    fdfs_regenerate_filename  fdfs_trackerd
+fdfs_appender_test1  fdfs_download_file  fdfs_storaged             fdfs_upload_appender
+fdfs_append_file     fdfs_file_info      fdfs_test                 fdfs_upload_file
+fdfs_crc32           fdfs_monitor        fdfs_test1
+
+5.查看相关配置文件
+[root@pinyoyougou-docker bin]# cd /etc/fdfs/
+[root@pinyoyougou-docker fdfs]# ll
+总用量 28
+-rw-r--r--. 1 root root  1834 4月  11 08:51 client.conf.sample
+-rw-r--r--. 1 root root 10085 4月  11 08:51 storage.conf.sample
+-rw-r--r--. 1 root root   527 4月  11 08:51 storage_ids.conf.sample
+-rw-r--r--. 1 root root  8038 4月  11 08:51 tracker.conf.sample
+
+6.拷贝相关配置文件至/etc/fdfs/
+cd /home/software/FastDFS/fastdfs-6.04/conf/
+cp * /etc/fdfs/
+
+[root@pinyoyougou-docker conf]# cd /etc/fdfs/
+[root@pinyoyougou-docker fdfs]# ll
+总用量 116
+-rw-r--r--. 1 root root 23981 4月  11 08:56 anti-steal.jpg
+-rw-r--r--. 1 root root  1834 4月  11 08:56 client.conf
+-rw-r--r--. 1 root root  1834 4月  11 08:51 client.conf.sample
+-rw-r--r--. 1 root root   955 4月  11 08:56 http.conf
+-rw-r--r--. 1 root root 31172 4月  11 08:56 mime.types
+-rw-r--r--. 1 root root 10085 4月  11 08:56 storage.conf
+-rw-r--r--. 1 root root 10085 4月  11 08:51 storage.conf.sample
+-rw-r--r--. 1 root root   527 4月  11 08:56 storage_ids.conf
+-rw-r--r--. 1 root root   527 4月  11 08:51 storage_ids.conf.sample
+-rw-r--r--. 1 root root  8038 4月  11 08:56 tracker.conf
+-rw-r--r--. 1 root root  8038 4月  11 08:51 tracker.conf.sample
