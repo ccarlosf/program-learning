@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+//import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import tk.mybatis.spring.annotation.MapperScan;
 
 // 跳转security的拦截登录
@@ -17,7 +17,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @ComponentScan(basePackages = {"com.ccarlosf", "org.n3r.idworker"})
 //@EnableTransactionManagement
 @EnableScheduling       // 开启定时任务
-@EnableRedisHttpSession // 开启使用redis作为spring session
+//@EnableRedisHttpSession // 开启使用redis作为spring session
 public class FoodieApplication {
 
     public static void main(String[] args) {

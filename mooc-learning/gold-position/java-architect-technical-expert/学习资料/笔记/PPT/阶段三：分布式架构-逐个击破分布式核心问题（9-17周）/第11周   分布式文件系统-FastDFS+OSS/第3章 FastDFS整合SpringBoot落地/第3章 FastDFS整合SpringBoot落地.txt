@@ -1,0 +1,15 @@
+第3章 FastDFS整合SpringBoot落地
+3-1 FastDFS整合SpringBoot - 实现service（7分钟）
+3-1 FastDFS整合SpringBoot - 实现service（7分钟）
+  @Override
+    public String upload(MultipartFile file, String fileExtName) throws Exception {
+
+        StorePath storePath = fastFileStorageClient.uploadFile(file.getInputStream(),
+                                file.getSize(),
+                                fileExtName,
+                                null);
+
+        String path = storePath.getFullPath();
+
+        return path;
+    }
