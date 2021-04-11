@@ -340,3 +340,7 @@ vim mod_fastdfs.conf
 store_path0=/usr/local/fastdfs/storage
 
 再次访问http://192.168.253.170:8888/imooc/M00/00/00/wKj9qmByVdCAdX0tAAIxdMx6dLU135_big.jpg成功
+
+
+
+2-8 附：配置 nginx fastdfs 实现文件服务器
