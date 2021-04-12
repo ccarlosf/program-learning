@@ -1,2 +1,6 @@
 第2章 RabbitMQ进阶与实战
 2-1 RabbitMQ学习指南（2分钟）
+
+
+
+2-2 初识RabbitMQ核心概念-1（18分钟）
