@@ -8,29 +8,35 @@
 
 
 2-3 （缺）初识RabbitMQ核心概念-2（11分钟）
+2-4 （缺）RabbitMQ环境搭建与控制台详解-1（29分钟）
+2-5 （缺）RabbitMQ环境搭建与控制台详解-2（20分钟）
+2-6（缺） RabbitMQ急速入门HelloWorld（24分钟）
+2-7 （缺）Rabbitmq核心API-Exchange之Direct（16分钟）
+2-8 （缺）Rabbitmq核心API-Exchange之Topic（16分钟）
+2-9（缺） Rabbitmq核心API-Exchange之Fanout（6分钟）
+
 2-03 【基础额外补充-视频】哪些互联网大厂在使用rabbitmq,为什么
 
 
 
-2-4 （缺）RabbitMQ环境搭建与控制台详解-1（29分钟）
 2-04 【基础额外补充-视频】rabbitmq高性能的原因
 
 
 
-2-5 （缺）RabbitMQ环境搭建与控制台详解-2（20分钟）
 2-5 【基础额外补充】amqp高级消息队列协议与模型
 
 
 
-2-6（缺） RabbitMQ急速入门HelloWorld（24分钟）
 2-06 【基础额外补充-视频】amqp核心概念讲解
 
 
 
-2-7 （缺）Rabbitmq核心API-Exchange之Direct（16分钟）
 2-07 【基础额外补充-视频】rabbitmq整体架构与消息流转
 
 
 
-2-8 （缺）Rabbitmq核心API-Exchange之Topic（16分钟）
 2-8 附：RabbitMQ急速入门
+
+
+
+2-9 附：RabbitMQ核心API
