@@ -14,6 +14,7 @@
 2-7 （缺）Rabbitmq核心API-Exchange之Direct（16分钟）
 2-8 （缺）Rabbitmq核心API-Exchange之Topic（16分钟）
 2-9（缺） Rabbitmq核心API-Exchange之Fanout（6分钟）
+2-10 （缺）Rabbitmq核心API-其他关键概念讲解（5分钟）
 
 2-03 【基础额外补充-视频】哪些互联网大厂在使用rabbitmq,为什么
 
@@ -40,3 +41,7 @@
 
 
 2-9 附：RabbitMQ核心API
+
+
+
+2-10 【基础额外补充-图文】RabbitMQ高级特性
