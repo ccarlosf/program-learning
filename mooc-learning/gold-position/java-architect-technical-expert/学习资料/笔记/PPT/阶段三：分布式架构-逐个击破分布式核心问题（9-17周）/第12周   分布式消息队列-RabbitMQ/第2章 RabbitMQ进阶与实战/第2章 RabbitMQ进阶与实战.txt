@@ -272,3 +272,7 @@ public class RabbitReceive {
 
 
 2-20 【选学：基础额外补充】集群架构模式-镜像模式（mirror)
+
+
+
+2-21 RabbitMQ镜像队列集群实操
