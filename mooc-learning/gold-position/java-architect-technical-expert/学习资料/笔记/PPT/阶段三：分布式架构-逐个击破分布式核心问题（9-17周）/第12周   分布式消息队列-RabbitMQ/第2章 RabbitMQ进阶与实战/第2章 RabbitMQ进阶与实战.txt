@@ -19,6 +19,7 @@
 2-12 （缺） Rabbitmq高级特性-生产端特性讲解_确认机制和返回机制 （13分钟）
 2-13 （缺）Rabbitmq高级特性-消费端特性讲解_流控服务和ACK重回队列 （18:49）
 2-14 （缺）高级特性-TTL消息与死信队列详解 （20分钟）
+2-15 Rabbitmq集群搭建-镜像队列集群环境搭建实操 （23分钟）
 
 2-03 【基础额外补充-视频】哪些互联网大厂在使用rabbitmq,为什么
 
@@ -96,3 +97,66 @@ spring.jackson.default-property-inclusion=NON_NULL
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+
+
+
+2-15 rabbitmq与springboot整合_生产端-2
+2-15 rabbitmq与springboot整合_生产端-2
+1.代码实现
+@Component
+public class RabbitSender {
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    /**
+     * 这里就是确认消息的回调监听接口，用于确认消息是否被broker所收到
+     */
+    final ConfirmCallback confirmCallback = new ConfirmCallback() {
+        /**
+         *    @param correlationData 作为一个唯一的标识
+         *    @param ack broker 是否落盘成功
+         *    @param cause 失败的一些异常信息
+         */
+        @Override
+        public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+            System.err.println("消息ACK结果:" + ack + ", correlationData: " + correlationData.getId());
+        }
+    };
+
+    /**
+     * 对外发送消息的方法
+     *
+     * @param message    具体的消息内容
+     * @param properties 额外的附加属性
+     * @throws Exception
+     */
+    public void send(Object message, Map<String, Object> properties) throws Exception {
+
+        MessageHeaders mhs = new MessageHeaders(properties);
+        Message<?> msg = MessageBuilder.createMessage(message, mhs);
+
+        rabbitTemplate.setConfirmCallback(confirmCallback);
+
+        // 	指定业务唯一的iD
+        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+
+        MessagePostProcessor mpp = new MessagePostProcessor() {
+
+            @Override
+            public org.springframework.amqp.core.Message postProcessMessage(org.springframework.amqp.core.Message message)
+                    throws AmqpException {
+                System.err.println("---> post to do: " + message);
+                return message;
+            }
+        };
+
+        rabbitTemplate.convertAndSend("exchange-1",
+                "springboot.rabbit",
+                msg, mpp, correlationData);
+
+    }
+
+
+}
+
