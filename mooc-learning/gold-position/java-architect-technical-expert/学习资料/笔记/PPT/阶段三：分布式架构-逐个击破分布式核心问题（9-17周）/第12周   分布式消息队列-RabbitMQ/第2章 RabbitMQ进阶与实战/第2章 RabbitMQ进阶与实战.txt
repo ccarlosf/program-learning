@@ -19,7 +19,8 @@
 2-12 （缺） Rabbitmq高级特性-生产端特性讲解_确认机制和返回机制 （13分钟）
 2-13 （缺）Rabbitmq高级特性-消费端特性讲解_流控服务和ACK重回队列 （18:49）
 2-14 （缺）高级特性-TTL消息与死信队列详解 （20分钟）
-2-15 Rabbitmq集群搭建-镜像队列集群环境搭建实操 （23分钟）
+2-15 （缺）Rabbitmq集群搭建-镜像队列集群环境搭建实操 （23分钟）
+2-16 RabbitMQ与SpringBoot整合_生产端-1（17:25）
 
 2-03 【基础额外补充-视频】哪些互联网大厂在使用rabbitmq,为什么
 
@@ -160,3 +161,87 @@ public class RabbitSender {
 
 }
 
+
+
+2-16 rabbitmq与springboot整合_消费端-1
+2-16 rabbitmq与springboot整合_消费端-1
+1.配置文件
+server.servlet.context-path=/
+server.port=8002
+
+#spring.rabbitmq.addresses=192.168.11.71:5672,192.168.11.72:5672,192.168.11.71:5673
+spring.rabbitmq.addresses=127.0.0.1:5672
+spring.rabbitmq.username=guest
+spring.rabbitmq.password=guest
+spring.rabbitmq.virtual-host=/
+spring.rabbitmq.connection-timeout=15000
+
+## 	表示消费者消费成功消息以后需要手工的进行签收(ack)，默认为auto
+spring.rabbitmq.listener.simple.acknowledge-mode=manual
+spring.rabbitmq.listener.simple.concurrency=5
+spring.rabbitmq.listener.simple.max-concurrency=10
+spring.rabbitmq.listener.simple.prefetch=1
+
+
+##	作业：
+##	最好不要在代码里写死配置信息，尽量使用这种方式也就是配置文件的方式
+##	在代码里使用 	${}	方式进行设置配置: ${spring.rabbitmq.listener.order.exchange.name}
+spring.rabbitmq.listener.order.exchange.name=order-exchange
+spring.rabbitmq.listener.order.exchange.durable=true
+spring.rabbitmq.listener.order.exchange.type=topic
+spring.rabbitmq.listener.order.exchange.key=order.*
+
+spring.application.name=rabbit-producer
+spring.http.encoding.charset=UTF-8
+spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+spring.jackson.time-zone=GMT+8
+spring.jackson.default-property-inclusion=NON_NULL
+
+2.pom文件
+   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- springboot rabbitmq(amqp) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+3.代码实现
+@Component
+public class RabbitReceive {
+
+	/**
+	 * 	组合使用监听
+	 * 	@RabbitListener @QueueBinding @Queue @Exchange
+	 * @param message
+	 * @param channel
+	 * @throws Exception
+	 */
+	@RabbitListener(bindings = @QueueBinding(
+					value = @Queue(value = "queue-1", durable = "true"),
+					exchange = @Exchange(name = "exchange-1",
+					durable = "true",
+					type = "topic",
+					ignoreDeclarationExceptions = "true"),
+					key = "springboot.*"
+				)
+			)
+	@RabbitHandler
+	public void onMessage(Message message, Channel channel) throws Exception {
+		//	1. 收到消息以后进行业务端消费处理
+		System.err.println("-----------------------");
+		System.err.println("消费消息:" + message.getPayload());
+
+		//  2. 处理成功之后 获取deliveryTag 并进行手工的ACK操作, 因为我们配置文件里配置的是 手工签收
+		//	spring.rabbitmq.listener.simple.acknowledge-mode=manual
+		Long deliveryTag = (Long)message.getHeaders().get(AmqpHeaders.DELIVERY_TAG);
+		channel.basicAck(deliveryTag, false);
+	}
+}

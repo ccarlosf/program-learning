@@ -23,6 +23,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>rabbit-producer</module>
+        <module>rabbit-consumer</module>
     </modules>
 
     <properties>
