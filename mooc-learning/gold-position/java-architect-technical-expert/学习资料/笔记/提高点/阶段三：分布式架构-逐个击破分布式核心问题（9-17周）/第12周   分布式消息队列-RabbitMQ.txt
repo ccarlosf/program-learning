@@ -1,0 +1,15 @@
+1.补充学习
+2-3 （缺）初识RabbitMQ核心概念-2（11分钟）
+2-4 （缺）RabbitMQ环境搭建与控制台详解-1（29分钟）
+2-5 （缺）RabbitMQ环境搭建与控制台详解-2（20分钟）
+2-6（缺） RabbitMQ急速入门HelloWorld（24分钟）
+2-7 （缺）Rabbitmq核心API-Exchange之Direct（16分钟）
+2-8 （缺）Rabbitmq核心API-Exchange之Topic（16分钟）
+2-9（缺） Rabbitmq核心API-Exchange之Fanout（6分钟）
+2-10 （缺）Rabbitmq核心API-其他关键概念讲解（5分钟）
+2-11 （缺）Rabbitmq高级特性-生产端可靠性投递与消费端幂等性 （22分钟）
+2-12 （缺） Rabbitmq高级特性-生产端特性讲解_确认机制和返回机制 （13分钟）
+2-13 （缺）Rabbitmq高级特性-消费端特性讲解_流控服务和ACK重回队列 （18:49）
+2-14 （缺）高级特性-TTL消息与死信队列详解 （20分钟）
+
+2.搭建RabbitMQ单机和镜像队列模式
