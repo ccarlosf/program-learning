@@ -268,3 +268,7 @@ public class RabbitReceive {
 
 
 2-19 【选学：基础额外补充】集群架构模式-远程模式（shove)
+
+
+
+2-20 【选学：基础额外补充】集群架构模式-镜像模式（mirror)
