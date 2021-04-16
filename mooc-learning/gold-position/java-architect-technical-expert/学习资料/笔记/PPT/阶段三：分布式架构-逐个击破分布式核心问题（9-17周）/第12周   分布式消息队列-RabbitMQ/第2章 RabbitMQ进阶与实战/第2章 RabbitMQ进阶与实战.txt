@@ -21,6 +21,7 @@
 2-14 （缺）高级特性-TTL消息与死信队列详解 （20分钟）
 2-15 （缺）Rabbitmq集群搭建-镜像队列集群环境搭建实操 （23分钟）
 2-16 RabbitMQ与SpringBoot整合_生产端-1（17:25）
+2-17 RabbitMQ与SpringBoot整合_生产端-2 （13分钟）
 
 2-03 【基础额外补充-视频】哪些互联网大厂在使用rabbitmq,为什么
 
@@ -245,3 +246,5 @@ public class RabbitReceive {
 		channel.basicAck(deliveryTag, false);
 	}
 }
+
+2-17 rabbitmq与springboot整合_消费端-2

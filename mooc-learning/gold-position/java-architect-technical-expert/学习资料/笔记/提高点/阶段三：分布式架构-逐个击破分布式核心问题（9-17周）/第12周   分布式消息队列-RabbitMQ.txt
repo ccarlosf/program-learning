@@ -11,5 +11,35 @@
 2-12 （缺） Rabbitmq高级特性-生产端特性讲解_确认机制和返回机制 （13分钟）
 2-13 （缺）Rabbitmq高级特性-消费端特性讲解_流控服务和ACK重回队列 （18:49）
 2-14 （缺）高级特性-TTL消息与死信队列详解 （20分钟）
+2-15 （缺）Rabbitmq集群搭建-镜像队列集群环境搭建实操 （23分钟）
 
 2.搭建RabbitMQ单机和镜像队列模式
+
+3.rabbit-mq -> rabbit-consumer rabbit-producer
+##	作业：
+##	最好不要在代码里写死配置信息，尽量使用这种方式也就是配置文件的方式
+##	在代码里使用 	${}	方式进行设置配置: ${spring.rabbitmq.listener.order.exchange.name}
+spring.rabbitmq.listener.order.exchange.name=order-exchange
+spring.rabbitmq.listener.order.exchange.durable=true
+spring.rabbitmq.listener.order.exchange.type=topic
+spring.rabbitmq.listener.order.exchange.key=order.*
+
+rabbitTemplate.convertAndSend("exchange-1",
+                "springboot.rabbit",
+                msg, mpp, correlationData);
+
+4.rabbit-mq中rabbit-producer和rabbit-consumer公共依赖提取
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- springboot rabbitmq(amqp) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
