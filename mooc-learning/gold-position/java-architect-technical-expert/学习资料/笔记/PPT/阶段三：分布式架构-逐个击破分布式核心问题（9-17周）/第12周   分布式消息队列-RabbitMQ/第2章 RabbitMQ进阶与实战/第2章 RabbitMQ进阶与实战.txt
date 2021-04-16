@@ -248,3 +248,13 @@ public class RabbitReceive {
 }
 
 2-17 rabbitmq与springboot整合_消费端-2
+1.单元测试
+@Test
+	public void testSender() throws Exception {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("attr1", "12345");
+		properties.put("attr2", "abcde");
+		reRabbitSender.send("蔡少辉爱陈燕!", properties);
+
+		Thread.sleep(10000);
+	}
