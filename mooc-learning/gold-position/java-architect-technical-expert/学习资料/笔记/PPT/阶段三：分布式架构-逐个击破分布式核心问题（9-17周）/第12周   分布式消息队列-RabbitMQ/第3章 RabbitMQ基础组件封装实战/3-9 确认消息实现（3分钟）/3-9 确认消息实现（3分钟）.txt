@@ -1,0 +1,7 @@
+ 3-9 确认消息实现（3分钟）
+ 1.com.ccarlos.rabbit.producer.broker.RabbitBrokerImpl.confirmSend
+@Override
+   public void confirmSend(Message message) {
+       message.setMessageType(MessageType.CONFIRM);
+       sendKernel(message);
+   }
