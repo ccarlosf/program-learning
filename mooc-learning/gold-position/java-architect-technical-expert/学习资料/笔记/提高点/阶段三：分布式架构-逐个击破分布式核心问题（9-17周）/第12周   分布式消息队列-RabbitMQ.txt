@@ -29,6 +29,7 @@ rabbitTemplate.convertAndSend("exchange-1",
                 msg, mpp, correlationData);
 
 4.rabbit-mq中rabbit-producer和rabbit-consumer公共依赖提取
+rabbit-mq中rabbit-parent公共依赖提取
   <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -45,3 +46,5 @@ rabbitTemplate.convertAndSend("exchange-1",
         </dependency>
 
 5.构建RabbitMQ主备模式、远程模式、镜像模式（为什么100%数据不丢失？）
+
+6.elastic-job公共化为通用项目使用，而不是限制于RabbitMQ

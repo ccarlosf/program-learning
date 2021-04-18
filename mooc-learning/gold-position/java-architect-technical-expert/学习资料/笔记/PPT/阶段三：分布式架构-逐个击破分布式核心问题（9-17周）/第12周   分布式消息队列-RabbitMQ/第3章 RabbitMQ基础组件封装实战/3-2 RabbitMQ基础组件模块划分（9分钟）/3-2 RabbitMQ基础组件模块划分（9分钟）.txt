@@ -1,8 +1,3 @@
-第3章 RabbitMQ基础组件封装实战
-3-1 RabbitMQ基础组件整体功能概述（3分钟）
-
-
-
 3-2 RabbitMQ基础组件模块划分（9分钟）
 1.父pom文件依赖
 <parent>

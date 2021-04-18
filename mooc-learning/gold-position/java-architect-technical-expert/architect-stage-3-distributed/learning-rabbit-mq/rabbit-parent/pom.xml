@@ -1,11 +1,13 @@
-第3章 RabbitMQ基础组件封装实战
-3-1 RabbitMQ基础组件整体功能概述（3分钟）
-
-
-
-3-2 RabbitMQ基础组件模块划分（9分钟）
-1.父pom文件依赖
-<parent>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--    <parent>
+        <artifactId>learning-rabbit-mq</artifactId>
+        <groupId>com.ccarlosf</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>-->
+    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.5.RELEASE</version>
@@ -94,3 +96,6 @@
             <version>${fasterxml.uuid.version}</version>
         </dependency>
     </dependencies>
+
+
+</project>
