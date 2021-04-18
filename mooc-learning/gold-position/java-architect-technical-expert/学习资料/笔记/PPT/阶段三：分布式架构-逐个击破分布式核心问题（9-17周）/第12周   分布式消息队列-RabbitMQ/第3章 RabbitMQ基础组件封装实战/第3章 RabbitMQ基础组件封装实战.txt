@@ -290,3 +290,6 @@ public final class MessageType {
 
 }
 
+
+
+3-4 RabbitMQ基础组件API封装-2（4分钟）

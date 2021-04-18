@@ -1,0 +1,55 @@
+3-4 RabbitMQ基础组件API封装-2（4分钟）
+1.MessageListener类
+/**
+ * 	$MessageListener 消费者监听消息
+ *
+ */
+public interface MessageListener {
+
+	void onMessage(Message message);
+
+}
+
+2.MessageProducer类
+/**
+ * 	$MessageProducer
+ *
+ */
+public interface MessageProducer {
+
+	/**
+	 * 	$send消息的发送 附带SendCallback回调执行响应的业务逻辑处理
+	 * @param message
+	 * @param sendCallback
+	 * @throws MessageRunTimeException
+	 */
+	void send(Message message, SendCallback sendCallback) throws MessageRunTimeException;
+
+	/**
+	 *
+	 * @param message 消息的发送
+	 * @throws MessageRunTimeException
+	 */
+	void send(Message message) throws MessageRunTimeException;
+
+	/**
+	 * 	$send 消息的批量发送
+	 * @param messages
+	 * @throws MessageRunTimeException
+	 */
+	void send(List<Message> messages) throws MessageRunTimeException;
+
+}
+
+3.SendCallback类
+/**
+ * 	$SendCallback 回调函数处理
+ *
+ */
+public interface SendCallback {
+
+	void onSuccess();
+
+	void onFailure();
+
+}
