@@ -1,0 +1,20 @@
+package com.ccarlos;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import tk.mybatis.spring.annotation.MapperScan;
+
+// 跳转security的拦截登录
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+// 扫描 mybatis 通用 mapper 所在的包目录
+@MapperScan(basePackages = "com.ccarlos.mapper")
+// 扫描所有包以及相关组件包
+@ComponentScan(basePackages = {"com.ccarlos", "org.n3r.idworker"})
+public class FoodieSSOApplication {
+	
+	public static void main(String[] args) {
+		SpringApplication.run(FoodieSSOApplication.class, args);
+	}
+}

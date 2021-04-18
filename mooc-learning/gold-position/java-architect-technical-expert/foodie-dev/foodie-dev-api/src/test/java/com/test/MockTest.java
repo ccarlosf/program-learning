@@ -1,7 +1,7 @@
 package com.test;
 
-import com.ccarlosf.FoodieApplication;
-import com.ccarlosf.controller.HelloController;
+import com.ccarlos.FoodieApplication;
+import com.ccarlos.controller.HelloController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

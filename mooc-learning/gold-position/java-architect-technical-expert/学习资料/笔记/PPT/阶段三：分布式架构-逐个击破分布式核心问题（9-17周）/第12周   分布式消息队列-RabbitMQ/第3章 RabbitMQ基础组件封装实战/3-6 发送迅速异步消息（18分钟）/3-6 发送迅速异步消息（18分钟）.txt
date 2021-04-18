@@ -143,4 +143,4 @@ public class RabbitBrokerImpl implements RabbitBroker {
 }
 
 5.RabbitProducerAutoConfiguration
-@ComponentScan({"com.ccarlosf.rabbit.producer.*"})
+@ComponentScan({"com.ccarlos.rabbit.producer.*"})

@@ -2,7 +2,7 @@
 1.rabbit-common pom文件
 <dependencies>
         <dependency>
-            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <groupId>com.ccarlos.base.rabbit</groupId>
             <artifactId>rabbit-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -15,12 +15,12 @@
 2.rabbit-core-producer
 <dependencies>
         <dependency>
-            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <groupId>com.ccarlos.base.rabbit</groupId>
             <artifactId>rabbit-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <groupId>com.ccarlos.base.rabbit</groupId>
             <artifactId>rabbit-task</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -64,4 +64,4 @@ public class RabbitProducerAutoConfiguration {
 5.spring.factories
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.ccarlosf.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration
+com.ccarlos.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration

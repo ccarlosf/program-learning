@@ -1,7 +1,7 @@
 package com.test;
 
-import com.ccarlosf.FoodieSearchApplication;
-import com.ccarlosf.es.pojo.Stu;
+import com.ccarlos.FoodieSearchApplication;
+import com.ccarlos.es.pojo.Stu;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilders;

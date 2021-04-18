@@ -12,7 +12,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.ccarlosf.base.rabbit</groupId>
+    <groupId>com.ccarlos.base.rabbit</groupId>
     <artifactId>rabbit-parent</artifactId>
     <packaging>pom</packaging>
     <name>rabbit-parent</name>
@@ -301,7 +301,7 @@ public final class MessageType {
 1.rabbit-common pom文件
 <dependencies>
         <dependency>
-            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <groupId>com.ccarlos.base.rabbit</groupId>
             <artifactId>rabbit-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -314,12 +314,12 @@ public final class MessageType {
 2.rabbit-core-producer
 <dependencies>
         <dependency>
-            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <groupId>com.ccarlos.base.rabbit</groupId>
             <artifactId>rabbit-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <groupId>com.ccarlos.base.rabbit</groupId>
             <artifactId>rabbit-task</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -363,7 +363,7 @@ public class RabbitProducerAutoConfiguration {
 5.spring.factories
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.ccarlosf.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration
+com.ccarlos.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration
 
 
 
@@ -512,7 +512,7 @@ public class RabbitBrokerImpl implements RabbitBroker {
 }
 
 5.RabbitProducerAutoConfiguration
-@ComponentScan({"com.ccarlosf.rabbit.producer.*"})
+@ComponentScan({"com.ccarlos.rabbit.producer.*"})
 
 
 
@@ -584,7 +584,7 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
 }
 
 2.RabbitBrokerImpl
-com.ccarlosf.rabbit.producer.broker.RabbitBrokerImpl.sendKernel
+com.ccarlos.rabbit.producer.broker.RabbitBrokerImpl.sendKernel
 @Autowired
 private RabbitTemplateContainer rabbitTemplateContainer;
 // 以topic为key做池化操作，多生产者操作，而不是单例（性能不高）

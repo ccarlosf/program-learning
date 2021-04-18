@@ -1,7 +1,7 @@
 package com.test;
 
-import com.ccarlosf.service.StuService;
-import com.ccarlosf.service.TestTransService;
+import com.ccarlos.service.StuService;
+import com.ccarlos.service.TestTransService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

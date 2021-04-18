@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ccarlosf.mapper.OrdersMapperCustom" >
+<mapper namespace="com.ccarlos.mapper.OrdersMapperCustom" >
 
-  <resultMap id="myOrdersVO" type="com.ccarlosf.pojo.vo.MyOrdersVO">
+  <resultMap id="myOrdersVO" type="com.ccarlos.pojo.vo.MyOrdersVO">
     <id column="orderId" property="orderId"/>
     <result column="createdTime" property="createdTime"/>
     <result column="payMethod" property="payMethod"/>
@@ -14,7 +14,7 @@
       <collection property="subOrderItemList"
                 select="getSubItems"
                 column="orderId"
-                ofType="com.ccarlosf.pojo.vo.MySubOrderItemVO">
+                ofType="com.ccarlos.pojo.vo.MySubOrderItemVO">
       <result column="itemId" property="itemId"/>
       <result column="itemName" property="itemName"/>
       <result column="itemImg" property="itemImg"/>
@@ -24,7 +24,7 @@
     </collection>
   </resultMap>
 
-    <select id="getSubItems" parameterType="String" resultType="com.ccarlosf.pojo.vo.MySubOrderItemVO">
+    <select id="getSubItems" parameterType="String" resultType="com.ccarlos.pojo.vo.MySubOrderItemVO">
 
         select
             oi.item_id as itemId,
@@ -116,7 +116,7 @@
         </if>
     </select>
 
-    <select id="getMyOrderTrend" parameterType="Map" resultType="com.ccarlosf.pojo.OrderStatus">
+    <select id="getMyOrderTrend" parameterType="Map" resultType="com.ccarlos.pojo.OrderStatus">
 
         SELECT
             os.order_id as orderId,

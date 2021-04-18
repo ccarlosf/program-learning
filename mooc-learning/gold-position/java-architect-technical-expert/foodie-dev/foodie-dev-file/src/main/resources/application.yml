@@ -49,7 +49,7 @@ mybatis:
 ############################################################
 # 通用 Mapper 配置
 mapper:
-  mappers: com.ccarlosf.my.mapper.MyMapper
+  mappers: com.ccarlos.my.mapper.MyMapper
   not-empty: false
   identity: MYSQL
 # 分页插件配置

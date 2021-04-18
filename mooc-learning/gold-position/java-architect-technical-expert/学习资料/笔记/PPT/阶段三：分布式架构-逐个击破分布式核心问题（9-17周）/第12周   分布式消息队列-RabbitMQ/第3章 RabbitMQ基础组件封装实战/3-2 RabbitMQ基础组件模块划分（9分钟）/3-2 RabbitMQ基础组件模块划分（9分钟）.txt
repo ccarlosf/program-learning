@@ -7,7 +7,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.ccarlosf.base.rabbit</groupId>
+    <groupId>com.ccarlos.base.rabbit</groupId>
     <artifactId>rabbit-parent</artifactId>
     <packaging>pom</packaging>
     <name>rabbit-parent</name>

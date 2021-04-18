@@ -162,14 +162,14 @@ public class RabbitMessageConverter implements MessageConverter {
 	@Override
 	public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
 //		messageProperties.setExpiration(delaultExprie);
-		com.ccarlosf.rabbit.api.Message message = (com.ccarlosf.rabbit.api.Message)object;
+		com.ccarlos.rabbit.api.Message message = (com.ccarlos.rabbit.api.Message)object;
 		messageProperties.setDelay(message.getDelayMills());
 		return this.delegate.toMessage(object, messageProperties);
 	}
 
 	@Override
 	public Object fromMessage(Message message) throws MessageConversionException {
-		com.ccarlosf.rabbit.api.Message msg = (com.ccarlosf.rabbit.api.Message) this.delegate.fromMessage(message);
+		com.ccarlos.rabbit.api.Message msg = (com.ccarlos.rabbit.api.Message) this.delegate.fromMessage(message);
 		return msg;
 	}
 

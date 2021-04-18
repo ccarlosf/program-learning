@@ -6,11 +6,11 @@
 
     <parent>
         <artifactId>architect-stage-1-monolith</artifactId>
-        <groupId>com.ccarlosf</groupId>
+        <groupId>com.ccarlos</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.ccarlosf</groupId>
+    <groupId>com.ccarlos</groupId>
     <artifactId>mybatis-generator</artifactId>
     <version>1.0-SNAPSHOT</version>
 
