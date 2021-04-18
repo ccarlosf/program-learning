@@ -364,3 +364,7 @@ public class RabbitProducerAutoConfiguration {
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.ccarlosf.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration
+
+
+
+3-6 发送迅速异步消息（18分钟）

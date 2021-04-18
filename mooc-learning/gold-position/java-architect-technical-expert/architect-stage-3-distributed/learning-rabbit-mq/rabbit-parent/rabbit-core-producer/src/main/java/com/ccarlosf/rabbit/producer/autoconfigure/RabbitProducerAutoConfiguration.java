@@ -1,5 +1,6 @@
-package com.ccarlosf.producer.com.ccarlosf.rabbit.producer.autoconfigure;
+package com.ccarlosf.rabbit.producer.autoconfigure;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
+@ComponentScan({"com.ccarlosf.rabbit.producer.*"})
 public class RabbitProducerAutoConfiguration {
 
 

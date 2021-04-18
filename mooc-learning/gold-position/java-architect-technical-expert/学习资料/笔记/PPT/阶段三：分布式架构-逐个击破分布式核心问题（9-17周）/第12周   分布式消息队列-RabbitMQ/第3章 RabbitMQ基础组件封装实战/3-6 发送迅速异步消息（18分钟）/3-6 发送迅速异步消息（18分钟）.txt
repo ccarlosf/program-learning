@@ -1,0 +1,146 @@
+3-6 发送迅速异步消息（18分钟）
+1.AsyncBaseQueue
+@Slf4j
+public class AsyncBaseQueue {
+
+	private static final int THREAD_SIZE = Runtime.getRuntime().availableProcessors();
+
+	private static final int QUEUE_SIZE = 10000;
+
+	private static ExecutorService senderAsync =
+			new ThreadPoolExecutor(THREAD_SIZE,
+					THREAD_SIZE,
+					60L,
+					TimeUnit.SECONDS,
+					new ArrayBlockingQueue<Runnable>(QUEUE_SIZE),
+					new ThreadFactory() {
+						@Override
+						public Thread newThread(Runnable r) {
+							Thread t = new Thread(r);
+							t.setName("rabbitmq_client_async_sender");
+							return t;
+						}
+					},
+					new java.util.concurrent.RejectedExecutionHandler() {
+						@Override
+						public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+							log.error("async sender is error rejected, runnable: {}, executor: {}", r, executor);
+						}
+					});
+
+		public static void submit(Runnable runnable) {
+			senderAsync.submit(runnable);
+		}
+
+}
+
+2.ProducerClient
+@Override
+	public void send(Message message) throws MessageRunTimeException {
+		Preconditions.checkNotNull(message.getTopic());
+		String messageType = message.getMessageType();
+		switch (messageType) {
+			case MessageType.RAPID:
+				rabbitBroker.rapidSend(message);
+				break;
+			case MessageType.CONFIRM:
+				rabbitBroker.confirmSend(message);
+				break;
+			case MessageType.RELIANT:
+				rabbitBroker.reliantSend(message);
+				break;
+			default:
+				break;
+		}
+
+	}
+
+3.RabbitBroker
+/**
+ * 	$RabbitBroker 具体发送不同种类型消息的接口
+ *
+ */
+public interface RabbitBroker {
+
+	void rapidSend(Message message);
+
+	void confirmSend(Message message);
+
+	void reliantSend(Message message);
+
+	void sendMessages();
+
+}
+
+4.RabbitBrokerImpl
+/**
+ * $RabbitBrokerImpl 真正的发送不同类型的消息实现类
+ */
+@Slf4j
+@Component
+public class RabbitBrokerImpl implements RabbitBroker {
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    /**
+     * $rapidSend迅速发消息
+     */
+    @Override
+    public void rapidSend(Message message) {
+        message.setMessageType(MessageType.RAPID);
+        sendKernel(message);
+    }
+
+
+/*    private void sendKernel(Message message) {
+
+        CorrelationData correlationData = new CorrelationData(String.format("%s#%s",
+                message.getMessageId(),
+                System.currentTimeMillis()));
+
+        String topic = message.getTopic();
+        String routingKey = message.getRoutingKey();
+        rabbitTemplate.convertAndSend(topic, routingKey, message, correlationData);
+        log.info("#RabbitBrokerImpl.sendKernel# send to rabbitmq, messageId: {}", message.getMessageId());
+
+    }*/
+    /**
+     * $sendKernel 发送消息的核心方法 使用异步线程池进行发送消息
+     *
+     * @param message
+     */
+    private void sendKernel(Message message) {
+
+        AsyncBaseQueue.submit((Runnable) () -> {
+            CorrelationData correlationData =
+                    new CorrelationData(String.format("%s#%s#%s",
+                            message.getMessageId(),
+                            System.currentTimeMillis(),
+                            message.getMessageType()));
+            String topic = message.getTopic();
+            String routingKey = message.getRoutingKey();
+            RabbitTemplate rabbitTemplate = rabbitTemplate.getTemplate(message);
+            rabbitTemplate.convertAndSend(topic, routingKey, message, correlationData);
+            log.info("#RabbitBrokerImpl.sendKernel# send to rabbitmq, messageId: {}", message.getMessageId());
+        });
+    }
+
+    @Override
+    public void confirmSend(Message message) {
+    }
+
+    @Override
+    public void reliantSend(Message message) {
+
+    }
+
+    @Override
+    public void sendMessages() {
+
+    }
+
+}
+
+5.RabbitProducerAutoConfiguration
+@ComponentScan({"com.ccarlosf.rabbit.producer.*"})
