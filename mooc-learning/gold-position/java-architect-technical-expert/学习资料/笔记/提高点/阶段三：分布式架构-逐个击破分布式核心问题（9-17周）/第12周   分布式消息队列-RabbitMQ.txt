@@ -50,3 +50,9 @@ rabbit-mq中rabbit-parent公共依赖提取
 6.elastic-job公共化为通用项目使用，而不是限制于RabbitMQ
 
 7.项目名由foodie-dev改为foodie，子项目之间重构
+
+8.rabbit-common数据源改为hikari
+
+9.rabbit-core-producer把mapping改为配置文件形式
+
+10.foodie-dev的hikari和rabbit-core-producer的druid数据源配置比较

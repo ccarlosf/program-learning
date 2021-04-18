@@ -1,0 +1,209 @@
+3-11 可靠性投递落地-集成数据源（21分钟）
+1.BrokerMessage
+/**
+ * 	$BrokerMessage 消息记录表实体映射
+ * @author ccarlos
+ *
+ */
+public class BrokerMessage implements Serializable {
+
+	private static final long serialVersionUID = 7447792462810110841L;
+
+	private String messageId;
+
+    private Message message;
+
+    private Integer tryCount = 0;
+
+    private String status;
+
+    private Date nextRetry;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId == null ? null : messageId.trim();
+    }
+
+    public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+
+	public Integer getTryCount() {
+        return tryCount;
+    }
+
+    public void setTryCount(Integer tryCount) {
+        this.tryCount = tryCount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public Date getNextRetry() {
+        return nextRetry;
+    }
+
+    public void setNextRetry(Date nextRetry) {
+        this.nextRetry = nextRetry;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}
+
+2.BrokerMessageConfiguration
+/**
+ * 	$BrokerMessageConfiguration
+ * 	帮我执行SQL脚本
+ * 	帮我进行数据库表结构的创建
+ * @author ccarlos
+ *
+ */
+@Configuration
+public class BrokerMessageConfiguration {
+
+    @Autowired
+    private DataSource rabbitProducerDataSource;
+
+    @Value("classpath:rabbit-producer-message-schema.sql")
+    private Resource schemaScript;
+
+    @Bean
+    public DataSourceInitializer initDataSourceInitializer() {
+    	System.err.println("--------------rabbitProducerDataSource-----------:" + rabbitProducerDataSource);
+        final DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(rabbitProducerDataSource);
+        initializer.setDatabasePopulator(databasePopulator());
+        return initializer;
+    }
+
+    private DatabasePopulator databasePopulator() {
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(schemaScript);
+        return populator;
+    }
+}
+
+3.RabbitProducerDataSourceConfiguration
+@Configuration
+@PropertySource({"classpath:rabbit-producer-message.properties"})
+public class RabbitProducerDataSourceConfiguration {
+
+	private static Logger LOGGER = org.slf4j.LoggerFactory.getLogger(RabbitProducerDataSourceConfiguration.class);
+
+	@Value("${rabbit.producer.druid.type}")
+	private Class<? extends DataSource> dataSourceType;
+
+	@Bean(name = "rabbitProducerDataSource")
+	@Primary
+	@ConfigurationProperties(prefix = "rabbit.producer.druid.jdbc")
+	public DataSource rabbitProducerDataSource() throws SQLException {
+		DataSource rabbitProducerDataSource = DataSourceBuilder.create().type(dataSourceType).build();
+		LOGGER.info("============= rabbitProducerDataSource : {} ================", rabbitProducerDataSource);
+		return rabbitProducerDataSource;
+	}
+
+    public DataSourceProperties primaryDataSourceProperties(){
+        return new DataSourceProperties();
+    }
+
+    public DataSource primaryDataSource(){
+        return primaryDataSourceProperties().initializeDataSourceBuilder().build();
+    }
+
+}
+
+4.RabbitProducerMyBatisConfiguration
+@Configuration
+@AutoConfigureAfter(value = {RabbitProducerDataSourceConfiguration.class})
+public class RabbitProducerMyBatisConfiguration {
+
+	@Resource(name= "rabbitProducerDataSource")
+	private DataSource rabbitProducerDataSource;
+
+	@Bean(name="rabbitProducerSqlSessionFactory")
+	public SqlSessionFactory rabbitProducerSqlSessionFactory(DataSource rabbitProducerDataSource) {
+
+		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+		bean.setDataSource(rabbitProducerDataSource);
+		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+		try {
+			bean.setMapperLocations(resolver.getResources("classpath:com/ccarlos/rabbit/producer/mapping/*.xml"));
+			SqlSessionFactory sqlSessionFactory = bean.getObject();
+			sqlSessionFactory.getConfiguration().setCacheEnabled(Boolean.TRUE);
+			return sqlSessionFactory;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Bean(name="rabbitProducerSqlSessionTemplate")
+	public SqlSessionTemplate rabbitProducerSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+		return new SqlSessionTemplate(sqlSessionFactory);
+	}
+
+}
+
+5.RabbitProducerMybatisMapperScanerConfig
+@Configuration
+@AutoConfigureAfter(RabbitProducerDataSourceConfiguration.class)
+public class RabbitProducerMybatisMapperScanerConfig {
+
+	@Bean(name="rabbitProducerMapperScannerConfigurer")
+    public MapperScannerConfigurer rabbitProducerMapperScannerConfigurer() {
+        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+        mapperScannerConfigurer.setSqlSessionFactoryBeanName("rabbitProducerSqlSessionFactory");
+        mapperScannerConfigurer.setBasePackage("com.ccarlos.rabbit.producer.mapper");
+        return mapperScannerConfigurer;
+    }
+
+}
+
+6.pom依赖
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>

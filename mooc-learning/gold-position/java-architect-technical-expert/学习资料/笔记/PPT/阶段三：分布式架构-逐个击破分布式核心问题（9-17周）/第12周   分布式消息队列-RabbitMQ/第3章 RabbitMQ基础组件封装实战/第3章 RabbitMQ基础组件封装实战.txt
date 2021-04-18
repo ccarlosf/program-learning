@@ -793,3 +793,7 @@ newTemplate.setMessageConverter(rmc);
 
 
 3-10 从架构的视角分析可靠性消息投递（14分钟）
+
+
+
+3-11 可靠性投递落地-集成数据源（21分钟）
