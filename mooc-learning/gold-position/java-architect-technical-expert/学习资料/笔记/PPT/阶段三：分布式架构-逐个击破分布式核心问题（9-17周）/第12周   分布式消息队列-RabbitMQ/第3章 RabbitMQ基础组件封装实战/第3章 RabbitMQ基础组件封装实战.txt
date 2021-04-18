@@ -593,3 +593,193 @@ RabbitTemplate rabbitTemplate = rabbitTemplateContainer.getTemplate(message);
 
 
 3-8 序列化与反序列化转换封装（22分钟）
+3-8 序列化与反序列化转换封装（22分钟）
+1.Serializer
+
+/**
+ * 	序列化和反序列化的接口
+ * @author ccarlos
+ */
+public interface Serializer {
+
+	byte[] serializeRaw(Object data);
+
+	String serialize(Object data);
+
+	<T> T deserialize(String content);
+
+	<T> T deserialize(byte[] content);
+
+}
+
+2.SerializerFactory
+public interface SerializerFactory {
+
+	Serializer create();
+}
+
+3.JacksonSerializer
+/**
+ * 	$JacksonSerializer
+ * @author ccarlos
+ *
+ */
+public class JacksonSerializer implements Serializer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JacksonSerializer.class);
+    private static final ObjectMapper mapper = new ObjectMapper();
+
+    static {
+        mapper.disable(SerializationFeature.INDENT_OUTPUT);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
+        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        mapper.configure(JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS, true);
+        mapper.configure(JsonParser.Feature.ALLOW_NUMERIC_LEADING_ZEROS, true);
+        mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+    }
+
+    private final JavaType type;
+
+    private JacksonSerializer(JavaType type) {
+        this.type = type;
+    }
+
+    public JacksonSerializer(Type type) {
+        this.type = mapper.getTypeFactory().constructType(type);
+    }
+
+    public static JacksonSerializer createParametricType(Class<?> cls) {
+        return new JacksonSerializer(mapper.getTypeFactory().constructType(cls));
+    }
+
+    @Override
+    public byte[] serializeRaw(Object data) {
+        try {
+            return mapper.writeValueAsBytes(data);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("序列化出错", e);
+        }
+        return null;
+    }
+
+    @Override
+    public String serialize(Object data) {
+        try {
+            return mapper.writeValueAsString(data);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("序列化出错", e);
+        }
+        return null;
+    }
+
+    @Override
+    public <T> T deserialize(String content) {
+        try {
+            return mapper.readValue(content, type);
+        } catch (IOException e) {
+            LOGGER.error("反序列化出错", e);
+        }
+        return null;
+    }
+
+    @Override
+    public <T> T deserialize(byte[] content) {
+        try {
+            return mapper.readValue(content, type);
+        } catch (IOException e) {
+            LOGGER.error("反序列化出错", e);
+        }
+        return null;
+    }
+
+}
+
+4.JacksonSerializerFactory
+public class JacksonSerializerFactory implements SerializerFactory {
+
+	/** 单例模式 */
+	public static final SerializerFactory INSTANCE = new JacksonSerializerFactory();
+
+	@Override
+	public Serializer create() {
+		return JacksonSerializer.createParametricType(Message.class);
+	}
+
+}
+
+5.GenericMessageConverter
+/**
+ * 	$GenericMessageConverter
+ * @author ccarlos
+ *
+ */
+public class GenericMessageConverter implements MessageConverter {
+
+	private Serializer serializer;
+
+	public GenericMessageConverter(Serializer serializer) {
+		Preconditions.checkNotNull(serializer);
+		this.serializer = serializer;
+	}
+
+	@Override
+	public Object fromMessage(org.springframework.amqp.core.Message message) throws MessageConversionException {
+		return this.serializer.deserialize(message.getBody());
+	}
+
+	@Override
+	public org.springframework.amqp.core.Message toMessage(Object object, MessageProperties messageProperties)
+			throws MessageConversionException {
+		return new org.springframework.amqp.core.Message(this.serializer.serializeRaw(object), messageProperties);
+	}
+
+}
+
+6.RabbitMessageConverter
+/**
+ * 	$RabbitMessageConverter
+ *  装饰者模式或者静态代理模式
+ */
+public class RabbitMessageConverter implements MessageConverter {
+
+	private GenericMessageConverter delegate;
+
+//	private final String delaultExprie = String.valueOf(24 * 60 * 60 * 1000);
+
+	public RabbitMessageConverter(GenericMessageConverter genericMessageConverter) {
+		Preconditions.checkNotNull(genericMessageConverter);
+		this.delegate = genericMessageConverter;
+	}
+
+	@Override
+	public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
+//		messageProperties.setExpiration(delaultExprie);
+		com.ccarlos.rabbit.api.Message message = (com.ccarlos.rabbit.api.Message)object;
+		messageProperties.setDelay(message.getDelayMills());
+		return this.delegate.toMessage(object, messageProperties);
+	}
+
+	@Override
+	public Object fromMessage(Message message) throws MessageConversionException {
+		com.ccarlos.rabbit.api.Message msg = (com.ccarlos.rabbit.api.Message) this.delegate.fromMessage(message);
+		return msg;
+	}
+
+}
+
+7.RabbitTemplateContainer
+// 单例模式，饥饿加载
+private SerializerFactory serializerFactory = JacksonSerializerFactory.INSTANCE;
+
+//	添加序列化反序列化和converter对象
+Serializer serializer = serializerFactory.create();
+GenericMessageConverter gmc = new GenericMessageConverter(serializer);
+RabbitMessageConverter rmc = new RabbitMessageConverter(gmc);
+newTemplate.setMessageConverter(rmc);
+
+
+
+3-9 确认消息实现（3分钟）
