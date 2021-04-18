@@ -293,3 +293,74 @@ public final class MessageType {
 
 
 3-4 RabbitMQ基础组件API封装-2（4分钟）
+
+
+
+3-5 自动装配与架构接口定义（10分钟）
+3-5 自动装配与架构接口定义（10分钟）
+1.rabbit-common pom文件
+<dependencies>
+        <dependency>
+            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <artifactId>rabbit-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+    </dependencies>
+
+2.rabbit-core-producer
+<dependencies>
+        <dependency>
+            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <artifactId>rabbit-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ccarlosf.base.rabbit</groupId>
+            <artifactId>rabbit-task</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+3.ProducerClient
+/**
+ * 	$ProducerClient 发送消息的实际实现类
+ *
+ */
+@Component
+public class ProducerClient implements MessageProducer {
+
+	@Override
+	public void send(Message message, SendCallback sendCallback) throws MessageRunTimeException {
+
+	}
+
+	@Override
+	public void send(Message message) throws MessageRunTimeException {
+
+	}
+
+	@Override
+	public void send(List<Message> messages) throws MessageRunTimeException {
+
+	}
+}
+
+4.RabbitProducerAutoConfiguration
+/**
+ * 	$RabbitProducerAutoConfiguration 自动装配
+ *
+ */
+@Configuration
+public class RabbitProducerAutoConfiguration {
+
+
+}
+
+5.spring.factories
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ccarlosf.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration
