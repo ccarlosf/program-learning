@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class RabbitBrokerImpl implements RabbitBroker {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private RabbitTemplateContainer rabbitTemplateContainer;
 
     /**
      * $rapidSend迅速发消息
@@ -46,7 +46,6 @@ public class RabbitBrokerImpl implements RabbitBroker {
      * @param message
      */
     private void sendKernel(Message message) {
-
         AsyncBaseQueue.submit((Runnable) () -> {
             CorrelationData correlationData =
                     new CorrelationData(String.format("%s#%s#%s",
@@ -55,7 +54,8 @@ public class RabbitBrokerImpl implements RabbitBroker {
                             message.getMessageType()));
             String topic = message.getTopic();
             String routingKey = message.getRoutingKey();
-            RabbitTemplate rabbitTemplate = rabbitTemplate.getTemplate(message);
+            // 以topic为key做池化操作，多生产者操作，而不是单例（性能不高）
+            RabbitTemplate rabbitTemplate = rabbitTemplateContainer.getTemplate(message);
             rabbitTemplate.convertAndSend(topic, routingKey, message, correlationData);
             log.info("#RabbitBrokerImpl.sendKernel# send to rabbitmq, messageId: {}", message.getMessageId());
         });
