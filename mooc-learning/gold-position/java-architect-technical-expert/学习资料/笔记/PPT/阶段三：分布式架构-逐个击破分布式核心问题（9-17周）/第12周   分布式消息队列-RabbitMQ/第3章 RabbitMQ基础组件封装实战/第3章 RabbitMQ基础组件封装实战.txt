@@ -789,3 +789,7 @@ newTemplate.setMessageConverter(rmc);
        message.setMessageType(MessageType.CONFIRM);
        sendKernel(message);
    }
+
+
+
+3-10 从架构的视角分析可靠性消息投递（14分钟）

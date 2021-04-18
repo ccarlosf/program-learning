@@ -48,3 +48,5 @@ rabbit-mq中rabbit-parent公共依赖提取
 5.构建RabbitMQ主备模式、远程模式、镜像模式（为什么100%数据不丢失？）
 
 6.elastic-job公共化为通用项目使用，而不是限制于RabbitMQ
+
+7.项目名由foodie-dev改为foodie，子项目之间重构
