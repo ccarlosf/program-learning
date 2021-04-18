@@ -589,3 +589,7 @@ com.ccarlosf.rabbit.producer.broker.RabbitBrokerImpl.sendKernel
 private RabbitTemplateContainer rabbitTemplateContainer;
 // 以topic为key做池化操作，多生产者操作，而不是单例（性能不高）
 RabbitTemplate rabbitTemplate = rabbitTemplateContainer.getTemplate(message);
+
+
+
+3-8 序列化与反序列化转换封装（22分钟）

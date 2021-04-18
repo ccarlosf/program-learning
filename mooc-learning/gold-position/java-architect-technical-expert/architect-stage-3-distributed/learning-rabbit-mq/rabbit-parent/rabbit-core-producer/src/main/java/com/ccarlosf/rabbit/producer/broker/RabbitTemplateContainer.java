@@ -1,5 +1,10 @@
 package com.ccarlosf.rabbit.producer.broker;
 
+import com.ccarlosf.common.convert.GenericMessageConverter;
+import com.ccarlosf.common.convert.RabbitMessageConverter;
+import com.ccarlosf.common.serializer.Serializer;
+import com.ccarlosf.common.serializer.SerializerFactory;
+import com.ccarlosf.common.serializer.impl.JacksonSerializerFactory;
 import com.ccarlosf.rabbit.api.Message;
 import com.ccarlosf.rabbit.api.MessageType;
 import com.ccarlosf.rabbit.api.exception.MessageRunTimeException;
@@ -32,6 +37,9 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
 	
 	private Splitter splitter = Splitter.on("#");
 
+	// 单例模式，饥饿加载
+	private SerializerFactory serializerFactory = JacksonSerializerFactory.INSTANCE;
+
 	@Autowired
 	private ConnectionFactory connectionFactory;
 	
@@ -48,9 +56,12 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
 		newTemplate.setExchange(topic);
 		newTemplate.setRoutingKey(message.getRoutingKey());
 		newTemplate.setRetryTemplate(new RetryTemplate());
-		
-		// 对于message的序列化方式
-		// newTemplate.setMessageConverter(messageConverter);
+
+		//	添加序列化反序列化和converter对象
+		Serializer serializer = serializerFactory.create();
+		GenericMessageConverter gmc = new GenericMessageConverter(serializer);
+		RabbitMessageConverter rmc = new RabbitMessageConverter(gmc);
+		newTemplate.setMessageConverter(rmc);
 		
 		String messageType = message.getMessageType();
 		if(!MessageType.RAPID.equals(messageType)) {
