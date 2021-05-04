@@ -14,6 +14,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,8 @@ import java.util.List;
 @RestController
 @RequestMapping("index")
 public class IndexController {
+
+    public static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     private CarouselService carouselService;
@@ -51,6 +55,41 @@ public class IndexController {
             list = JsonUtils.jsonToList(carouselStr, Carousel.class);
         }
         return JSONResult.ok(list);
+    }
+
+    @GetMapping("/dayan-goddess")
+    public Integer dayanGoddess() {
+        int random = (int) (Math.random() * 8);
+        log.info("random:{}", random);
+        switch (random) {
+            case 0:
+                log.info("大雁转到了火锅");
+                break;
+            case 1:
+                log.info("大雁转到了早茶");
+                break;
+            case 2:
+                log.info("大雁转到了海鲜");
+                break;
+            case 3:
+                log.info("大雁转到了烤肉烤串");
+                break;
+            case 4:
+                log.info("大雁转到了西餐");
+                break;
+            case 5:
+                log.info("大雁转到了日料韩料");
+                break;
+            case 6:
+                log.info("大雁转到了地方菜");
+                break;
+            case 7:
+                log.info("大雁转到了其它");
+                break;
+            default:
+                log.info("程序发送异常");
+        }
+        return random;
     }
 
     /**
@@ -106,7 +145,7 @@ public class IndexController {
             if (list != null && list.size() > 0) {
                 redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(list));
             } else {
-                redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(list), 5*60);
+                redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(list), 5 * 60);
             }
         } else {
             list = JsonUtils.jsonToList(catsStr, CategoryVO.class);

@@ -1009,3 +1009,98 @@ public class RabbitProducerMybatisMapperScanerConfig {
 
 
 3-12 可靠性投递落地-可靠性消息业务实现落地（17分钟）
+3-12 可靠性投递落地-可靠性消息业务实现落地（17分钟）
+1.BrokerMessageConst
+/**
+ * 	$BrokerMessageConst 常量信息
+ *
+ */
+public interface BrokerMessageConst {
+
+	int TIMEOUT = 1;
+}
+
+2.BrokerMessageStatus
+/**
+ * 	$BrokerMessageStatus
+ * 	消息的发送状态
+ *
+ */
+public enum BrokerMessageStatus {
+
+	SENDING("0"),
+	SEND_OK("1"),
+	SEND_FAIL("2"),
+	SEND_FAIL_A_MOMENT("3");
+
+	private String code;
+
+	private BrokerMessageStatus(String code) {
+		this.code = code;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
+
+}
+
+3.MessageStoreService
+@Service
+public class MessageStoreService {
+
+	@Autowired
+	private BrokerMessageMapper brokerMessageMapper;
+
+	public int insert(BrokerMessage brokerMessage) {
+		return this.brokerMessageMapper.insert(brokerMessage);
+	}
+
+	public BrokerMessage selectByMessageId(String messageId) {
+		return this.brokerMessageMapper.selectByPrimaryKey(messageId);
+	}
+
+	public void succuess(String messageId) {
+		this.brokerMessageMapper.changeBrokerMessageStatus(messageId,
+				BrokerMessageStatus.SEND_OK.getCode(),
+				new Date());
+	}
+
+	public void failure(String messageId) {
+		this.brokerMessageMapper.changeBrokerMessageStatus(messageId,
+				BrokerMessageStatus.SEND_FAIL.getCode(),
+				new Date());
+	}
+
+}
+
+4.RabbitBrokerImpl
+  @Override
+    public void reliantSend(Message message) {
+        message.setMessageType(MessageType.RELIANT);
+        BrokerMessage bm = messageStoreService.selectByMessageId(message.getMessageId());
+        if(bm == null) {
+            //1. 把数据库的消息发送日志先记录好
+            Date now = new Date();
+            BrokerMessage brokerMessage = new BrokerMessage();
+            brokerMessage.setMessageId(message.getMessageId());
+            brokerMessage.setStatus(BrokerMessageStatus.SENDING.getCode());
+            //tryCount 在最开始发送的时候不需要进行设置
+            brokerMessage.setNextRetry(DateUtils.addMinutes(now, BrokerMessageConst.TIMEOUT));
+            brokerMessage.setCreateTime(now);
+            brokerMessage.setUpdateTime(now);
+            brokerMessage.setMessage(message);
+            messageStoreService.insert(brokerMessage);
+        }
+        //2. 执行真正的发送消息逻辑
+        sendKernel(message);
+    }
+
+5.RabbitTemplateContainer
+com.ccarlos.rabbit.producer.broker.RabbitTemplateContainer.confirm
+if (ack) {
+            //	当Broker 返回ACK成功时, 就是更新一下日志表里对应的消息发送状态为 SEND_OK
+
+            this.messageStoreService.succuess(messageId);
+            log.info("send message is OK, confirm messageId: {}, sendTime: {}", messageId, sendTime);
+        }

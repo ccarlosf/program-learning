@@ -2,11 +2,18 @@ package com.ccarlos.rabbit.producer.broker;
 
 import com.ccarlos.rabbit.api.Message;
 import com.ccarlos.rabbit.api.MessageType;
+import com.ccarlos.rabbit.producer.constant.BrokerMessageConst;
+import com.ccarlos.rabbit.producer.constant.BrokerMessageStatus;
+import com.ccarlos.rabbit.producer.entity.BrokerMessage;
+import com.ccarlos.rabbit.producer.service.MessageStoreService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * $RabbitBrokerImpl 真正的发送不同类型的消息实现类
@@ -17,6 +24,9 @@ public class RabbitBrokerImpl implements RabbitBroker {
 
     @Autowired
     private RabbitTemplateContainer rabbitTemplateContainer;
+
+    @Autowired
+    private MessageStoreService messageStoreService;
 
     /**
      * $rapidSend迅速发消息
@@ -69,7 +79,23 @@ public class RabbitBrokerImpl implements RabbitBroker {
 
     @Override
     public void reliantSend(Message message) {
-
+        message.setMessageType(MessageType.RELIANT);
+        BrokerMessage bm = messageStoreService.selectByMessageId(message.getMessageId());
+        if(bm == null) {
+            //1. 把数据库的消息发送日志先记录好
+            Date now = new Date();
+            BrokerMessage brokerMessage = new BrokerMessage();
+            brokerMessage.setMessageId(message.getMessageId());
+            brokerMessage.setStatus(BrokerMessageStatus.SENDING.getCode());
+            //tryCount 在最开始发送的时候不需要进行设置
+            brokerMessage.setNextRetry(DateUtils.addMinutes(now, BrokerMessageConst.TIMEOUT));
+            brokerMessage.setCreateTime(now);
+            brokerMessage.setUpdateTime(now);
+            brokerMessage.setMessage(message);
+            messageStoreService.insert(brokerMessage);
+        }
+        //2. 执行真正的发送消息逻辑
+        sendKernel(message);
     }
 
     @Override
