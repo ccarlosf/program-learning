@@ -56,3 +56,7 @@ rabbit-mq中rabbit-parent公共依赖提取
 9.rabbit-core-producer把mapping改为配置文件形式
 
 10.foodie-dev的hikari和rabbit-core-producer的druid数据源配置比较
+
+11.阅读当当网elastic-job源码，思考分布式定时任务的具体实现细节
+
+12.搭建zookeeper集群模式和伪集群模式
