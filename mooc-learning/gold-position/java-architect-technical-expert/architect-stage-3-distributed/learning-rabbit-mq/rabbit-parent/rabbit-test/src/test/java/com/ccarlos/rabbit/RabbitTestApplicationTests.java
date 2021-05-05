@@ -40,7 +40,7 @@ public class RabbitTestApplicationTests {
 			producerClient.send(message);			
 		}
 
-		Thread.sleep(1000000);
+		Thread.sleep(100000);
 	}
 
 }
