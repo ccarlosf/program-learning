@@ -72,3 +72,5 @@ rabbit-mq中rabbit-parent公共依赖提取
 17.elastic-job(xxl-job)使用到项目中的所有定时任务中
 
 18.es-job改成自动装配形式
+
+19.对比elastic-job api形式和spring自动装配形式

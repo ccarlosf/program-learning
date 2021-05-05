@@ -1,11 +1,12 @@
 package com.ccarlos.esjob;
 
+import com.ccarlos.rabbit.task.annotation.EnableElasticJob;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 
-//@EnableElasticJob
+@EnableElasticJob
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.ccarlos.esjob.*", "com.ccarlos.esjob.service.*", "com.ccarlos.esjob.annotation.*", "com.ccarlos.esjob.task.*"})
 public class ESJobApplication {

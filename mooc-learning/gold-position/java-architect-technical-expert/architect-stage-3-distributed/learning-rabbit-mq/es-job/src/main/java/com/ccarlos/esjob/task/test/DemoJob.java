@@ -1,5 +1,6 @@
 package com.ccarlos.esjob.task.test;
 
+import com.ccarlos.rabbit.task.annotation.ElasticJobConfig;
 import org.springframework.stereotype.Component;
 
 //import com.bfxy.rabbit.task.annotation.ElasticJobConfig;
@@ -7,13 +8,13 @@ import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 
 @Component
-/*@ElasticJobConfig(
-			name = "com.bfxy.esjob.task.test.DemoJob",
+@ElasticJobConfig(
+			name = "com.ccarlos.esjob.task.test.DemoJob",
 			cron = "0/10 * * * * ?",
 			description = "样例定时任务",
 			overwrite = true,
 			shardingTotalCount = 2
-		)*/
+		)
 public class DemoJob implements SimpleJob {
 
 	@Override
