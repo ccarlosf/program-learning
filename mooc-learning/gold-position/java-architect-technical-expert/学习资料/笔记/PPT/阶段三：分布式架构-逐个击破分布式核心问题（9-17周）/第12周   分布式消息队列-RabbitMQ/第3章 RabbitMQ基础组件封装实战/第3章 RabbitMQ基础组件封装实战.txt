@@ -1277,3 +1277,113 @@ public @interface EnableElasticJob {
 
 
 3-19 定时任务通用组件封装-3（19分钟）
+3-19 定时任务通用组件封装-3（19分钟）
+1.ElasticJobConfParser
+@Slf4j
+public class ElasticJobConfParser implements ApplicationListener<ApplicationReadyEvent> {
+
+    private JobZookeeperProperties jobZookeeperProperties;
+
+    private ZookeeperRegistryCenter zookeeperRegistryCenter;
+
+    public ElasticJobConfParser(JobZookeeperProperties jobZookeeperProperties,
+                                ZookeeperRegistryCenter zookeeperRegistryCenter) {
+        this.jobZookeeperProperties = jobZookeeperProperties;
+        this.zookeeperRegistryCenter = zookeeperRegistryCenter;
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        try {
+            ApplicationContext applicationContext = event.getApplicationContext();
+            Map<String, Object> beanMap = applicationContext.getBeansWithAnnotation(ElasticJobConfig.class);
+            for (Iterator<?> it = beanMap.values().iterator(); it.hasNext(); ) {
+                Object confBean = it.next();
+                Class<?> clazz = confBean.getClass();
+                if (clazz.getName().indexOf("$") > 0) {
+                    String className = clazz.getName();
+                    clazz = Class.forName(className.substring(0, className.indexOf("$")));
+                }
+                // 	获取接口类型 用于判断是什么类型的任务
+                String jobTypeName = clazz.getInterfaces()[0].getSimpleName();
+                //	获取配置项 ElasticJobConfig
+                ElasticJobConfig conf = clazz.getAnnotation(ElasticJobConfig.class);
+
+                String jobClass = clazz.getName();
+                String jobName = this.jobZookeeperProperties.getNamespace() + "." + conf.name();
+                String cron = conf.cron();
+                String shardingItemParameters = conf.shardingItemParameters();
+                String description = conf.description();
+                String jobParameter = conf.jobParameter();
+                String jobExceptionHandler = conf.jobExceptionHandler();
+                String executorServiceHandler = conf.executorServiceHandler();
+
+                String jobShardingStrategyClass = conf.jobShardingStrategyClass();
+                String eventTraceRdbDataSource = conf.eventTraceRdbDataSource();
+                String scriptCommandLine = conf.scriptCommandLine();
+
+                boolean failover = conf.failover();
+                boolean misfire = conf.misfire();
+                boolean overwrite = conf.overwrite();
+                boolean disabled = conf.disabled();
+                boolean monitorExecution = conf.monitorExecution();
+                boolean streamingProcess = conf.streamingProcess();
+
+                int shardingTotalCount = conf.shardingTotalCount();
+                int monitorPort = conf.monitorPort();
+                int maxTimeDiffSeconds = conf.maxTimeDiffSeconds();
+                int reconcileIntervalMinutes = conf.reconcileIntervalMinutes();
+
+
+            }
+
+        } catch (Exception e) {
+            log.error("elasticjob 启动异常, 系统强制退出", e);
+            System.exit(1);
+        }
+    }
+}
+
+2.ElasticJobTypeEnum
+public enum ElasticJobTypeEnum {
+
+	SIMPLE("SimpleJob", "简单类型job"),
+	DATAFLOW("DataflowJob", "流式类型job"),
+	SCRIPT("ScriptJob", "脚本类型job");
+
+	private String type;
+
+	private String desc;
+
+	private ElasticJobTypeEnum(String type, String desc) {
+		this.type = type;
+		this.desc = desc;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+}
+
+3.com.ccarlos.rabbit.task.parser.ElasticJobConfParser
+	@Bean
+	public ElasticJobConfParser elasticJobConfParser(JobZookeeperProperties jobZookeeperProperties, ZookeeperRegistryCenter zookeeperRegistryCenter) {
+		return new ElasticJobConfParser(jobZookeeperProperties, zookeeperRegistryCenter);
+	}
+
+
+
+3-20 定时任务通用组件封装-4（15分钟）
