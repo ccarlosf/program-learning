@@ -1,0 +1,44 @@
+3-23 可靠性消息重试实现集成定时任务组件-2（22分钟）
+1.com.ccarlos.rabbit.producer.service.MessageStoreService
+public List<BrokerMessage> fetchTimeOutMessage4Retry(BrokerMessageStatus brokerMessageStatus){
+		return this.brokerMessageMapper.queryBrokerMessageStatus4Timeout(brokerMessageStatus.getCode());
+	}
+
+	public int updateTryCount(String brokerMessageId) {
+		return this.brokerMessageMapper.update4TryCount(brokerMessageId, new Date());
+	}
+
+2.com.ccarlos.rabbit.producer.broker.RabbitTemplateContainer.confirm
+String messageType = strings.get(2);
+        if (ack) {
+            //	当Broker 返回ACK成功时, 就是更新一下日志表里对应的消息发送状态为 SEND_OK
+
+            // 	如果当前消息类型为reliant 我们就去数据库查找并进行更新
+            if(MessageType.RELIANT.endsWith(messageType)) {
+                this.messageStoreService.succuess(messageId);
+            }
+            log.info("send message is OK, confirm messageId: {}, sendTime: {}", messageId, sendTime);
+        } else {
+            log.error("send message is Fail, confirm messageId: {}, sendTime: {}", messageId, sendTime);
+
+        }
+
+3.com.ccarlos.rabbit.producer.task.RetryMessageDataflowJob.processData
+  @Override
+    public void processData(ShardingContext shardingContext, List<BrokerMessage> dataList) {
+
+        dataList.forEach(brokerMessage -> {
+
+            String messageId = brokerMessage.getMessageId();
+            if (brokerMessage.getTryCount() >= MAX_RETRY_COUNT) {
+                this.messageStoreService.failure(messageId);
+                log.warn(" -----消息设置为最终失败，消息ID: {} -------", messageId);
+            } else {
+                //	每次重发的时候要更新一下try count字段
+                this.messageStoreService.updateTryCount(messageId);
+                // 	重发消息
+                this.rabbitBroker.reliantSend(brokerMessage.getMessage());
+            }
+
+        });
+    }

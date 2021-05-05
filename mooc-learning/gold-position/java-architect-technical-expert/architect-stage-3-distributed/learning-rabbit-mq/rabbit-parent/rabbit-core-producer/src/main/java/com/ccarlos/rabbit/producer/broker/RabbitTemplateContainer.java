@@ -87,10 +87,14 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
         List<String> strings = splitter.splitToList(correlationData.getId());
         String messageId = strings.get(0);
         long sendTime = Long.parseLong(strings.get(1));
+        String messageType = strings.get(2);
         if (ack) {
             //	当Broker 返回ACK成功时, 就是更新一下日志表里对应的消息发送状态为 SEND_OK
 
-            this.messageStoreService.succuess(messageId);
+            // 	如果当前消息类型为reliant 我们就去数据库查找并进行更新
+            if(MessageType.RELIANT.endsWith(messageType)) {
+                this.messageStoreService.succuess(messageId);
+            }
             log.info("send message is OK, confirm messageId: {}, sendTime: {}", messageId, sendTime);
         } else {
             log.error("send message is Fail, confirm messageId: {}, sendTime: {}", messageId, sendTime);
