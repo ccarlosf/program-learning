@@ -1122,3 +1122,85 @@ CREATE INDEX TASK_ID_STATE_INDEX ON job_status_trace_log(task_id(191),state);
 
 
 3-16 可靠性投递落地-ESJOB定时任务讲解-3（10分钟）
+
+
+
+3-17 定时任务通用组件封装-1（22分钟）
+3-17 定时任务通用组件封装-1（22分钟）
+1.JobParserAutoConfiguration
+@Slf4j
+@Configuration
+@ConditionalOnProperty(prefix = "elastic.job.zk", name = {"namespace", "serverLists"}, matchIfMissing = false)
+@EnableConfigurationProperties(JobZookeeperProperties.class)
+public class JobParserAutoConfiguration {
+
+	@Bean(initMethod = "init")
+	public ZookeeperRegistryCenter zookeeperRegistryCenter(JobZookeeperProperties jobZookeeperProperties) {
+		ZookeeperConfiguration zkConfig = new ZookeeperConfiguration(jobZookeeperProperties.getServerLists(),
+				jobZookeeperProperties.getNamespace());
+		zkConfig.setBaseSleepTimeMilliseconds(jobZookeeperProperties.getBaseSleepTimeMilliseconds());
+		zkConfig.setMaxSleepTimeMilliseconds(jobZookeeperProperties.getMaxSleepTimeMilliseconds());
+		zkConfig.setConnectionTimeoutMilliseconds(jobZookeeperProperties.getConnectionTimeoutMilliseconds());
+		zkConfig.setSessionTimeoutMilliseconds(jobZookeeperProperties.getSessionTimeoutMilliseconds());
+		zkConfig.setMaxRetries(jobZookeeperProperties.getMaxRetries());
+		zkConfig.setDigest(jobZookeeperProperties.getDigest());
+		log.info("初始化job注册中心配置成功, zkaddress : {}, namespace : {}", jobZookeeperProperties.getServerLists(), jobZookeeperProperties.getNamespace());
+		return new ZookeeperRegistryCenter(zkConfig);
+	}
+}
+
+2.JobZookeeperProperties
+@ConfigurationProperties(prefix = "elastic.job.zk")
+@Data
+public class JobZookeeperProperties {
+
+    private String namespace;
+
+    private String serverLists;
+
+    private int maxRetries = 3;
+
+    private int connectionTimeoutMilliseconds = 15000;
+
+    private int sessionTimeoutMilliseconds = 60000;
+
+    private int baseSleepTimeMilliseconds = 1000;
+
+    private int maxSleepTimeMilliseconds = 3000;
+
+    private String digest = "";
+
+}
+
+3.pom.xml
+ <properties>
+        <elastic-job.version>2.1.4</elastic-job.version>
+    </properties>
+    <dependencies>
+        <!-- spring boot dependency -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!--  elastic-job dependency -->
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-core</artifactId>
+            <version>${elastic-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-spring</artifactId>
+            <version>${elastic-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+4.spring.factories
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ccarlos.rabbit.task.autoconfigure.JobParserAutoConfiguration

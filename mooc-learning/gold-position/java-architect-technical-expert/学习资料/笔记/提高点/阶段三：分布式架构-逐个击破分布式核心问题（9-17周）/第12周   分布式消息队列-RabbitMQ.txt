@@ -65,6 +65,8 @@ rabbit-mq中rabbit-parent公共依赖提取
 
 14.复习elastic-job专题课程（同种类型多个job配置）
 
-15.学习使用xxl-job
+15.学习使用xxl-job（最新版）、elastic-job（最新版）
 
 16.阅读elastic-job自动创建索引源代码
+
+17.elastic-job(xxl-job)使用到项目中的所有定时任务中
