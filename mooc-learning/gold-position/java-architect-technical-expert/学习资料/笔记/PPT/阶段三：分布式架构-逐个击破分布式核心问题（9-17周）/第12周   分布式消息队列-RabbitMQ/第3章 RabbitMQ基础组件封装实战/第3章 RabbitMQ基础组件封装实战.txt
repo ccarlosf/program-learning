@@ -1448,5 +1448,3 @@ public enum ElasticJobTypeEnum {
 					rdbFactory.addConstructorArgReference(eventTraceRdbDataSource);
 					factory.addConstructorArgValue(rdbFactory.getBeanDefinition());
 				}
-
-			}

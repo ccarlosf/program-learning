@@ -60,5 +60,3 @@
 					rdbFactory.addConstructorArgReference(eventTraceRdbDataSource);
 					factory.addConstructorArgValue(rdbFactory.getBeanDefinition());
 				}
-
-			}
