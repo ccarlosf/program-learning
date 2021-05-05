@@ -1208,3 +1208,72 @@ com.ccarlos.rabbit.task.autoconfigure.JobParserAutoConfiguration
 
 
 3-18 定时任务通用组件封装-2（10分钟）
+3-18 定时任务通用组件封装-2（10分钟）
+1.ElasticJobConfig
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ElasticJobConfig {
+
+	String name();	//elasticjob的名称
+
+	String cron() default "";
+
+	int shardingTotalCount() default 1;
+
+	String shardingItemParameters() default "";
+
+	String jobParameter() default "";
+
+	boolean failover() default false;
+
+	boolean misfire() default true;
+
+	String description() default "";
+
+	boolean overwrite() default false;
+
+	boolean streamingProcess() default false;
+
+	String scriptCommandLine() default "";
+
+	boolean monitorExecution() default false;
+
+	public int monitorPort() default -1;	//must
+
+	public int maxTimeDiffSeconds() default -1;	//must
+
+	public String jobShardingStrategyClass() default "";	//must
+
+	public int reconcileIntervalMinutes() default 10;	//must
+
+	public String eventTraceRdbDataSource() default "";	//must
+
+	public String listener() default "";	//must
+
+	public boolean disabled() default false;	//must
+
+	public String distributedListener() default "";
+
+	public long startedTimeoutMilliseconds() default Long.MAX_VALUE;	//must
+
+	public long completedTimeoutMilliseconds() default Long.MAX_VALUE;		//must
+
+	public String jobExceptionHandler() default "com.dangdang.ddframe.job.executor.handler.impl.DefaultJobExceptionHandler";
+
+	public String executorServiceHandler() default "com.dangdang.ddframe.job.executor.handler.impl.DefaultExecutorServiceHandler";
+
+}
+
+2.EnableElasticJob
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@Import(JobParserAutoConfiguration.class)
+public @interface EnableElasticJob {
+
+}
+
+
+
+3-19 定时任务通用组件封装-3（19分钟）

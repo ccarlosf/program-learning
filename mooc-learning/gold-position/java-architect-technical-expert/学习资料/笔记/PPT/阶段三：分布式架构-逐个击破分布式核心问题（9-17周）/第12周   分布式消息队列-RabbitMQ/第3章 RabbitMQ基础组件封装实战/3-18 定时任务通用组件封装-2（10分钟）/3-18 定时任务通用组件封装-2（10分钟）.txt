@@ -63,5 +63,3 @@ public @interface ElasticJobConfig {
 public @interface EnableElasticJob {
 
 }
-
-3.
