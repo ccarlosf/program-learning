@@ -1204,3 +1204,7 @@ public class JobZookeeperProperties {
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.ccarlos.rabbit.task.autoconfigure.JobParserAutoConfiguration
+
+
+
+3-18 定时任务通用组件封装-2（10分钟）
