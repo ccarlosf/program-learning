@@ -1387,3 +1387,66 @@ public enum ElasticJobTypeEnum {
 
 
 3-20 定时任务通用组件封装-4（15分钟）
+1.com.ccarlos.rabbit.task.parser.ElasticJobConfParser.onApplicationEvent
+//	先把当当网的esjob的相关configuration
+				JobCoreConfiguration coreConfig = JobCoreConfiguration
+						.newBuilder(jobName, cron, shardingTotalCount)
+						.shardingItemParameters(shardingItemParameters)
+						.description(description)
+						.failover(failover)
+						.jobParameter(jobParameter)
+						.misfire(misfire)
+						.jobProperties(JobProperties.JobPropertiesEnum.JOB_EXCEPTION_HANDLER.getKey(), jobExceptionHandler)
+						.jobProperties(JobProperties.JobPropertiesEnum.EXECUTOR_SERVICE_HANDLER.getKey(), executorServiceHandler)
+						.build();
+
+				//	我到底要创建什么样的任务.
+				JobTypeConfiguration typeConfig = null;
+				if(ElasticJobTypeEnum.SIMPLE.getType().equals(jobTypeName)) {
+					typeConfig = new SimpleJobConfiguration(coreConfig, jobClass);
+				}
+
+				if(ElasticJobTypeEnum.DATAFLOW.getType().equals(jobTypeName)) {
+					typeConfig = new DataflowJobConfiguration(coreConfig, jobClass, streamingProcess);
+				}
+
+				if(ElasticJobTypeEnum.SCRIPT.getType().equals(jobTypeName)) {
+					typeConfig = new ScriptJobConfiguration(coreConfig, scriptCommandLine);
+				}
+
+				// LiteJobConfiguration
+				LiteJobConfiguration jobConfig = LiteJobConfiguration
+						.newBuilder(typeConfig)
+						.overwrite(overwrite)
+						.disabled(disabled)
+						.monitorPort(monitorPort)
+						.monitorExecution(monitorExecution)
+						.maxTimeDiffSeconds(maxTimeDiffSeconds)
+						.jobShardingStrategyClass(jobShardingStrategyClass)
+						.reconcileIntervalMinutes(reconcileIntervalMinutes)
+						.build();
+
+				// 	创建一个Spring的beanDefinition
+				BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(SpringJobScheduler.class);
+				// 初始化方法
+				factory.setInitMethodName("init");
+				// 多例
+				factory.setScope("prototype");
+
+				//	1.添加bean构造参数，相当于添加自己的真实的任务实现类
+				if (!ElasticJobTypeEnum.SCRIPT.getType().equals(jobTypeName)) {
+					factory.addConstructorArgValue(confBean);
+				}
+				//	2.添加注册中心
+				factory.addConstructorArgValue(this.zookeeperRegistryCenter);
+				//	3.添加LiteJobConfiguration
+				factory.addConstructorArgValue(jobConfig);
+
+				//	4.如果有eventTraceRdbDataSource 则也进行添加
+				if (StringUtils.hasText(eventTraceRdbDataSource)) {
+					BeanDefinitionBuilder rdbFactory = BeanDefinitionBuilder.rootBeanDefinition(JobEventRdbConfiguration.class);
+					rdbFactory.addConstructorArgReference(eventTraceRdbDataSource);
+					factory.addConstructorArgValue(rdbFactory.getBeanDefinition());
+				}
+
+			}
