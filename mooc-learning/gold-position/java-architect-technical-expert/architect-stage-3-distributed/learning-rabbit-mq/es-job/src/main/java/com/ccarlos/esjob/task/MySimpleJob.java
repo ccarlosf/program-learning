@@ -1,5 +1,6 @@
 package com.ccarlos.esjob.task;
 
+import com.ccarlos.rabbit.task.annotation.ElasticJobConfig;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 

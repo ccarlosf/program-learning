@@ -1,5 +1,6 @@
 package com.ccarlos.rabbit.task.autoconfigure;
 
+import com.ccarlos.rabbit.task.parser.ElasticJobConfParser;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
 import lombok.extern.slf4j.Slf4j;
@@ -26,5 +27,10 @@ public class JobParserAutoConfiguration {
 		zkConfig.setDigest(jobZookeeperProperties.getDigest());
 		log.info("初始化job注册中心配置成功, zkaddress : {}, namespace : {}", jobZookeeperProperties.getServerLists(), jobZookeeperProperties.getNamespace());
 		return new ZookeeperRegistryCenter(zkConfig);
+	}
+
+	@Bean
+	public ElasticJobConfParser elasticJobConfParser(JobZookeeperProperties jobZookeeperProperties, ZookeeperRegistryCenter zookeeperRegistryCenter) {
+		return new ElasticJobConfParser(jobZookeeperProperties, zookeeperRegistryCenter);
 	}
 }

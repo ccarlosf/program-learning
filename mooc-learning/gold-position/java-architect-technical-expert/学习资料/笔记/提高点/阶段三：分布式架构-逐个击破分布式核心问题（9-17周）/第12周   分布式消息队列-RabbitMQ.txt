@@ -70,3 +70,5 @@ rabbit-mq中rabbit-parent公共依赖提取
 16.阅读elastic-job自动创建索引源代码
 
 17.elastic-job(xxl-job)使用到项目中的所有定时任务中
+
+18.es-job改成自动装配形式
