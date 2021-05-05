@@ -1757,3 +1757,118 @@ String messageType = strings.get(2);
 
         });
     }
+
+
+
+3-24 可靠性消息最终演示（10分钟）
+3-24 可靠性消息最终演示（10分钟）
+创建rabbit-test项目
+1.application.properties
+server.servlet.context-path=/test
+server.port=8001
+
+spring.application.name=test
+
+spring.rabbitmq.addresses=127.0.0.1:5672
+spring.rabbitmq.username=guest
+spring.rabbitmq.password=guest
+spring.rabbitmq.virtual-host=/
+spring.rabbitmq.connection-timeout=15000
+spring.rabbitmq.publisher-confirms=true
+spring.rabbitmq.publisher-returns=true
+spring.rabbitmq.template.mandatory=true
+spring.rabbitmq.listener.simple.auto-startup=false
+
+elastic.job.zk.serverLists=127.0.0.1:2181
+elastic.job.zk.namespace=elastic-job
+
+2.com.ccarlos.rabbit.MainConfig
+@Configuration
+@ComponentScan({"com.ccarlos.rabbit.*"})
+public class MainConfig {
+
+}
+
+3.pom.xml
+<parent>
+        <artifactId>rabbit-parent</artifactId>
+        <groupId>com.ccarlos.base.rabbit</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>rabbit-test</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ccarlos.base.rabbit</groupId>
+            <artifactId>rabbit-core-producer</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+
+
+4.com.ccarlos.rabbit.producer.config.database.RabbitProducerMyBatisConfiguration.rabbitProducerSqlSessionFactory
+//			bean.setMapperLocations(resolver.getResources("classpath:com.ccarlos.rabbit.producer.mapping.*.xml"));
+//			bean.setMapperLocations(resolver.getResources("classpath:com/ccarlos/rabbit/producer/mapper/*.xml"));
+//			bean.setMapperLocations(resolver.getResources("classpath:com/ccarlos/store/mapping/*.xml"));
+//			bean.setMapperLocations(resolver.getResources("classpath:com/ccarlos/order/mapping/*.xml"));
+
+
+
+5.com.ccarlos.rabbit.RabbitTestApplication
+@SpringBootApplication
+public class RabbitTestApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RabbitTestApplication.class, args);
+	}
+}
+
+
+
+6.com.ccarlos.rabbit.RabbitTestApplicationTests
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class RabbitTestApplicationTests {
+
+	@Autowired
+	private ProducerClient producerClient;
+
+	@Test
+	public void testProducerClient() throws Exception {
+
+		for(int i = 0 ; i < 1; i ++) {
+			String uniqueId = UUID.randomUUID().toString();
+			Map<String, Object> attributes = new HashMap<>();
+			attributes.put("name", "张三");
+			attributes.put("age", "18");
+			Message message = new Message(
+					uniqueId,
+					"exchange-2",
+					"springboot.abc",
+					attributes,
+					0);
+			message.setMessageType(MessageType.RELIANT);
+//			message.setDelayMills(15000);
+			producerClient.send(message);
+		}
+
+		Thread.sleep(100000);
+	}
+}

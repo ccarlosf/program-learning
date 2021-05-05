@@ -76,3 +76,12 @@ rabbit-mq中rabbit-parent公共依赖提取
 19.对比elastic-job api形式和spring自动装配形式
 
 20.把es-job(rabbit-task)基础组件和rabbit基础组件(rabbit-core-producer)应用到各个项目中
+
+21.（重要）com.ccarlos.rabbit.producer.autoconfigure.RabbitProducerAutoConfiguration
+改成@Bean形式，去掉@ComponentScan({"com.ccarlos.rabbit.producer.*"})
+
+22.（重要）研究SpringBoot+Mybatis整合
+          研究SpringBoot+Mybatis+Druid整合
+          研究SpringBoot+Mybatis+HikariCP整合
+
+23.解决rabbit-core-producer项目时差8小时的问题

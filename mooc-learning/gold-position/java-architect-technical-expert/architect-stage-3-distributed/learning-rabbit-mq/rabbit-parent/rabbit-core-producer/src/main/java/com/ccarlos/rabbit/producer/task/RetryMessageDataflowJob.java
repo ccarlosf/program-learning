@@ -30,7 +30,7 @@ public class RetryMessageDataflowJob implements DataflowJob<BrokerMessage> {
     @Autowired
     private RabbitBroker rabbitBroker;
 
-    private static final int MAX_RETRY_COUNT = 3;
+    private static final int MAX_RETRY_COUNT = 100;
 
     @Override
     public List<BrokerMessage> fetchData(ShardingContext shardingContext) {
