@@ -1,10 +1,10 @@
 package com.ccarlos.rabbit.producer.broker;
 
-import com.ccarlos.common.convert.GenericMessageConverter;
-import com.ccarlos.common.convert.RabbitMessageConverter;
-import com.ccarlos.common.serializer.Serializer;
-import com.ccarlos.common.serializer.SerializerFactory;
-import com.ccarlos.common.serializer.impl.JacksonSerializerFactory;
+import com.ccarlos.rabbit.common.convert.GenericMessageConverter;
+import com.ccarlos.rabbit.common.convert.RabbitMessageConverter;
+import com.ccarlos.rabbit.common.serializer.Serializer;
+import com.ccarlos.rabbit.common.serializer.SerializerFactory;
+import com.ccarlos.rabbit.common.serializer.impl.JacksonSerializerFactory;
 import com.ccarlos.rabbit.api.Message;
 import com.ccarlos.rabbit.api.MessageType;
 import com.ccarlos.rabbit.api.exception.MessageRunTimeException;

@@ -1,4 +1,4 @@
-package com.ccarlos.common.serializer;
+package com.ccarlos.rabbit.common.serializer;
 
 public interface SerializerFactory {
 	

@@ -1,6 +1,6 @@
-package com.ccarlos.common.serializer.impl;
+package com.ccarlos.rabbit.common.serializer.impl;
 
-import com.ccarlos.common.serializer.Serializer;
+import com.ccarlos.rabbit.common.serializer.Serializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

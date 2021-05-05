@@ -1,6 +1,6 @@
-package com.ccarlos.common.convert;
+package com.ccarlos.rabbit.common.convert;
 
-import com.ccarlos.common.serializer.Serializer;
+import com.ccarlos.rabbit.common.serializer.Serializer;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConversionException;
 import org.springframework.amqp.support.converter.MessageConverter;

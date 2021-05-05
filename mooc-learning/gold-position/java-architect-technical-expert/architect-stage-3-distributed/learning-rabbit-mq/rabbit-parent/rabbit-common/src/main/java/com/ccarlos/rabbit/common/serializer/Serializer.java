@@ -1,4 +1,4 @@
-package com.ccarlos.common.serializer;
+package com.ccarlos.rabbit.common.serializer;
 
 /**
  * 	序列化和反序列化的接口

@@ -1,4 +1,4 @@
-package com.ccarlos.common.convert;
+package com.ccarlos.rabbit.common.convert;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
