@@ -27,6 +27,7 @@
     <modules>
         <module>rabbit-mq</module>
         <module>rabbit-parent</module>
+        <module>es-job</module>
     </modules>
 
 </project>

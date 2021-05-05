@@ -1,1 +1,3 @@
 3-13 可靠性投递落地-ESJOB定时任务讲解-1（29分钟）
+手动创建索引（解决报错问题）
+CREATE INDEX TASK_ID_STATE_INDEX ON job_status_trace_log(task_id(191),state);

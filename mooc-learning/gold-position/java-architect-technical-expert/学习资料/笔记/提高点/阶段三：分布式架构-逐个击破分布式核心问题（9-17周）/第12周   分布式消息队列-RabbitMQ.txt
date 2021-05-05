@@ -62,3 +62,9 @@ rabbit-mq中rabbit-parent公共依赖提取
 12.搭建zookeeper集群模式和伪集群模式
 
 13.解决事件追踪JobEventConfiguration不生效的问题
+
+14.复习elastic-job专题课程（同种类型多个job配置）
+
+15.学习使用xxl-job
+
+16.阅读elastic-job自动创建索引源代码
