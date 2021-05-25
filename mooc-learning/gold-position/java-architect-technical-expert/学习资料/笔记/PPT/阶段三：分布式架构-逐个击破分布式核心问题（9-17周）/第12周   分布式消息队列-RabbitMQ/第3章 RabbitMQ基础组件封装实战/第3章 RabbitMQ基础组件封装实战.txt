@@ -1872,3 +1872,95 @@ public class RabbitTestApplicationTests {
 		Thread.sleep(100000);
 	}
 }
+
+
+
+3-25 批量消息发送封装（9分钟）
+1.com.ccarlos.rabbit.producer.broker.MessageHolder
+public class MessageHolder {
+
+    private List<Message> messages = Lists.newArrayList();
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static final ThreadLocal<MessageHolder> holder = new ThreadLocal() {
+        @Override
+        protected Object initialValue() {
+            return new MessageHolder();
+        }
+    };
+
+    public static void add(Message message) {
+        holder.get().messages.add(message);
+    }
+
+    public static List<Message> clear() {
+        List<Message> tmp = Lists.newArrayList(holder.get().messages);
+        holder.remove();
+        return tmp;
+    }
+
+}
+
+2.com.ccarlos.rabbit.producer.broker.MessageHolderAyncQueue
+@Slf4j
+public class MessageHolderAyncQueue {
+
+	private static final int THREAD_SIZE = Runtime.getRuntime().availableProcessors();
+
+	private static final int QUEUE_SIZE = 10000;
+
+	private static ExecutorService senderAsync =
+			new ThreadPoolExecutor(THREAD_SIZE,
+					THREAD_SIZE,
+					60L,
+					TimeUnit.SECONDS,
+					new ArrayBlockingQueue<Runnable>(QUEUE_SIZE),
+					new ThreadFactory() {
+						@Override
+						public Thread newThread(Runnable r) {
+							Thread t = new Thread(r);
+							t.setName("rabbitmq_client_async_sender");
+							return t;
+						}
+					},
+					new java.util.concurrent.RejectedExecutionHandler() {
+						@Override
+						public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+							log.error("async sender is error rejected, runnable: {}, executor: {}", r, executor);
+						}
+					});
+
+		public static void submit(Runnable runnable) {
+			senderAsync.submit(runnable);
+		}
+}
+
+3.com.ccarlos.rabbit.producer.broker.ProducerClient.send(java.util.List<com.ccarlos.rabbit.api.Message>)
+@Override
+    public void send(List<Message> messages) throws MessageRunTimeException {
+        messages.forEach(message -> {
+            message.setMessageType(MessageType.RAPID);
+            MessageHolder.add(message);
+        });
+        rabbitBroker.sendMessages();
+    }
+
+4.com.ccarlos.rabbit.producer.broker.RabbitBrokerImpl.sendMessages
+@Override
+    public void sendMessages() {
+        List<Message> messages = MessageHolder.clear();
+        messages.forEach(message -> {
+            MessageHolderAyncQueue.submit((Runnable) () -> {
+                CorrelationData correlationData =
+                        new CorrelationData(String.format("%s#%s#%s",
+                                message.getMessageId(),
+                                System.currentTimeMillis(),
+                                message.getMessageType()));
+                String topic = message.getTopic();
+                String routingKey = message.getRoutingKey();
+                RabbitTemplate rabbitTemplate = rabbitTemplateContainer.getTemplate(message);
+                rabbitTemplate.convertAndSend(topic, routingKey, message, correlationData);
+                log.info("#RabbitBrokerImpl.sendMessages# send to rabbitmq, messageId: {}", message.getMessageId());
+            });
+        });
+    }

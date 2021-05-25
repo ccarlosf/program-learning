@@ -85,3 +85,5 @@ rabbit-mq中rabbit-parent公共依赖提取
           研究SpringBoot+Mybatis+HikariCP整合
 
 23.解决rabbit-core-producer项目时差8小时的问题
+
+24.使用工厂模式简化AsyncBaseQueue和MessageHolderAyncQueue

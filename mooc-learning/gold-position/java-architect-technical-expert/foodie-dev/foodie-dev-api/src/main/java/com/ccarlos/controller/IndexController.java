@@ -59,7 +59,7 @@ public class IndexController {
 
     @GetMapping("/dayan-goddess")
     public Integer dayanGoddess() {
-        int random = (int) (Math.random() * 8);
+        int random = 0;
         log.info("random:{}", random);
         switch (random) {
             case 0:
