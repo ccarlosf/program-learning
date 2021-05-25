@@ -87,3 +87,33 @@ rabbit-mq中rabbit-parent公共依赖提取
 23.解决rabbit-core-producer项目时差8小时的问题
 
 24.使用工厂模式简化AsyncBaseQueue和MessageHolderAyncQueue
+
+25.解决添加RabbitMQ延迟队列报错问题
+Request to node rabbit@DESKTOP-6MTN2DK failed with {'EXIT',
+{function_clause,
+[{rabbit_exchange_type_delayed_message,
+validate,
+[{exchange,
+{resource,<<"/">>,
+exchange,
+<<"delay-ex">>},
+'x-delayed-message',
+true,false,false,
+[{<<"x-delayed-type">>,
+longstr,
+<<"topic">>}],
+undefined,undefined,
+undefined,
+{[],[]},
+#{user =>
+<<"guest">>}}],
+[{file,
+"src/rabbit_exchange_type_delayed_message.erl"},
+{line,61}]},
+{rabbit_exchange,
+declare,7,
+[{file,
+"src/rabbit_exchange.erl"},
+{line,170}]},
+{rabbit_channel,
+handle_method,5,

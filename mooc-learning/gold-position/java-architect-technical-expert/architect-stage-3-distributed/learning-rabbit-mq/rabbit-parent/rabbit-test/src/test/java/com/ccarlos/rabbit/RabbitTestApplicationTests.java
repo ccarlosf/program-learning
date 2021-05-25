@@ -43,4 +43,25 @@ public class RabbitTestApplicationTests {
 		Thread.sleep(100000);
 	}
 
+	@Test
+	public void testProducerClient2() throws Exception {
+
+		for(int i = 0 ; i < 1; i ++) {
+			String uniqueId = UUID.randomUUID().toString();
+			Map<String, Object> attributes = new HashMap<>();
+			attributes.put("name", "张三");
+			attributes.put("age", "18");
+			Message message = new Message(
+					uniqueId,
+					"delay-exchange",
+					"delay.abc",
+					attributes,
+					15000);
+			message.setMessageType(MessageType.RELIANT);
+			producerClient.send(message);
+		}
+
+		Thread.sleep(100000);
+	}
+
 }
