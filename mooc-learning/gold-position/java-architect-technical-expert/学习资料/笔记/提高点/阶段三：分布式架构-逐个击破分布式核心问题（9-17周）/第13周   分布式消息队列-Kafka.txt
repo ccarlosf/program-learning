@@ -1,0 +1,5 @@
+第13周   分布式消息队列-Kafka
+1.搭建三个节点的linux版本Zookeeper
+
+
+2.搭建Kafka
