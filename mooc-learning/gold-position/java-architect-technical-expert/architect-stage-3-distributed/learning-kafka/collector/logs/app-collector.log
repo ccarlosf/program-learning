@@ -1,0 +1,124 @@
+[2021-05-30T17:08:32.649+08:00] [INFO] [main-1] [com.ccarlos.collector.CollectorApplication] [] [] [] [StartupInfoLogger.java,50,org.springframework.boot.StartupInfoLogger,logStarting] [Starting CollectorApplication on DESKTOP-6MTN2DK with PID 38000 (C:\Users\rjsjs\Desktop\program-learning\mooc-learning\gold-position\java-architect-technical-expert\architect-stage-3-distributed\learning-kafka\collector\target\classes started by rjsjs in C:\Users\rjsjs\Desktop\program-learning)] ## ''
+[2021-05-30T17:08:32.669+08:00] [INFO] [main-1] [com.ccarlos.collector.CollectorApplication] [] [] [] [SpringApplication.java,675,org.springframework.boot.SpringApplication,logStartupProfileInfo] [No active profile set, falling back to default profiles: default] ## ''
+[2021-05-30T17:08:35.692+08:00] [INFO] [main-1] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] [] [] [TomcatWebServer.java,90,org.springframework.boot.web.embedded.tomcat.TomcatWebServer,initialize] [Tomcat initialized with port(s): 8001 (http)] ## ''
+[2021-05-30T17:08:35.740+08:00] [INFO] [main-1] [org.apache.coyote.http11.Http11NioProtocol] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Initializing ProtocolHandler ["http-nio-8001"]] ## ''
+[2021-05-30T17:08:35.763+08:00] [INFO] [main-1] [org.apache.catalina.core.StandardService] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Starting service [Tomcat]] ## ''
+[2021-05-30T17:08:35.767+08:00] [INFO] [main-1] [org.apache.catalina.core.StandardEngine] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Starting Servlet engine: [Apache Tomcat/9.0.19]] ## ''
+[2021-05-30T17:08:35.951+08:00] [INFO] [main-1] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Initializing Spring embedded WebApplicationContext] ## ''
+[2021-05-30T17:08:35.952+08:00] [INFO] [main-1] [org.springframework.web.context.ContextLoader] [] [] [] [ServletWebServerApplicationContext.java,296,org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext,prepareWebApplicationContext] [Root WebApplicationContext: initialization completed in 3018 ms] ## ''
+[2021-05-30T17:08:36.273+08:00] [INFO] [main-1] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] [] [] [ExecutorConfigurationSupport.java,171,org.springframework.scheduling.concurrent.ExecutorConfigurationSupport,initialize] [Initializing ExecutorService 'applicationTaskExecutor'] ## ''
+[2021-05-30T17:08:36.502+08:00] [INFO] [main-1] [org.apache.coyote.http11.Http11NioProtocol] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Starting ProtocolHandler ["http-nio-8001"]] ## ''
+[2021-05-30T17:08:36.546+08:00] [INFO] [main-1] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] [] [] [TomcatWebServer.java,204,org.springframework.boot.web.embedded.tomcat.TomcatWebServer,start] [Tomcat started on port(s): 8001 (http) with context path ''] ## ''
+[2021-05-30T17:08:36.554+08:00] [INFO] [main-1] [com.ccarlos.collector.CollectorApplication] [] [] [] [StartupInfoLogger.java,59,org.springframework.boot.StartupInfoLogger,logStarted] [Started CollectorApplication in 5.671 seconds (JVM running for 11.732)] ## ''
+[2021-05-30T17:08:55.090+08:00] [INFO] [http-nio-8001-exec-2-36] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Initializing Spring DispatcherServlet 'dispatcherServlet'] ## ''
+[2021-05-30T17:08:55.090+08:00] [INFO] [http-nio-8001-exec-2-36] [org.springframework.web.servlet.DispatcherServlet] [] [] [] [FrameworkServlet.java,524,org.springframework.web.servlet.FrameworkServlet,initServletBean] [Initializing Servlet 'dispatcherServlet'] ## ''
+[2021-05-30T17:08:55.101+08:00] [INFO] [http-nio-8001-exec-2-36] [org.springframework.web.servlet.DispatcherServlet] [] [] [] [FrameworkServlet.java,546,org.springframework.web.servlet.FrameworkServlet,initServletBean] [Completed initialization in 11 ms] ## ''
+[2021-05-30T17:08:56.701+08:00] [INFO] [http-nio-8001-exec-2-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:08:56.707+08:00] [WARN] [http-nio-8001-exec-2-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:08:56.709+08:00] [ERROR] [http-nio-8001-exec-2-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:08:59.610+08:00] [INFO] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:08:59.619+08:00] [WARN] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:08:59.620+08:00] [ERROR] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:04.465+08:00] [INFO] [http-nio-8001-exec-3-37] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:04.466+08:00] [WARN] [http-nio-8001-exec-3-37] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:04.467+08:00] [ERROR] [http-nio-8001-exec-3-37] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:43.931+08:00] [INFO] [http-nio-8001-exec-4-38] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:43.933+08:00] [WARN] [http-nio-8001-exec-4-38] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:43.933+08:00] [ERROR] [http-nio-8001-exec-4-38] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:44.702+08:00] [INFO] [http-nio-8001-exec-5-39] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:44.703+08:00] [WARN] [http-nio-8001-exec-5-39] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:44.704+08:00] [ERROR] [http-nio-8001-exec-5-39] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:51.180+08:00] [INFO] [http-nio-8001-exec-7-41] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:51.181+08:00] [WARN] [http-nio-8001-exec-7-41] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:51.182+08:00] [ERROR] [http-nio-8001-exec-7-41] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:51.898+08:00] [INFO] [http-nio-8001-exec-8-42] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:51.899+08:00] [WARN] [http-nio-8001-exec-8-42] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:51.899+08:00] [ERROR] [http-nio-8001-exec-8-42] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:52.604+08:00] [INFO] [http-nio-8001-exec-9-43] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:52.610+08:00] [WARN] [http-nio-8001-exec-9-43] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:52.612+08:00] [ERROR] [http-nio-8001-exec-9-43] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:53.579+08:00] [INFO] [http-nio-8001-exec-10-44] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:53.580+08:00] [WARN] [http-nio-8001-exec-10-44] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:53.581+08:00] [ERROR] [http-nio-8001-exec-10-44] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:54.906+08:00] [INFO] [http-nio-8001-exec-2-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:54.907+08:00] [WARN] [http-nio-8001-exec-2-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:54.907+08:00] [ERROR] [http-nio-8001-exec-2-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:55.562+08:00] [INFO] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:55.562+08:00] [WARN] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:55.565+08:00] [ERROR] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:09:55.808+08:00] [INFO] [http-nio-8001-exec-3-37] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,39,com.ccarlos.collector.web.IndexController,index] [我是一条info日志] ## ''
+[2021-05-30T17:09:55.810+08:00] [WARN] [http-nio-8001-exec-3-37] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:09:55.811+08:00] [ERROR] [http-nio-8001-exec-3-37] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:11:45.846+08:00] [INFO] [Thread-11-48] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] [] [] [ExecutorConfigurationSupport.java,208,org.springframework.scheduling.concurrent.ExecutorConfigurationSupport,shutdown] [Shutting down ExecutorService 'applicationTaskExecutor'] ## ''
+[2021-05-30T17:12:01.114+08:00] [INFO] [main-1] [com.ccarlos.collector.CollectorApplication] [] [] [] [StartupInfoLogger.java,50,org.springframework.boot.StartupInfoLogger,logStarting] [Starting CollectorApplication on DESKTOP-6MTN2DK with PID 18592 (C:\Users\rjsjs\Desktop\program-learning\mooc-learning\gold-position\java-architect-technical-expert\architect-stage-3-distributed\learning-kafka\collector\target\classes started by rjsjs in C:\Users\rjsjs\Desktop\program-learning)] ## ''
+[2021-05-30T17:12:01.130+08:00] [INFO] [main-1] [com.ccarlos.collector.CollectorApplication] [] [] [] [SpringApplication.java,675,org.springframework.boot.SpringApplication,logStartupProfileInfo] [No active profile set, falling back to default profiles: default] ## ''
+[2021-05-30T17:12:04.331+08:00] [INFO] [main-1] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] [] [] [TomcatWebServer.java,90,org.springframework.boot.web.embedded.tomcat.TomcatWebServer,initialize] [Tomcat initialized with port(s): 8001 (http)] ## ''
+[2021-05-30T17:12:04.378+08:00] [INFO] [main-1] [org.apache.coyote.http11.Http11NioProtocol] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Initializing ProtocolHandler ["http-nio-8001"]] ## ''
+[2021-05-30T17:12:04.397+08:00] [INFO] [main-1] [org.apache.catalina.core.StandardService] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Starting service [Tomcat]] ## ''
+[2021-05-30T17:12:04.398+08:00] [INFO] [main-1] [org.apache.catalina.core.StandardEngine] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Starting Servlet engine: [Apache Tomcat/9.0.19]] ## ''
+[2021-05-30T17:12:04.722+08:00] [INFO] [main-1] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Initializing Spring embedded WebApplicationContext] ## ''
+[2021-05-30T17:12:04.723+08:00] [INFO] [main-1] [org.springframework.web.context.ContextLoader] [] [] [] [ServletWebServerApplicationContext.java,296,org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext,prepareWebApplicationContext] [Root WebApplicationContext: initialization completed in 3327 ms] ## ''
+[2021-05-30T17:12:05.171+08:00] [INFO] [main-1] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor] [] [] [] [ExecutorConfigurationSupport.java,171,org.springframework.scheduling.concurrent.ExecutorConfigurationSupport,initialize] [Initializing ExecutorService 'applicationTaskExecutor'] ## ''
+[2021-05-30T17:12:05.462+08:00] [INFO] [main-1] [org.apache.coyote.http11.Http11NioProtocol] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Starting ProtocolHandler ["http-nio-8001"]] ## ''
+[2021-05-30T17:12:05.514+08:00] [INFO] [main-1] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [] [] [] [TomcatWebServer.java,204,org.springframework.boot.web.embedded.tomcat.TomcatWebServer,start] [Tomcat started on port(s): 8001 (http) with context path ''] ## ''
+[2021-05-30T17:12:05.525+08:00] [INFO] [main-1] [com.ccarlos.collector.CollectorApplication] [] [] [] [StartupInfoLogger.java,59,org.springframework.boot.StartupInfoLogger,logStarted] [Started CollectorApplication in 5.784 seconds (JVM running for 10.975)] ## ''
+[2021-05-30T17:12:13.369+08:00] [INFO] [http-nio-8001-exec-1-35] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] [] [] [] [DirectJDKLog.java,173,org.apache.juli.logging.DirectJDKLog,log] [Initializing Spring DispatcherServlet 'dispatcherServlet'] ## ''
+[2021-05-30T17:12:13.369+08:00] [INFO] [http-nio-8001-exec-1-35] [org.springframework.web.servlet.DispatcherServlet] [] [] [] [FrameworkServlet.java,524,org.springframework.web.servlet.FrameworkServlet,initServletBean] [Initializing Servlet 'dispatcherServlet'] ## ''
+[2021-05-30T17:12:13.381+08:00] [INFO] [http-nio-8001-exec-1-35] [org.springframework.web.servlet.DispatcherServlet] [] [] [] [FrameworkServlet.java,546,org.springframework.web.servlet.FrameworkServlet,initServletBean] [Completed initialization in 12 ms] ## ''
+[2021-05-30T17:12:14.593+08:00] [ERROR] [http-nio-8001-exec-1-35] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,54,com.ccarlos.collector.web.IndexController,err] [算术异常] ## ' java.lang.ArithmeticException: / by zero
+	at com.ccarlos.collector.web.IndexController.err(IndexController.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1039)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:200)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:836)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1747)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+'

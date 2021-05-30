@@ -1,0 +1,48 @@
+[2021-05-30T16:56:01.083+08:00] [ERROR] [main-1] [org.apache.catalina.util.LifecycleBase] [] [] [] [DirectJDKLog.java,175,org.apache.juli.logging.DirectJDKLog,log] [Failed to start component [Connector[HTTP/1.1-8001]]] ## ' org.apache.catalina.LifecycleException: Protocol handler start failed
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1008)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.addConnector(StandardService.java:226)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.addPreviouslyRemovedConnectors(TomcatWebServer.java:259)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:197)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.startWebServer(ServletWebServerApplicationContext.java:311)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.finishRefresh(ServletWebServerApplicationContext.java:164)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:552)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at com.ccarlos.collector.CollectorApplication.main(CollectorApplication.java:13)
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:239)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:213)
+	at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1116)
+	at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:1202)
+	at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:568)
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1005)
+	... 12 more
+'
+[2021-05-30T16:56:01.140+08:00] [ERROR] [main-1] [org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter] [] [] [] [LoggingFailureAnalysisReporter.java,42,org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter,report] [
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The Tomcat connector configured to listen on port 8001 failed to start. The port may already be in use or the connector may be misconfigured.
+
+Action:
+
+Verify the connector's configuration, identify and stop any process that's listening on port 8001, or configure this application to listen on another port.
+] ## ''
+[2021-05-30T17:04:43.707+08:00] [WARN] [http-nio-8001-exec-1-32] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:04:43.707+08:00] [ERROR] [http-nio-8001-exec-1-32] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:06:30.592+08:00] [WARN] [http-nio-8001-exec-5-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:06:30.592+08:00] [ERROR] [http-nio-8001-exec-5-36] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
+[2021-05-30T17:06:33.084+08:00] [WARN] [http-nio-8001-exec-7-38] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,41,com.ccarlos.collector.web.IndexController,index] [我是一条warn日志] ## ''
+[2021-05-30T17:06:33.085+08:00] [ERROR] [http-nio-8001-exec-7-38] [com.ccarlos.collector.web.IndexController] [DESKTOP-6MTN2DK] [172.23.126.1] [collector] [IndexController.java,43,com.ccarlos.collector.web.IndexController,index] [我是一条error日志] ## ''
