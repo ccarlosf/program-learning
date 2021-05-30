@@ -1,0 +1,44 @@
+filebeat.prospectors:
+
+- input_type: log
+
+  paths:
+    - /usr/local/logs/app-collector.log
+  document_type: "app_log"
+  multiline:
+    pattern: '^\['
+    negate: true
+    match: after
+    max_line: 2000
+    timeout: 2s
+  fields:
+    logbiz: collector
+    logtopic: app-log-collector
+    env: dev
+
+- input_type: log
+
+  paths:
+    - /usr/local/logs/error-collector.log
+  document_type: "error_log"
+  multiline:
+    pattern: '^\['
+    negate: true
+    match: after
+    max_line: 2000
+    timeout: 2s
+  fields:
+    logbiz: collector
+    logtopic: error-log-collector
+    env: dev
+
+output.kafka:
+  enabled: true
+  hosts: ["192.168.253.165:9092"]
+  topic: '%{[fields.logtopic]}'
+  partition.hash:
+    reachable_only: true
+  compression: gzip
+  max_message_bytes: 1000000
+  required_acks: 1
+logging.to_files: true

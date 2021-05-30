@@ -204,3 +204,7 @@ public class InputMDC implements EnvironmentAware {
 	}
 
 }
+
+
+
+2-04 Kafka海量日志收集实战_filebeat日志收集实战-1
