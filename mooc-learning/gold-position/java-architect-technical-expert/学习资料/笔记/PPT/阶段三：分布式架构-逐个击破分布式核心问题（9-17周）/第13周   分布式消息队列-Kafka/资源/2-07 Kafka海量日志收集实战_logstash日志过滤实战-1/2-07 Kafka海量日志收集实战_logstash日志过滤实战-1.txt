@@ -20,4 +20,8 @@ pipeline.workers: 16
 
 
 ## 启动logstash
-nohup /usr/l
+nohup /usr/local/logstash-6.6.0/bin/logstash -f /usr/local/logstash-6.6.0/script/logstash-script.conf &
+
+/usr/local/logstash-6.6.0/bin/logstash -f /usr/local/logstash-6.6.0/script/logstash-script.conf
+
+./kafka-consumer-groups.sh --bootstrap-server 192.168.253.165:9092 --describe --group app-log-group

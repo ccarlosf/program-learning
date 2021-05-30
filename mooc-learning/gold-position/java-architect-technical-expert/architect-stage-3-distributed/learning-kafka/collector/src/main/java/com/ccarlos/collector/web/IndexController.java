@@ -30,6 +30,18 @@ public class IndexController {
 	 * []
 	 * [TomcatWebServer.java,90,org.springframework.boot.web.embedded.tomcat.TomcatWebServer,initialize]
 	 * [Tomcat initialized with port(s): 8001 (http)] ## ''
+	 *
+	 * ["message",
+	 * "\[%{NOTSPACE:currentDateTime}\]
+	 *  \[%{NOTSPACE:level}\]
+	 *  \[%{NOTSPACE:thread-id}\]
+	 *  \[%{NOTSPACE:class}\]
+	 *  \[%{DATA:hostName}\]
+	 *  \[%{DATA:ip}\]
+	 *  \[%{DATA:applicationName}\]
+	 *  \[%{DATA:location}\]
+	 *  \[%{DATA:messageInfo}\]
+	 *  ## (\'\'|%{QUOTEDSTRING:throwable})"]
 	 * @return
 	 */
 	@RequestMapping(value = "/index")

@@ -89,11 +89,11 @@ vim /usr/local/kafka_2.12/config/server.properties
 ## 修改配置：
 broker.id=0
 port=9092
-host.name=192.168.11.51
-advertised.host.name=192.168.11.51
+host.name=192.168.253.165
+advertised.host.name=192.168.253.165
 log.dirs=/usr/local/kafka_2.12/kafka-logs
 num.partitions=2
-zookeeper.connect=192.168.11.111:2181,192.168.11.112:2181,192.168.11.113:2181
+zookeeper.connect=192.168.253.171:2181,192.168.253.147:2181,192.168.253.145:2181
 
 ## 建立日志文件夹：
 mkdir /usr/local/kafka_2.12/kafka-logs
@@ -104,28 +104,28 @@ mkdir /usr/local/kafka_2.12/kafka-logs
 
 ## 简单操作：
 #（1）创建topic主题命令：（创建名为test的topic， 1个分区分别存放数据，数据备份总共1份）
-kafka-topics.sh --zookeeper 192.168.11.111:2181 --create --topic topic1 --partitions 1  --replication-factor 1
+kafka-topics.sh --zookeeper 192.168.253.171:2181 --create --topic topic1 --partitions 1  --replication-factor 1
 ## --zookeeper 为zookeeper服务列表地址配置项，这里任意指定zookeeper其中一个服务列表地址即可
 ## --create 命令后 --topic 为创建topic 并指定 topic name
 ## --partitions 为指定分区数量配置项
 ## --replication-factor 为指定副本集数量配置项
 
 #（2）查看topic列表命令：
-kafka-topics.sh --zookeeper 192.168.11.111:2181 --list
+kafka-topics.sh --zookeeper 192.168.253.171:2181 --list
 
 #（3）kafka命令发送数据：（然后我们就可以编写数据发送出去了）
-kafka-console-producer.sh --broker-list 192.168.11.51:9092 --topic topic1
+kafka-console-producer.sh --broker-list 192.168.253.165:9092 --topic topic1
 ## --brokerlist kafka服务的broker节点列表
 
 #（4）kafka命令接受数据：（然后我们就可以看到消费的信息了）
-kafka-console-consumer.sh --bootstrap-server 192.168.11.51:9092 --topic topic1 --from-beginning
+kafka-console-consumer.sh --bootstrap-server 192.168.253.165:9092 --topic topic1 --from-beginning
 
 
 #（5）删除topic命令：
-kafka-topics.sh --zookeeper 192.168.11.111:2181 --delete --topic topic1
+kafka-topics.sh --zookeeper 192.168.253.171:2181 --delete --topic topic1
 
 #（6）kafka查看消费进度：（当我们需要查看一个消费者组的消费进度时，则使用下面的命令）
-kafka-consumer-groups.sh --bootstrap-server 192.168.11.51:9092 --describe --group group1
+kafka-consumer-groups.sh --bootstrap-server 192.168.253.165:9092 --describe --group group1
 ## --describe --group 为订阅组， 后面指定 group name
 
 
@@ -282,3 +282,7 @@ pipeline.workers: 16
 
 ## 启动logstash
 nohup /usr/l
+
+
+
+2-08 Kafka海量日志收集实战_logstash日志过滤实战-2
