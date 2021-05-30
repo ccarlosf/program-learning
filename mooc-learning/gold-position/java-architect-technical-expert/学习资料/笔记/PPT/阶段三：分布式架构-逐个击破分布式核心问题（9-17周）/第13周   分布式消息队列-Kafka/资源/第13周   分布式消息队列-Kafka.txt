@@ -131,3 +131,7 @@ kafka-consumer-groups.sh --bootstrap-server 192.168.11.51:9092 --describe --grou
 
 
 2-01 Kafka海量日志收集实战_架构设计讲解
+
+
+
+2-02 Kafka海量日志收集实战_log4j2日志输出实战-1
