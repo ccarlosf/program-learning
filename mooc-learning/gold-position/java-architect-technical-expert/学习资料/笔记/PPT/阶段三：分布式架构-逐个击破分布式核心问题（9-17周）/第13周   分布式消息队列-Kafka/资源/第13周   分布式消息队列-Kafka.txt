@@ -208,3 +208,51 @@ public class InputMDC implements EnvironmentAware {
 
 
 2-04 Kafka海量日志收集实战_filebeat日志收集实战-1
+
+
+
+2-05 Kafka海量日志收集实战_filebeat日志收集实战-2
+filebeat安装：
+
+cd /usr/local/software
+tar -zxvf filebeat-6.6.0-linux-x86_64.tar.gz -C /usr/local/
+cd /usr/local
+mv filebeat-6.6.0-linux-x86_64/ filebeat-6.6.0
+
+## 配置filebeat，可以参考filebeat.full.yml中的配置。
+vim /usr/local/filebeat-6.6.0/filebeat.yml
+
+覆盖fileBeat文件
+mv /home/software/filebeat.yml /usr/local/filebeat-6.6.0/
+
+filebeat启动：
+
+## 检查配置是否正确
+cd /usr/local/filebeat-6.6.0
+./filebeat -c filebeat.yml -configtest
+## Config OK
+
+
+
+
+
+
+## 启动kafka：
+/usr/local/kafka_2.12/bin/kafka-server-start.sh /usr/local/kafka_2.12/config/server.properties &
+
+## 查看topic列表：
+./kafka-topics.sh --zookeeper 192.168.253.171:2181 --list
+
+## 创建topic
+./kafka-topics.sh --zookeeper 192.168.253.171:2181 --create --topic app-log-collector --partitions 1  --replication-factor 1
+./kafka-topics.sh --zookeeper 192.168.253.171:2181 --create --topic error-log-collector --partitions 1  --replication-factor 1
+
+
+## 启动filebeat
+cd /usr/local/filebeat-6.6.0
+/usr/local/filebeat-6.6.0/filebeat &
+ps -ef | grep filebeat
+
+
+## 查看topic情况
+./kafka-topics.sh --zookeeper 192.168.253.171:2181 --topic app-log-collector --describe

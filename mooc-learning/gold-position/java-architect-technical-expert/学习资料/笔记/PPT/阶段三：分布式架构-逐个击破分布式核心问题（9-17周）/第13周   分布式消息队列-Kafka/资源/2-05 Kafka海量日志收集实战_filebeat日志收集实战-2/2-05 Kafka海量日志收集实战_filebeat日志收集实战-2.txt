@@ -1,3 +1,4 @@
+2-05 Kafka海量日志收集实战_filebeat日志收集实战-2
 filebeat安装：
 
 cd /usr/local/software
