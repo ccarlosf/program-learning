@@ -127,3 +127,7 @@ kafka-topics.sh --zookeeper 192.168.11.111:2181 --delete --topic topic1
 #（6）kafka查看消费进度：（当我们需要查看一个消费者组的消费进度时，则使用下面的命令）
 kafka-consumer-groups.sh --bootstrap-server 192.168.11.51:9092 --describe --group group1
 ## --describe --group 为订阅组， 后面指定 group name
+
+
+
+2-01 Kafka海量日志收集实战_架构设计讲解

@@ -2,4 +2,4 @@
 1.搭建三个节点的linux版本Zookeeper
 
 
-2.搭建Kafka
+2.搭建Kafka集群模式
