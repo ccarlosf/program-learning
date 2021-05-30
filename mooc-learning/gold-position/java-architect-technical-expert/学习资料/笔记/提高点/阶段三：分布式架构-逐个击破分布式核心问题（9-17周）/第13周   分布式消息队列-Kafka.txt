@@ -1,5 +1,6 @@
 第13周   分布式消息队列-Kafka
 1.搭建三个节点的linux版本Zookeeper
 
-
 2.搭建Kafka集群模式
+
+3.FileBeat和应用部署在不同机器，实现远程日志收集
