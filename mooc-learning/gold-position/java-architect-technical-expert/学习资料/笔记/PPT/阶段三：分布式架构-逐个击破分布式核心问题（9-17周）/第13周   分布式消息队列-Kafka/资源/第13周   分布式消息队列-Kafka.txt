@@ -286,3 +286,7 @@ nohup /usr/l
 
 
 2-08 Kafka海量日志收集实战_logstash日志过滤实战-2
+
+
+
+2-09 Kafka海量日志收集实战_elasticsearch&kibana存储可视化实战
