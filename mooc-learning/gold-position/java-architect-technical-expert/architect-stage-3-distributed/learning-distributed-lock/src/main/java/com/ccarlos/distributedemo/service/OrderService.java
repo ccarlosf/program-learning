@@ -1,37 +1,36 @@
-第2章 分布式锁设计
-2-1 使用锁解决电商中的超卖（6分钟）
+package com.ccarlos.distributedemo.service;
+
+import com.ccarlos.distributedemo.dao.OrderItemMapper;
+import com.ccarlos.distributedemo.dao.OrderMapper;
+import com.ccarlos.distributedemo.dao.ProductMapper;
+import com.ccarlos.distributedemo.model.Order;
+import com.ccarlos.distributedemo.model.OrderItem;
+import com.ccarlos.distributedemo.model.Product;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Service
+@Slf4j
+public class OrderService {
+
+    @Resource
+    private OrderMapper orderMapper;
+    @Resource
+    private OrderItemMapper orderItemMapper;
+    @Resource
+    private ProductMapper productMapper;
+    //购买商品id
+    private int purchaseProductId = 100100;
+    //购买商品数量
+    private int purchaseProductNum = 1;
 
 
-
-2-2 超卖现象一（16分钟）
-1.com.ccarlos.distributedemo.DistributeDemoApplicationTests.concurrentOrder
-@Test
-    public void concurrentOrder() throws InterruptedException {
-        CountDownLatch cdl = new CountDownLatch(5);
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
-
-        ExecutorService es = Executors.newFixedThreadPool(5);
-        for (int i = 0; i < 5; i++) {
-            es.execute(() -> {
-                try {
-                    // 等待5个线并发执行
-                    cyclicBarrier.await();
-                    Integer orderId = orderService.createOrder();
-                    System.out.println("订单id：" + orderId);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    cdl.countDown();
-                }
-            });
-        }
-        // 等5个线程执行完成后，再关闭线程（否则提前关闭，其它线程获取不到数据库链接）
-        cdl.await();
-        es.shutdown();
-    }
-
-2.com.ccarlos.distributedemo.service.OrderService
-/*@Transactional(rollbackFor = Exception.class)
+    /*@Transactional(rollbackFor = Exception.class)
     public Integer createOrder() throws Exception {
         Product product = productMapper.selectByPrimaryKey(purchaseProductId);
         if (product == null) {
@@ -126,4 +125,6 @@
         orderItemMapper.insertSelective(orderItem);
         return order.getId();
     }
+    
 
+}

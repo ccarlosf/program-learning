@@ -1,8 +1,3 @@
-第2章 分布式锁设计
-2-1 使用锁解决电商中的超卖（6分钟）
-
-
-
 2-2 超卖现象一（16分钟）
 1.com.ccarlos.distributedemo.DistributeDemoApplicationTests.concurrentOrder
 @Test
@@ -126,4 +121,3 @@
         orderItemMapper.insertSelective(orderItem);
         return order.getId();
     }
-

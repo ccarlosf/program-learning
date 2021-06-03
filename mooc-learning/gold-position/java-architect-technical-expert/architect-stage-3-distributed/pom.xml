@@ -15,6 +15,7 @@
         <module>learning-distributed-sessions</module>
         <module>learning-rabbit-mq</module>
         <module>learning-kafka</module>
+        <module>learning-distributed-lock</module>
     </modules>
 
     <properties>
