@@ -127,3 +127,59 @@
         return order.getId();
     }
 
+
+
+2-3 超卖现象二&解决思路（7分钟）
+1.com.ccarlos.distributedemo.service.OrderService.createOrder
+ @Transactional(rollbackFor = Exception.class)
+    public Integer createOrder() throws Exception {
+        Product product = productMapper.selectByPrimaryKey(purchaseProductId);
+        if (product == null) {
+            throw new Exception("购买商品：" + purchaseProductId + "不存在");
+        }
+
+        //商品当前库存
+        Integer currentCount = product.getCount();
+        System.out.println(Thread.currentThread().getName() + "库存数：" + currentCount);
+        //校验库存
+        if (purchaseProductNum > currentCount) {
+            throw new Exception("商品" + purchaseProductId + "仅剩" + currentCount + "件，无法购买");
+        }
+        //计算剩余库存
+//        Integer leftCount = currentCount - purchaseProductNum;
+//        //更新库存
+//        product.setCount(leftCount);
+//        product.setUpdateTime(LocalDateTime.now());
+//        product.setUpdateUser("xxx");
+//        productMapper.updateByPrimaryKeySelective(product);
+
+
+        productMapper.updateProductCount(purchaseProductNum,"xxx",
+                LocalDateTime.now(),product.getId());
+
+        //检索商品的库存
+        //如果商品库存为负数，抛出异常
+
+        Order order = new Order();
+        order.setOrderAmount(product.getPrice().multiply(new BigDecimal(purchaseProductNum)));
+        order.setOrderStatus(1);//待处理
+        order.setReceiverName("xxx");
+        order.setReceiverMobile("13311112222");
+        order.setCreateTime(LocalDateTime.now());
+        order.setCreateUser("xxx");
+        order.setUpdateTime(LocalDateTime.now());
+        order.setUpdateUser("xxx");
+        orderMapper.insertSelective(order);
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrderId(order.getId());
+        orderItem.setProductId(product.getId());
+        orderItem.setPurchasePrice(product.getPrice());
+        orderItem.setPurchaseNum(purchaseProductNum);
+        orderItem.setCreateUser("xxx");
+        orderItem.setCreateTime(LocalDateTime.now());
+        orderItem.setUpdateTime(LocalDateTime.now());
+        orderItem.setUpdateUser("xxx");
+        orderItemMapper.insertSelective(orderItem);
+        return order.getId();
+    }
